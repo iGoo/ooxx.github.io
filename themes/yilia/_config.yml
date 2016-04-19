@@ -32,7 +32,7 @@ open_in_new: false
 
 # Miscellaneous
 google_analytics: ''
-favicon: /favicon.png
+favicon: https://hexo.io/favicon.ico
 
 #你的头像url
 avatar: http://7xoumt.com1.z0.glb.clouddn.com/new-hexo.jpg

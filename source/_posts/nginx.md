@@ -1,5 +1,6 @@
 ---
 title: Nginx 调试记录
+date: 2016-04-18 18:03:27
 ---
 
 ```bash
@@ -28,6 +29,6 @@ title: Nginx 调试记录
     }
     $obj = new Sum();
 ```
-
+<!-- more -->
 ![sb](http://static.keer.me/o_1ae22cr836bismoso6jec1rtla.jpg)
-![](http://static.keer.me/o_1adg6djrp1930127j103g6846oda.png)
+![](http://static.keer.me/o_1adg6djrp1930127j103g6846oda.png)aaa
