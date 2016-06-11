@@ -27,7 +27,7 @@ INSERT INTO `table_name`
     VALUES
     (值1, 值2, 值n), (值1n, 值2n, 值3n);
 ```
-
+<!-- more -->
 **插入查询结果**
 ```sql
 INSERT INTO `table_name`
