@@ -5,12 +5,14 @@ date: 2016-06-12 23:19:45
 tags: [Tools, SublimeText]
 categories: Tools
 ---
+<img src="http://static.keer.me/o_1al2jldppaod1eja1cgk1aif1a3ma.png?imageView2/1/w/700/h/400" alt="o_1al2jldppaod1eja1cgk1aif1a3ma.png" >
 > 整理平时常用的一些`SublimeText`常用的开发插件，不定期更新
+
+<!-- more -->
 
 ### ConvertToUTF8
 中文编码GBK转换为UTF8，直接CMD+Shitf+P搜索安装即可
 
-<!-- more -->
 
 ### SideBarEnhancements
 增强ST侧边栏功能`必备`插件
