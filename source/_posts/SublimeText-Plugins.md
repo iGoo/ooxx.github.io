@@ -6,7 +6,7 @@ tags: [Tools, SublimeText]
 categories: Tools
 ---
 <!-- <img src="http://static.keer.me/o_1al2jldppaod1eja1cgk1aif1a3ma.png?imageView2/1/w/700/h/400" alt="o_1al2jldppaod1eja1cgk1aif1a3ma.png" > -->
-![o_1al4jht341rl53sjvf6ql5ne3a.jpg](http://static.keer.me/o_1al4jht341rl53sjvf6ql5ne3a.jpg)
+![SublimeText](http://static.keer.me/o_1al4jht341rl53sjvf6ql5ne3a.jpg)
 > 整理平时常用的一些`SublimeText`常用的开发插件，不定期更新
 
 <!-- more -->
