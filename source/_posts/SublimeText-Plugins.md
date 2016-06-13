@@ -5,7 +5,8 @@ date: 2016-06-12 23:19:45
 tags: [Tools, SublimeText]
 categories: Tools
 ---
-<img src="http://static.keer.me/o_1al2jldppaod1eja1cgk1aif1a3ma.png?imageView2/1/w/700/h/400" alt="o_1al2jldppaod1eja1cgk1aif1a3ma.png" >
+<!-- <img src="http://static.keer.me/o_1al2jldppaod1eja1cgk1aif1a3ma.png?imageView2/1/w/700/h/400" alt="o_1al2jldppaod1eja1cgk1aif1a3ma.png" > -->
+![o_1al4jht341rl53sjvf6ql5ne3a.jpg](http://static.keer.me/o_1al4jht341rl53sjvf6ql5ne3a.jpg)
 > 整理平时常用的一些`SublimeText`常用的开发插件，不定期更新
 
 <!-- more -->
@@ -36,7 +37,7 @@ categories: Tools
 在新建文件或者是文件夹的时候一般都是都是右键侧边栏进行操作。但是安装了这个插件以后就可以类似的模拟linux下的建立文件方式了。
 只要使用OSX下使用`cmd+alt+n`即可打开输入框 win下使用`ctrl+alt+n`
 > 如果一个侧边栏中有多个project那么直接数据project name就可以定位到此project，注意大小写
-> ![图片描述][1]
+> ![AdvancedNewFile](http://static.keer.me/o_1al4j2esg1ksu18i3gksjr5siha.png)
 
 ### ctags [链接]()
 代码跳转神器。因为不太喜欢IDE的臃肿所以这个插件对于ST来说也是`必备`插件
