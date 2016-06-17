@@ -71,5 +71,7 @@ theme: next
 ## Docs: https://hexo.io/docs/deployment.html
 deploy:
   type: git
-  repository: git@github.com:lepigs/lepigs.github.io.git
+  repository:
+    github: git@github.com:lepigs/lepigs.github.io.git
+    coding: git@git.coding.net:lepig/lepig.git
   branch: master
