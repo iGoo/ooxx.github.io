@@ -72,6 +72,6 @@ theme: next
 deploy:
   type: git
   repository:
-    github: git@github.com:lepigs/lepigs.github.io.git
     coding: git@git.coding.net:lepig/lepig.git
+    github: git@github.com:lepigs/lepigs.github.io.git
   branch: master
