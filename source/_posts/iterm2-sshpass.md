@@ -19,7 +19,7 @@ sudo make install
 ```
 
 ## 设置iTerm2
-
+1
 
 
 ```sh
