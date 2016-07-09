@@ -34,8 +34,8 @@ php -m | grep uuid
 ```php
 function create()
 {
-    crate_uuid(); # b6489492-4706-4d68-a52b-63e2bbddfbf3
-    crate_uuid(1); # 908c13b0-321e-11e6-97d9-080027c23ce5
+    uuid_create(); # b6489492-4706-4d68-a52b-63e2bbddfbf3
+    uuid_create(1); # 908c13b0-321e-11e6-97d9-080027c23ce5
 }
 ```
 ---
