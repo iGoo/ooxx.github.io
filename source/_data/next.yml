@@ -61,9 +61,9 @@ menu_icons:
 # ---------------------------------------------------------------
 
 # Schemes
-scheme: Muse
+# scheme: Muse
 # scheme: Mist
-# scheme: Pisces
+scheme: Pisces
 
 
 # ---------------------------------------------------------------
@@ -147,7 +147,8 @@ social_icons:
 # in theme directory(source/images): /images/avatar.jpg
 # in site  directory(source/uploads): /uploads/avatar.jpg
 # avatar: http://static.keer.me/hexo_avatar-369x369.jpg
-avatar: http://static.keer.me/n3d.png
+# avatar: http://static.keer.me/n3d.png
+avatar: http://static.keer.me/o_1an9r7n3l1oplsu9g1no7013ona.png
 
 
 # Table Of Contents in the Sidebar
