@@ -51,7 +51,7 @@
 	"build_varint": "",
 	"command_palette":
 	{
-		"height": 311.0,
+		"height": 221.0,
 		"last_filter": "",
 		"selected_items":
 		[
@@ -89,18 +89,32 @@
 	},
 	"expanded_folders":
 	[
-		"/Users/lePig/Hexo"
+		"/Users/lePig/Hexo",
+		"/Users/lePig/Hexo/source",
+		"/Users/lePig/Hexo/source/about",
+		"/Users/lePig/Hexo/source/search",
+		"/Users/lePig/Hexo/themes/fexo"
 	],
 	"file_history":
 	[
+		"/Users/lePig/Hexo/_config.yml",
+		"/Users/lePig/Hexo/source/_data/_config.yml",
+		"/Users/lePig/Hexo/themes/fexo/_config.yml",
+		"/Users/lePig/Hexo/source/about/index.md",
+		"/Users/lePig/Hexo/source/_data/next.yml",
+		"/Users/lePig/Hexo/source/search/index.md",
+		"/Users/lePig/Hexo/source/tags/index.md",
+		"/Users/lePig/Hexo/source/categories/index.md",
+		"/Users/lePig/Hexo/public/categories/Redis/index.html",
+		"/Users/lePig/Hexo/source/category/index.md",
+		"/Users/lePig/Hexo/public/category/index.html",
+		"/Users/lePig/Hexo/public/categories/Hexo/index.html",
 		"/Users/lePig/WorkSpace/code/dump.php",
 		"/Users/lePig/WorkSpace/code/one.php",
 		"/Users/lePig/Library/Application Support/Sublime Text 3/Packages/User/php.sublime-build",
 		"/Users/lePig/WorkSpace/code/composer.lock",
 		"/Users/lePig/WorkSpace/www/MongoDB/application/controllers/Users.php",
 		"/Users/lePig/Hexo/package.json",
-		"/Users/lePig/Hexo/_config.yml",
-		"/Users/lePig/Hexo/source/_data/next.yml",
 		"/Users/lePig/Hexo/source/_data/yelee.yml",
 		"/Users/lePig/Hexo/feature.txt",
 		"/Users/lePig/Hexo/nil.txt",
@@ -176,7 +190,7 @@
 	],
 	"find":
 	{
-		"height": 27.0
+		"height": 50.0
 	},
 	"find_in_files":
 	{
@@ -190,6 +204,8 @@
 		"case_sensitive": false,
 		"find_history":
 		[
+			"lepigs",
+			"name: 友链\n  #   url: /links/\n  #   target_blank: false",
 			"rss",
 			"toggle_comment",
 			"s->user_m->get_list();",
