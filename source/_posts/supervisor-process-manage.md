@@ -3,7 +3,7 @@ title: Supervisor守护进程管理
 s: supervisor-process-manage
 date: 2016-07-21 22:20:40
 tags: [Supervisor, 进程管理, deamon]
-categroies: Linux
+categories: Linux
 ---
 
 > http://blog.cheyo.net/1.html
