@@ -4,6 +4,10 @@
 		"selected_items":
 		[
 			[
+				"dd",
+				"dd	Graceful Dump"
+			],
+			[
 				"json",
 				"json_encode"
 			],
@@ -51,10 +55,26 @@
 	"build_varint": "",
 	"command_palette":
 	{
-		"height": 221.0,
-		"last_filter": "",
+		"height": 281.0,
+		"last_filter": "project",
 		"selected_items":
 		[
+			[
+				"project",
+				"Project: Add Folder"
+			],
+			[
+				"boxy",
+				"Boxy Theme: Configuration"
+			],
+			[
+				"prbr",
+				"Preferences: Browse Packages"
+			],
+			[
+				"material",
+				"Material Theme: Activate theme"
+			],
 			[
 				"install",
 				"Package Control: Install Package"
@@ -89,12 +109,15 @@
 	},
 	"expanded_folders":
 	[
-		"/Users/lePig/Hexo/source",
-		"/Users/lePig/Hexo/source/_posts"
 	],
 	"file_history":
 	[
 		"/Users/lePig/Hexo/Hexo.sublime-project",
+		"/Users/lePig/WorkSpace/code/ci/application/controllers/Welcome.php",
+		"/Users/lePig/Library/Application Support/Sublime Text 3/Packages/User/Preferences.sublime-settings",
+		"/Users/lePig/Hexo/source/_posts/homestead-installing-phpredis.md",
+		"/Users/lePig/Library/Application Support/Sublime Text 3/Packages/User/Plain text.sublime-settings",
+		"/Users/lePig/WorkSpace/code/ci/index.php",
 		"/Users/lePig/Hexo/source/css/personal-style.css",
 		"/Users/lePig/Hexo/source/_posts/linux-command-tips.md",
 		"/Users/lePig/Hexo/source/_posts/supervisor-process-manage.md",
@@ -158,7 +181,6 @@
 		"/Users/lePig/Hexo/source/_posts/testtest.md",
 		"/Users/lePig/Hexo/themes/yilia/_config.yml",
 		"/Users/lePig/WorkSpace/web/MongoDB/composer.json",
-		"/Users/lePig/Library/Application Support/Sublime Text 3/Packages/User/Preferences.sublime-settings",
 		"/Users/lePig/Library/Application Support/Sublime Text 3/Packages/User/Default (OSX).sublime-keymap",
 		"/Users/lePig/Library/Application Support/Sublime Text 3/Packages/Default/Default (OSX).sublime-keymap",
 		"/Users/lePig/WorkSpace/web/MongoDB/vendor/qiniu/php-sdk/src/Qiniu/Storage/UploadManager.php",
@@ -335,7 +357,7 @@
 		[
 			[
 				"",
-				"~/WorkSpace/code/code.sublime-workspace"
+				"~/Hexo/Hexo.sublime-project"
 			]
 		],
 		"width": 380.0
