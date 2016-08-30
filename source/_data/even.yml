@@ -1,0 +1,41 @@
+# navbar
+menu:
+  Home: /
+  Archives: /archives/
+  Categories: /categories/
+  Tags: /tags/
+  About: /about/
+
+# site icon
+favicon: /favicon.ico
+
+# comments
+comments:
+  post: false
+  about: false
+
+# article directory sidebar
+sidebar: true
+
+# Analytics
+## Baidu Analytics
+#baidu_analytics: Your baidu Analytics ID
+## Google Analytics
+#google_analytics: Your Google Analytics ID
+
+# Comments
+## Duoshuo
+#duoshuo_shortname: Your duoshuo ID
+## Disqus
+#disqus_shortname: Your disqus ID
+
+# Social links
+social:
+  email: lepig@qq.com
+  # stack-overflow:
+  # twitter:
+  # facebook:
+  github: http://github.com/lepigs
+  weibo: http://weibo.com/719836150
+  # zhihu: 
+  rss: /atom.xml
