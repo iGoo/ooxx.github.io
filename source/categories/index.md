@@ -1,6 +1,7 @@
 ---
 title: categories
 date: 2016-06-11 17:55:52
-layout: category
+<!-- layout: category -->
+layout: categories
 comments: false
 ---
