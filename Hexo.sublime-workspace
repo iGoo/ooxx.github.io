@@ -4,8 +4,12 @@
 		"selected_items":
 		[
 			[
+				"fa",
+				"false\t(_config.yml)"
+			],
+			[
 				"dd",
-				"dd	Graceful Dump"
+				"dd\tGraceful Dump"
 			],
 			[
 				"json",
@@ -13,7 +17,7 @@
 			],
 			[
 				"for",
-				"foreach	foreach …"
+				"foreach\tforeach …"
 			],
 			[
 				"redis",
@@ -25,7 +29,7 @@
 			],
 			[
 				"sign",
-				"signin	(Users.php)"
+				"signin\t(Users.php)"
 			],
 			[
 				"se",
@@ -55,10 +59,18 @@
 	"build_varint": "",
 	"command_palette":
 	{
-		"height": 281.0,
-		"last_filter": "project",
+		"height": 357.0,
+		"last_filter": "",
 		"selected_items":
 		[
+			[
+				"",
+				"Boxy Theme: Configuration"
+			],
+			[
+				"install",
+				"Package Control: Install Package"
+			],
 			[
 				"project",
 				"Project: Add Folder"
@@ -74,10 +86,6 @@
 			[
 				"material",
 				"Material Theme: Activate theme"
-			],
-			[
-				"install",
-				"Package Control: Install Package"
 			],
 			[
 				"i",
@@ -109,30 +117,51 @@
 	},
 	"expanded_folders":
 	[
+		"/Users/lePig/Hexo",
+		"/Users/lePig/Hexo/source/_data",
+		"/Users/lePig/Hexo/themes/even"
 	],
 	"file_history":
 	[
+		"/Users/lePig/Hexo/source/_data/even.yml",
+		"/Users/lePig/Hexo/newFeature.txt",
+		"/Users/lePig/Hexo/_config.yml",
+		"/Users/lePig/Hexo/themes/even/stylesheet/_global.scss",
+		"/Users/lePig/Hexo/themes/even/source/css/style.css",
+		"/Users/lePig/Hexo/source/css/personal-style.css",
+		"/Users/lePig/Hexo/themes/even/stylesheet/style.scss",
+		"/Users/lePig/Hexo/themes/even/stylesheet/partial/_post.scss",
+		"/Users/lePig/Hexo/themes/even/stylesheet/_setting.scss",
+		"/Users/lePig/Hexo/.gitignore",
+		"/Users/lePig/Hexo/source/archive/index.md",
+		"/Users/lePig/Hexo/themes/huno/_config.yml",
+		"/Users/lePig/Hexo/source/_posts/display-string-way.md",
+		"/Users/lePig/Hexo/source/tags/index.md",
+		"/Users/lePig/Hexo/source/categories/index.md",
+		"/Users/lePig/Hexo/themes/even/_config.yml",
+		"/Users/lePig/Hexo/themes/even/.gitignore",
+		"/Users/lePig/Hexo/source/about/index.md",
+		"/Users/lePig/Hexo/source/_posts/php-random-generator.md",
+		"/Users/lePig/Hexo/source/_posts/php-random-generation.md",
+		"/Users/lePig/Hexo/source/_posts/About-Hexo-Sync.md",
+		"/Users/lePig/Hexo/source/_posts/如何为Let’s-Encrypt颁发的SSL证书续期.md",
+		"/Users/lePig/Hexo/source/_posts/php-generator-syntax.md",
 		"/Users/lePig/Hexo/Hexo.sublime-project",
 		"/Users/lePig/WorkSpace/code/ci/application/controllers/Welcome.php",
 		"/Users/lePig/Library/Application Support/Sublime Text 3/Packages/User/Preferences.sublime-settings",
 		"/Users/lePig/Hexo/source/_posts/homestead-installing-phpredis.md",
 		"/Users/lePig/Library/Application Support/Sublime Text 3/Packages/User/Plain text.sublime-settings",
 		"/Users/lePig/WorkSpace/code/ci/index.php",
-		"/Users/lePig/Hexo/source/css/personal-style.css",
 		"/Users/lePig/Hexo/source/_posts/linux-command-tips.md",
 		"/Users/lePig/Hexo/source/_posts/supervisor-process-manage.md",
-		"/Users/lePig/Hexo/_config.yml",
 		"/Users/lePig/Hexo/source/_data/fexo.yml",
 		"/Users/lePig/Hexo/source/_posts/try-alpine-linux-release.md",
 		"/Users/lePig/Hexo/source/_posts/build-orderNo-for-php.md",
 		"/Users/lePig/Hexo/source/_posts/linux-cron-jobs-details.md",
 		"/Users/lePig/Hexo/themes/fexo/_config.yml",
 		"/Users/lePig/Hexo/source/_data/_config.yml",
-		"/Users/lePig/Hexo/source/about/index.md",
 		"/Users/lePig/Hexo/source/_data/next.yml",
 		"/Users/lePig/Hexo/source/search/index.md",
-		"/Users/lePig/Hexo/source/tags/index.md",
-		"/Users/lePig/Hexo/source/categories/index.md",
 		"/Users/lePig/Hexo/public/categories/Redis/index.html",
 		"/Users/lePig/Hexo/source/category/index.md",
 		"/Users/lePig/Hexo/public/category/index.html",
@@ -155,7 +184,6 @@
 		"/Users/lePig/Hexo/source/_posts/nginx.md",
 		"/Users/lePig/Hexo/themes/apollo/_config.yml",
 		"/Users/lePig/Hexo/source/_data/apollo.yml",
-		"/Users/lePig/Hexo/source/_posts/如何为Let’s-Encrypt颁发的SSL证书续期.md",
 		"/Users/lePig/WorkSpace/www/MongoDB/application/controllers/Test.php",
 		"/Users/lePig/WorkSpace/www/saikrweb4/application/config/development/config.php",
 		"/Users/lePig/WorkSpace/www/MongoDB/application/controllers/Redis.php",
@@ -173,7 +201,6 @@
 		"/Users/lePig/Hexo/source/_posts/PHP-some-forgotten-string-functions.md",
 		"/Users/lePig/Hexo/source/_posts/hexo-sync-solution.md",
 		"/Users/lePig/Hexo/source/_posts/Crontab-percent-need-to-escape.md",
-		"/Users/lePig/Hexo/source/_posts/About-Hexo-Sync.md",
 		"/Users/lePig/Hexo/source/_posts/keer-for-macbookPro.md",
 		"/Users/lePig/WorkSpace/web/MongoDB/application/third_party/Lepig.php",
 		"/Users/lePig/WorkSpace/web/MongoDB/application/controllers/Welcome.php",
@@ -217,13 +244,14 @@
 	],
 	"find":
 	{
-		"height": 50.0
+		"height": 48.0
 	},
 	"find_in_files":
 	{
-		"height": 0.0,
+		"height": 132.0,
 		"where_history":
 		[
+			""
 		]
 	},
 	"find_state":
@@ -231,6 +259,12 @@
 		"case_sensitive": false,
 		"find_history":
 		[
+			"favicon",
+			"hide",
+			"none",
+			"power",
+			"-->\n",
+			"even",
 			"next",
 			"personal_style",
 			"lepigs",
@@ -379,7 +413,7 @@
 	"show_open_files": false,
 	"show_tabs": true,
 	"side_bar_visible": true,
-	"side_bar_width": 203.0,
+	"side_bar_width": 315.0,
 	"status_bar_visible": true,
 	"template_settings":
 	{
