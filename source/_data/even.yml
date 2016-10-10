@@ -9,6 +9,8 @@ menu:
 # site icon
 favicon: /favicon.ico
 
+theme_color: Default
+
 # comments
 comments:
   post: false
