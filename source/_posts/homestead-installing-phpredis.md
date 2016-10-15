@@ -29,7 +29,7 @@ categories: PHP
 * 编译三步走
     ```
     sudo ./configure
-    make
+    sudo make
     sudo make install
     ```
 
@@ -47,20 +47,27 @@ categories: PHP
     ```
     cd /etc/php/7.0/fpm/conf.d
     sudo ln -s /etc/php/7.0/mods-available/redis.ini 25-redis.ini
+    sudo ln -s /etc/php/7.0/mods-available/redis.ini /etc/php/7.0/cli/conf.d/redis.ini #绝对路径
     ```
     在这个conf.d中建立的所有`*.ini`文件都在PHP初始化的时候自动加载。不过目前不太明白的是`25-redis.ini`这里的25是具体该定义成什么。不过我看了自带了一个`25-memcache.ini`所以我把redis也定义成25。(优先级序号)
+    > 不过写成`redis.ini`也是可以的
 
 * 然后重启php-fpm
     ```
     sudo /etc/init.d/php7.0-fpm reload
     ```
-    到此为止通过浏览器即fpm的配置已经可以了，但是如果是cli还是得稍微配置一下步骤和上面的基本一样，也是在cli文件下的conf.d中穿件一个软链接，如果图省事就直接在cli文件夹下的php.ini最后一行直接追加吧。
+    到此为止通过浏览器即fpm的配置已经可以了。CLI可以使用下面代码验证
+
+    ```
+    php -r "if (new Redis() == true){ echo \"OK \r\n\"; }"
+    ```
 
 ---
 网上搜索了一下别人的做法是直接在conf.d文件夹下直接创建了`redis.ini`而不是使用软连接的方式。其实都一样，不过为了统一我还是使用了软连接的方式的。
 参考
 > http://codegists.com/code/vagrant%20homestead%20php7%20redis/
 > https://laracasts.com/discuss/channels/tips/tutorial-guide-installing-php-redis-on-fresh-install-homestead-with-php7
+> https://anton.logvinenko.name/en/blog/how-to-install-redis-and-redis-php-client.html
 
 
 
