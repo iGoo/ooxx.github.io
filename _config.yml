@@ -67,7 +67,8 @@ pagination_dir: page
 # theme: landscape
 # theme: spfk
 # theme: fexo
-theme: even
+# theme: even
+theme: jekyll
 
 # Deployment
 ## Docs: https://hexo.io/docs/deployment.html
