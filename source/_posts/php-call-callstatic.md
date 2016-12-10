@@ -16,7 +16,7 @@ categories: PHP
 使用**静态方式**调用一个**不可访问**的方法时,__callStatic()会被触发. 如果调用的方法是非静态方法，那么会报一个`Strict Standards`提示。
 
 
-```
+```java
 class A
 {
     public function __call($name, $args)
