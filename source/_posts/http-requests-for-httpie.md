@@ -1,5 +1,5 @@
 ---
-title: 比cURL更酷的http命令行客户端-HTTPie111
+title: 比cURL更酷的http命令行客户端-HTTPieAAA
 s: http-requests-for-httpie
 date: 2016-12-15 21:38:10
 tags: [httpie, curl, http]
