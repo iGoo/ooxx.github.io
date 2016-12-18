@@ -7,16 +7,16 @@ categories: Tools
 ---
 
 * 发送GET请求,打印`request headers`和`request body`
-  ```http --print=BH my.sso.dev/request keywords==lePig ```
+  ```bash
+  http --print=BH my.sso.dev/request keywords==lePig
+  ```
 
 * 发送POST请求，打印`request headers`和`request body`
-  ``` http --print=BH my.sso.dev/request keywords=lePig```
+  ```bash
+  http --print=BH my.sso.dev/request keywords=lePig
+  ```
 
-  ​
-
-  <!--more-->
-
-  ​
+<!--more-->
 
 * 只返回Response Header或Response Body
 ```
