@@ -1,0 +1,1104 @@
+<!DOCTYPE html>
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+<html class="theme-next gemini use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=6.4.0" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=6.4.0">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=6.4.0">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=6.4.0">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=6.4.0" color="#222">
+
+
+
+
+
+
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Gemini',
+    version: '6.4.0',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: false,
+    fastclick: false,
+    lazyload: false,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+  
+
+
+
+
+  <meta name="description" content="整理平时常用的一些SublimeText常用的开发插件，不定期更新">
+<meta name="keywords" content="Tools,SublimeText">
+<meta property="og:type" content="article">
+<meta property="og:title" content="SublimeText插件备忘">
+<meta property="og:url" content="//keer.me/SublimeText-Plugins/index.html">
+<meta property="og:site_name" content="楽猪先生">
+<meta property="og:description" content="整理平时常用的一些SublimeText常用的开发插件，不定期更新">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="http://static.keer.me/o_1al4jht341rl53sjvf6ql5ne3a.jpg">
+<meta property="og:image" content="http://static.keer.me/o_1al4j2esg1ksu18i3gksjr5siha.png">
+<meta property="og:image" content="https://i.niupic.com/images/2016/06/05/ovKaUS.png">
+<meta property="og:updated_time" content="2018-09-01T13:56:54.252Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="SublimeText插件备忘">
+<meta name="twitter:description" content="整理平时常用的一些SublimeText常用的开发插件，不定期更新">
+<meta name="twitter:image" content="http://static.keer.me/o_1al4jht341rl53sjvf6ql5ne3a.jpg">
+
+
+
+
+
+
+  <link rel="canonical" href="//keer.me/SublimeText-Plugins/"/>
+
+
+
+<script type="text/javascript" id="page.configurations">
+  CONFIG.page = {
+    sidebar: "",
+  };
+</script>
+
+  <title>SublimeText插件备忘 | 楽猪先生</title>
+  
+
+
+
+
+
+
+
+
+
+  <noscript>
+  <style type="text/css">
+    .use-motion .motion-element,
+    .use-motion .brand,
+    .use-motion .menu-item,
+    .sidebar-inner,
+    .use-motion .post-block,
+    .use-motion .pagination,
+    .use-motion .comments,
+    .use-motion .post-header,
+    .use-motion .post-body,
+    .use-motion .collection-title { opacity: initial; }
+
+    .use-motion .logo,
+    .use-motion .site-title,
+    .use-motion .site-subtitle {
+      opacity: initial;
+      top: initial;
+    }
+
+    .use-motion {
+      .logo-line-before i { left: initial; }
+      .logo-line-after i { right: initial; }
+    }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">楽猪先生</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+    
+      
+        <p class="site-subtitle">向往文艺的小清新</p>
+      
+    
+  </div>
+
+  <div class="site-nav-toggle">
+    <button aria-label="Toggle navigation bar">
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  
+    <ul id="menu" class="menu">
+      
+        
+        
+        
+          
+          <li class="menu-item menu-item-home">
+    <a href="/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-home"></i> <br />Home</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-archives">
+    <a href="/archives/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />Archives</a>
+  </li>
+
+      
+      
+    </ul>
+  
+
+  
+
+  
+</nav>
+
+
+
+  
+
+
+
+</div>
+    </header>
+
+    
+
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+            
+
+          
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="//keer.me/SublimeText-Plugins/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="楽猪先生">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="楽猪先生">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">SublimeText插件备忘
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+
+              
+                
+              
+
+              <time title="Created: 2016-06-12 23:19:45" itemprop="dateCreated datePublished" datetime="2016-06-12T23:19:45+08:00">2016-06-12</time>
+            
+
+            
+              
+
+              
+                
+                <span class="post-meta-divider">|</span>
+                
+
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">Edited on</span>
+                
+                <time title="Modified: 2018-09-01 21:56:54" itemprop="dateModified" datetime="2018-09-01T21:56:54+08:00">2018-09-01</time>
+              
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/Tools/" itemprop="url" rel="index"><span itemprop="name">Tools</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <!-- <img src="http://static.keer.me/o_1al2jldppaod1eja1cgk1aif1a3ma.png?imageView2/1/w/700/h/400" alt="o_1al2jldppaod1eja1cgk1aif1a3ma.png" > -->
+<p><img src="http://static.keer.me/o_1al4jht341rl53sjvf6ql5ne3a.jpg" alt="SublimeText"></p>
+<blockquote>
+<p>整理平时常用的一些<code>SublimeText</code>常用的开发插件，不定期更新</p>
+</blockquote>
+<a id="more"></a>
+<h3 id="ConvertToUTF8"><a href="#ConvertToUTF8" class="headerlink" title="ConvertToUTF8"></a>ConvertToUTF8</h3><p>中文编码GBK转换为UTF8，直接CMD+Shitf+P搜索安装即可</p>
+<h3 id="SideBarEnhancements"><a href="#SideBarEnhancements" class="headerlink" title="SideBarEnhancements"></a>SideBarEnhancements</h3><p>增强ST侧边栏功能<code>必备</code>插件</p>
+<h3 id="Alignment"><a href="#Alignment" class="headerlink" title="Alignment"></a>Alignment</h3><p>一款代码格式对齐插件，默认快捷键是ctrl+cmd+a如果使用QQ建议改一下QQ的快捷键。因为这3个键如果在Windows平台上我使用的是ctrl+alt+a和OSX上面位置一样，用着很顺手。<br><figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> name = <span class="string">"sublimt"</span></span><br><span class="line"><span class="keyword">var</span> version = <span class="string">"2.0.1"</span></span><br><span class="line"><span class="keyword">var</span> title = <span class="string">"sublime text"</span></span><br><span class="line">-----格式化后-----</span><br><span class="line"><span class="keyword">var</span> name    = <span class="string">"sublimt"</span></span><br><span class="line"><span class="keyword">var</span> version = <span class="string">"2.0.1"</span></span><br><span class="line"><span class="keyword">var</span> title   = <span class="string">"sublime text"</span></span><br></pre></td></tr></table></figure></p>
+<h3 id="Function-Name-Display"><a href="#Function-Name-Display" class="headerlink" title="Function Name Display"></a>Function Name Display</h3><p>看名字就是知道，这是一款可以在状态栏左下角显示当前方法函数名或者是方法名的一个小插件，直接安装即可</p>
+<h3 id="AdvancedNewFile-链接"><a href="#AdvancedNewFile-链接" class="headerlink" title="AdvancedNewFile 链接"></a>AdvancedNewFile <a href="https://github.com/skuroda/Sublime-AdvancedNewFile" target="_blank" rel="noopener">链接</a></h3><p>在新建文件或者是文件夹的时候一般都是都是右键侧边栏进行操作。但是安装了这个插件以后就可以类似的模拟linux下的建立文件方式了。<br>只要使用OSX下使用<code>cmd+alt+n</code>即可打开输入框 win下使用<code>ctrl+alt+n</code></p>
+<blockquote>
+<p>如果一个侧边栏中有多个project那么直接数据project name就可以定位到此project，注意大小写<br><img src="http://static.keer.me/o_1al4j2esg1ksu18i3gksjr5siha.png" alt="AdvancedNewFile"></p>
+</blockquote>
+<h3 id="ctags-链接"><a href="#ctags-链接" class="headerlink" title="ctags 链接"></a>ctags <a href="">链接</a></h3><p>代码跳转神器。因为不太喜欢IDE的臃肿所以这个插件对于ST来说也是<code>必备</code>插件</p>
+<ol>
+<li>使用cmd+shift+p安装ctags插件</li>
+<li>安装ctags程序<ol>
+<li><a href="http://ctags.sourceforge.net" target="_blank" rel="noopener">http://ctags.sourceforge.net</a> 下载安装包</li>
+<li>下载ctags-5.8.tar.gz后解压编译。编译3步走，不在介绍</li>
+</ol>
+</li>
+<li>简单配置一下sublimetext ctags。默认ctags安装在了<code>/usr/local/bin/ctags</code> 打开<br> <img src="https://i.niupic.com/images/2016/06/05/ovKaUS.png" alt="ctags setting"><br> 将”command”设置为<code>/usr/local/bin/ctags</code> <code>&quot;command&quot;: &quot;/usr/local/bin/ctags&quot;,</code></li>
+<li>参考 <a href="http://www.smslit.top/develop/2015/11/14/macSTctags-Develop.html" target="_blank" rel="noopener">Mac OSX下Sublime Text配置使用Ctags实现代码跳转</a></li>
+</ol>
+<h3 id="Codeigniter-Utilities"><a href="#Codeigniter-Utilities" class="headerlink" title="Codeigniter Utilities"></a>Codeigniter Utilities</h3><blockquote>
+<p>CI框架辅助插件，可以直接输入<code>ci</code>然后进行选择进行快速补全</p>
+</blockquote>
+<h3 id="DocBlockr"><a href="#DocBlockr" class="headerlink" title="DocBlockr"></a>DocBlockr</h3><blockquote>
+<p>函数方法注释<br>可以进行配置，以便于定制要生成的注释、比如可以自定义方法创建的日期和作者名称</p>
+</blockquote>
+<h3 id="Bracket​Highlighter-链接"><a href="#Bracket​Highlighter-链接" class="headerlink" title="Bracket​Highlighter 链接"></a>Bracket​Highlighter <a href="https://github.com/facelessuser/BracketHighlighter" target="_blank" rel="noopener">链接</a></h3><p>具体设置可以参看官方文档</p>
+<h3 id="All-Autocomplete-链接"><a href="#All-Autocomplete-链接" class="headerlink" title="All Autocomplete 链接"></a>All Autocomplete <a href="https://github.com/alienhard/SublimeAllAutocomplete" target="_blank" rel="noopener">链接</a></h3><blockquote>
+<p>比自带的快速补全更强大，他可以在所有打开的tab中补全你的当前输入</p>
+</blockquote>
+<h3 id="sublimelinter"><a href="#sublimelinter" class="headerlink" title="sublimelinter"></a>sublimelinter</h3><p><code>&quot;show_errors_on_save&quot;: true,</code> 这个选项修改为<code>true</code>在保存的时候提示错误行号<br><code>paths</code>里填写php路径<br><figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">"paths": &#123;</span><br><span class="line">            "linux": [],</span><br><span class="line">            "osx": ["/usr/bin"],</span><br><span class="line">            "windows": []</span><br><span class="line">        &#125;,</span><br></pre></td></tr></table></figure></p>
+<p>参考：<a href="https://www.onlyke.com/html/404.html" target="_blank" rel="noopener">https://www.onlyke.com/html/404.html</a></p>
+
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Tools/" rel="tag"># Tools</a>
+          
+            <a href="/tags/SublimeText/" rel="tag"># SublimeText</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/MySQL学习系列-二-索引/" rel="next" title="MySQL学习系列(二)索引">
+                <i class="fa fa-chevron-left"></i> MySQL学习系列(二)索引
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/alipay-direct-pay-for-php/" rel="prev" title="支付宝即时到帐接入">
+                支付宝即时到帐接入 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+  </div>
+
+
+          </div>
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            Overview
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">楽猪先生</p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          
+            <nav class="site-state motion-element">
+              
+                <div class="site-state-item site-state-posts">
+                
+                  <a href="/archives/">
+                
+                    <span class="site-state-item-count">74</span>
+                    <span class="site-state-item-name">posts</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-categories">
+                  
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">17</span>
+                    <span class="site-state-item-name">categories</span>
+                  
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-tags">
+                  
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">127</span>
+                    <span class="site-state-item-name">tags</span>
+                  
+                </div>
+              
+            </nav>
+          
+
+          
+
+          
+
+          
+          
+
+          
+          
+
+          
+            
+          
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#ConvertToUTF8"><span class="nav-number">1.</span> <span class="nav-text">ConvertToUTF8</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#SideBarEnhancements"><span class="nav-number">2.</span> <span class="nav-text">SideBarEnhancements</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Alignment"><span class="nav-number">3.</span> <span class="nav-text">Alignment</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Function-Name-Display"><span class="nav-number">4.</span> <span class="nav-text">Function Name Display</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#AdvancedNewFile-链接"><span class="nav-number">5.</span> <span class="nav-text">AdvancedNewFile 链接</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#ctags-链接"><span class="nav-number">6.</span> <span class="nav-text">ctags 链接</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Codeigniter-Utilities"><span class="nav-number">7.</span> <span class="nav-text">Codeigniter Utilities</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#DocBlockr"><span class="nav-number">8.</span> <span class="nav-text">DocBlockr</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Bracket​Highlighter-链接"><span class="nav-number">9.</span> <span class="nav-text">Bracket​Highlighter 链接</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#All-Autocomplete-链接"><span class="nav-number">10.</span> <span class="nav-text">All Autocomplete 链接</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#sublimelinter"><span class="nav-number">11.</span> <span class="nav-text">sublimelinter</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2018</span>
+  <span class="with-love" id="animate">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">楽猪先生</span>
+
+  
+
+  
+</div>
+
+
+
+
+  <div class="powered-by">Powered by <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> v3.7.1</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">Theme – <a class="theme-link" target="_blank" href="https://theme-next.org">NexT.Gemini</a> v6.4.0</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+	
+    
+
+    
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=6.4.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=6.4.0"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=6.4.0"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=6.4.0"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=6.4.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=6.4.0"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=6.4.0"></script>
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

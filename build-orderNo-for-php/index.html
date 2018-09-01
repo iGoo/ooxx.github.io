@@ -1,0 +1,1060 @@
+<!DOCTYPE html>
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+<html class="theme-next gemini use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=6.4.0" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=6.4.0">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=6.4.0">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=6.4.0">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=6.4.0" color="#222">
+
+
+
+
+
+
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Gemini',
+    version: '6.4.0',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: false,
+    fastclick: false,
+    lazyload: false,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+  
+
+
+
+
+  <meta name="description" content="项目使用到了订单号生成的需求，看了一遍基本上是时间戳加随机数的思路。于是找了一些PHP生成订单流水号的具体代码，作为记录。  (一) 从ECSHOP中扒了一段订单号生成代码1234567function build_order_no()&amp;#123;    /* 选择一个随机的方案 */    mt_srand((double) microtime() * 1000000);    /* 日期前缀">
+<meta name="keywords" content="PHP,订单号">
+<meta property="og:type" content="article">
+<meta property="og:title" content="PHP生成订单号方法汇总">
+<meta property="og:url" content="//keer.me/build-orderNo-for-php/index.html">
+<meta property="og:site_name" content="楽猪先生">
+<meta property="og:description" content="项目使用到了订单号生成的需求，看了一遍基本上是时间戳加随机数的思路。于是找了一些PHP生成订单流水号的具体代码，作为记录。  (一) 从ECSHOP中扒了一段订单号生成代码1234567function build_order_no()&amp;#123;    /* 选择一个随机的方案 */    mt_srand((double) microtime() * 1000000);    /* 日期前缀">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2018-09-01T13:56:54.253Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="PHP生成订单号方法汇总">
+<meta name="twitter:description" content="项目使用到了订单号生成的需求，看了一遍基本上是时间戳加随机数的思路。于是找了一些PHP生成订单流水号的具体代码，作为记录。  (一) 从ECSHOP中扒了一段订单号生成代码1234567function build_order_no()&amp;#123;    /* 选择一个随机的方案 */    mt_srand((double) microtime() * 1000000);    /* 日期前缀">
+
+
+
+
+
+
+  <link rel="canonical" href="//keer.me/build-orderNo-for-php/"/>
+
+
+
+<script type="text/javascript" id="page.configurations">
+  CONFIG.page = {
+    sidebar: "",
+  };
+</script>
+
+  <title>PHP生成订单号方法汇总 | 楽猪先生</title>
+  
+
+
+
+
+
+
+
+
+
+  <noscript>
+  <style type="text/css">
+    .use-motion .motion-element,
+    .use-motion .brand,
+    .use-motion .menu-item,
+    .sidebar-inner,
+    .use-motion .post-block,
+    .use-motion .pagination,
+    .use-motion .comments,
+    .use-motion .post-header,
+    .use-motion .post-body,
+    .use-motion .collection-title { opacity: initial; }
+
+    .use-motion .logo,
+    .use-motion .site-title,
+    .use-motion .site-subtitle {
+      opacity: initial;
+      top: initial;
+    }
+
+    .use-motion {
+      .logo-line-before i { left: initial; }
+      .logo-line-after i { right: initial; }
+    }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">楽猪先生</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+    
+      
+        <p class="site-subtitle">向往文艺的小清新</p>
+      
+    
+  </div>
+
+  <div class="site-nav-toggle">
+    <button aria-label="Toggle navigation bar">
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  
+    <ul id="menu" class="menu">
+      
+        
+        
+        
+          
+          <li class="menu-item menu-item-home">
+    <a href="/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-home"></i> <br />Home</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-archives">
+    <a href="/archives/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />Archives</a>
+  </li>
+
+      
+      
+    </ul>
+  
+
+  
+
+  
+</nav>
+
+
+
+  
+
+
+
+</div>
+    </header>
+
+    
+
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+            
+
+          
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="//keer.me/build-orderNo-for-php/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="楽猪先生">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="楽猪先生">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">PHP生成订单号方法汇总
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+
+              
+                
+              
+
+              <time title="Created: 2016-06-15 17:23:33" itemprop="dateCreated datePublished" datetime="2016-06-15T17:23:33+08:00">2016-06-15</time>
+            
+
+            
+              
+
+              
+                
+                <span class="post-meta-divider">|</span>
+                
+
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">Edited on</span>
+                
+                <time title="Modified: 2018-09-01 21:56:54" itemprop="dateModified" datetime="2018-09-01T21:56:54+08:00">2018-09-01</time>
+              
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <blockquote>
+<p>项目使用到了订单号生成的需求，看了一遍基本上是时间戳加随机数的思路。<br>于是找了一些<code>PHP</code>生成订单流水号的具体代码，作为记录。</p>
+</blockquote>
+<h3 id="一-从ECSHOP中扒了一段订单号生成代码"><a href="#一-从ECSHOP中扒了一段订单号生成代码" class="headerlink" title="(一) 从ECSHOP中扒了一段订单号生成代码"></a>(一) 从<code>ECSHOP</code>中扒了一段订单号生成代码</h3><figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">build_order_no</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="comment">/* 选择一个随机的方案 */</span></span><br><span class="line">    mt_srand((double) microtime() * <span class="number">1000000</span>);</span><br><span class="line">    <span class="comment">/* 日期前缀+一个1-999999的六位随机数不满6未前位补0 */</span></span><br><span class="line">    <span class="keyword">return</span> date(<span class="string">'ymd'</span>) . str_pad(mt_rand(<span class="number">1</span>, <span class="number">999999</span>), <span class="number">6</span>, <span class="string">'0'</span>, STR_PAD_LEFT);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>本机(cpu:i5 mem:1G)测试生成10万订单号、重复代码在1万左右，对于目前系统业务来说绝对够用了。</p>
+<blockquote>
+<p>如果不放心可以在生成订单号后查询下数据库是否有对应的order_no如果有重新生成</p>
+</blockquote>
+<a id="more"></a>
+<h3 id="二-无碰撞方法"><a href="#二-无碰撞方法" class="headerlink" title="(二) 无碰撞方法"></a>(二) 无碰撞方法</h3><figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">build_order_no</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    $year_code = <span class="keyword">array</span>(<span class="string">'A'</span>,<span class="string">'B'</span>,<span class="string">'C'</span>,<span class="string">'D'</span>,<span class="string">'E'</span>,<span class="string">'F'</span>,<span class="string">'G'</span>,<span class="string">'H'</span>,<span class="string">'I'</span>,<span class="string">'J'</span>);</span><br><span class="line">    $order_sn = $year_code[intval(date(<span class="string">'Y'</span>))<span class="number">-2010</span>].</span><br><span class="line">    strtoupper(dechex(date(<span class="string">'m'</span>))).date(<span class="string">'d'</span>).</span><br><span class="line">    substr(time(),<span class="number">-5</span>).substr(microtime(),<span class="number">2</span>,<span class="number">5</span>).sprintf(<span class="string">'%02d'</span>,rand(<span class="number">0</span>,<span class="number">99</span>));</span><br><span class="line">    <span class="keyword">return</span> $order_sn;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>说无碰撞有点夸张、但是碰撞概率极低，依然是本机测试10万号全部没有碰撞。如果不想使用字符开头的符号可以注释掉1、2行只用后面的部分<br>从生成的结果来看这段代码生成的订单号是自增的，所以一般情况下不会出现重复，虽然是自增，但是不会像MySQL主键自增那样有规律的自增，所以一般中小型网站还是可以使用的。</p>
+<h3 id="三-一个碰撞率有点高的生成方法"><a href="#三-一个碰撞率有点高的生成方法" class="headerlink" title="(三) 一个碰撞率有点高的生成方法"></a>(三) 一个碰撞率有点高的生成方法</h3><figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">build_order_no</span><span class="params">()</span></span>&#123;</span><br><span class="line">    <span class="keyword">return</span> date(<span class="string">'Ymd'</span>).substr(implode(<span class="keyword">NULL</span>, array_map(<span class="string">'ord'</span>, str_split(substr(uniqid(), <span class="number">7</span>, <span class="number">13</span>), <span class="number">1</span>))), <span class="number">0</span>, <span class="number">8</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>本机(同上)测试生成10万订单重复的大概有65000左右，所以基本上不推荐使用</p>
+<hr>
+<h3 id="附上一个GUID生成方法"><a href="#附上一个GUID生成方法" class="headerlink" title="附上一个GUID生成方法"></a>附上一个GUID生成方法</h3><figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">guid</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (function_exists(<span class="string">'com_create_guid'</span>)) &#123;</span><br><span class="line">        <span class="keyword">return</span> com_create_guid();</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">        mt_srand((double)microtime()*<span class="number">10000</span>);</span><br><span class="line">        $charid = strtoupper(md5(uniqid(rand(), <span class="keyword">true</span>)));</span><br><span class="line">        $hyphen = chr(<span class="number">45</span>);</span><br><span class="line">        $uuid   = chr(<span class="number">123</span>)</span><br><span class="line">            .substr($charid, <span class="number">0</span>, <span class="number">8</span>).$hyphen</span><br><span class="line">            .substr($charid, <span class="number">8</span>, <span class="number">4</span>).$hyphen</span><br><span class="line">            .substr($charid,<span class="number">12</span>, <span class="number">4</span>).$hyphen</span><br><span class="line">            .substr($charid,<span class="number">16</span>, <span class="number">4</span>).$hyphen</span><br><span class="line">            .substr($charid,<span class="number">20</span>,<span class="number">12</span>)</span><br><span class="line">            .chr(<span class="number">125</span>);</span><br><span class="line">        <span class="keyword">return</span> $uuid;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/PHP/" rel="tag"># PHP</a>
+          
+            <a href="/tags/订单号/" rel="tag"># 订单号</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/uuid-extension-for-php/" rel="next" title="PHP UUID扩展安装">
+                <i class="fa fa-chevron-left"></i> PHP UUID扩展安装
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/contruct-function-for-php/" rel="prev" title="PHP构造函数">
+                PHP构造函数 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+  </div>
+
+
+          </div>
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            Overview
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">楽猪先生</p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          
+            <nav class="site-state motion-element">
+              
+                <div class="site-state-item site-state-posts">
+                
+                  <a href="/archives/">
+                
+                    <span class="site-state-item-count">74</span>
+                    <span class="site-state-item-name">posts</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-categories">
+                  
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">17</span>
+                    <span class="site-state-item-name">categories</span>
+                  
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-tags">
+                  
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">127</span>
+                    <span class="site-state-item-name">tags</span>
+                  
+                </div>
+              
+            </nav>
+          
+
+          
+
+          
+
+          
+          
+
+          
+          
+
+          
+            
+          
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#一-从ECSHOP中扒了一段订单号生成代码"><span class="nav-number">1.</span> <span class="nav-text">(一) 从ECSHOP中扒了一段订单号生成代码</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#二-无碰撞方法"><span class="nav-number">2.</span> <span class="nav-text">(二) 无碰撞方法</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#三-一个碰撞率有点高的生成方法"><span class="nav-number">3.</span> <span class="nav-text">(三) 一个碰撞率有点高的生成方法</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#附上一个GUID生成方法"><span class="nav-number">4.</span> <span class="nav-text">附上一个GUID生成方法</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2018</span>
+  <span class="with-love" id="animate">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">楽猪先生</span>
+
+  
+
+  
+</div>
+
+
+
+
+  <div class="powered-by">Powered by <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> v3.7.1</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">Theme – <a class="theme-link" target="_blank" href="https://theme-next.org">NexT.Gemini</a> v6.4.0</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+	
+    
+
+    
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=6.4.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=6.4.0"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=6.4.0"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=6.4.0"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=6.4.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=6.4.0"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=6.4.0"></script>
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

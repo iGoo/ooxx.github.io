@@ -1,0 +1,1091 @@
+<!DOCTYPE html>
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+<html class="theme-next gemini use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=6.4.0" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=6.4.0">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=6.4.0">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=6.4.0">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=6.4.0" color="#222">
+
+
+
+
+
+
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Gemini',
+    version: '6.4.0',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: false,
+    fastclick: false,
+    lazyload: false,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+  
+
+
+
+
+  <meta name="description" content="Nginx是俄国人最早开发的Webserver，现在已经风靡全球，相信大家并不陌生。PHP也通过二十多年的发展来到了7系列版本，更加关注性能。这对搭档在最近这些年，叱咤风云，基本上LNMP成了当下的标配。可是，你用了这么多年的Nginx+PHP的搭配，你真正知道他们之间是怎么交互怎么通信的么？作为一道常常用来面试的考题，从过往经验看，情况并不乐观。更多的同学是知道PHP-FPM、知道FastCGI">
+<meta name="keywords" content="nginx">
+<meta property="og:type" content="article">
+<meta property="og:title" content="你真的懂Nginx与PHP的交互？">
+<meta property="og:url" content="//keer.me/php-nginx-interactive/index.html">
+<meta property="og:site_name" content="楽猪先生">
+<meta property="og:description" content="Nginx是俄国人最早开发的Webserver，现在已经风靡全球，相信大家并不陌生。PHP也通过二十多年的发展来到了7系列版本，更加关注性能。这对搭档在最近这些年，叱咤风云，基本上LNMP成了当下的标配。可是，你用了这么多年的Nginx+PHP的搭配，你真正知道他们之间是怎么交互怎么通信的么？作为一道常常用来面试的考题，从过往经验看，情况并不乐观。更多的同学是知道PHP-FPM、知道FastCGI">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="https://img.mukewang.com/596e558e0001c89b04520054.png">
+<meta property="og:image" content="https://img.mukewang.com/596e55bd00019daf18940871.png">
+<meta property="og:image" content="https://img.mukewang.com/596e56010001222706100396.png">
+<meta property="og:image" content="https://img.mukewang.com/596e56510001032007890706.png">
+<meta property="og:image" content="https://img.mukewang.com/596e56910001ae5d05590315.png">
+<meta property="og:image" content="https://img.mukewang.com/596e56eb0001f80908140678.png">
+<meta property="og:image" content="https://img.mukewang.com/596e57670001f53a13250474.png">
+<meta property="og:updated_time" content="2018-09-01T13:56:54.267Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="你真的懂Nginx与PHP的交互？">
+<meta name="twitter:description" content="Nginx是俄国人最早开发的Webserver，现在已经风靡全球，相信大家并不陌生。PHP也通过二十多年的发展来到了7系列版本，更加关注性能。这对搭档在最近这些年，叱咤风云，基本上LNMP成了当下的标配。可是，你用了这么多年的Nginx+PHP的搭配，你真正知道他们之间是怎么交互怎么通信的么？作为一道常常用来面试的考题，从过往经验看，情况并不乐观。更多的同学是知道PHP-FPM、知道FastCGI">
+<meta name="twitter:image" content="https://img.mukewang.com/596e558e0001c89b04520054.png">
+
+
+
+
+
+
+  <link rel="canonical" href="//keer.me/php-nginx-interactive/"/>
+
+
+
+<script type="text/javascript" id="page.configurations">
+  CONFIG.page = {
+    sidebar: "",
+  };
+</script>
+
+  <title>你真的懂Nginx与PHP的交互？ | 楽猪先生</title>
+  
+
+
+
+
+
+
+
+
+
+  <noscript>
+  <style type="text/css">
+    .use-motion .motion-element,
+    .use-motion .brand,
+    .use-motion .menu-item,
+    .sidebar-inner,
+    .use-motion .post-block,
+    .use-motion .pagination,
+    .use-motion .comments,
+    .use-motion .post-header,
+    .use-motion .post-body,
+    .use-motion .collection-title { opacity: initial; }
+
+    .use-motion .logo,
+    .use-motion .site-title,
+    .use-motion .site-subtitle {
+      opacity: initial;
+      top: initial;
+    }
+
+    .use-motion {
+      .logo-line-before i { left: initial; }
+      .logo-line-after i { right: initial; }
+    }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">楽猪先生</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+    
+      
+        <p class="site-subtitle">向往文艺的小清新</p>
+      
+    
+  </div>
+
+  <div class="site-nav-toggle">
+    <button aria-label="Toggle navigation bar">
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  
+    <ul id="menu" class="menu">
+      
+        
+        
+        
+          
+          <li class="menu-item menu-item-home">
+    <a href="/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-home"></i> <br />Home</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-archives">
+    <a href="/archives/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />Archives</a>
+  </li>
+
+      
+      
+    </ul>
+  
+
+  
+
+  
+</nav>
+
+
+
+  
+
+
+
+</div>
+    </header>
+
+    
+
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+            
+
+          
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="//keer.me/php-nginx-interactive/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="楽猪先生">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="楽猪先生">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">你真的懂Nginx与PHP的交互？
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+
+              
+                
+              
+
+              <time title="Created: 2018-03-08 22:14:07" itemprop="dateCreated datePublished" datetime="2018-03-08T22:14:07+08:00">2018-03-08</time>
+            
+
+            
+              
+
+              
+                
+                <span class="post-meta-divider">|</span>
+                
+
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">Edited on</span>
+                
+                <time title="Modified: 2018-09-01 21:56:54" itemprop="dateModified" datetime="2018-09-01T21:56:54+08:00">2018-09-01</time>
+              
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/Nginx/" itemprop="url" rel="index"><span itemprop="name">Nginx</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>Nginx是俄国人最早开发的Webserver，现在已经风靡全球，相信大家并不陌生。PHP也通过二十多年的发展来到了7系列版本，更加关注性能。这对搭档在最近这些年，叱咤风云，基本上LNMP成了当下的标配。可是，你用了这么多年的Nginx+PHP的搭配，你真正知道他们之间是怎么交互怎么通信的么？作为一道常常用来面试的考题，从过往经验看，情况并不乐观。更多的同学是知道PHP-FPM、知道FastCGI，但不晓得Nginx、PHP这对老搭档具体的交互细节。那么，今天我们就来一起学习一下，做一回认真的PHP工程师。</p>
+<a id="more"></a>
+<h2 id="前菜"><a href="#前菜" class="headerlink" title="前菜"></a>前菜</h2><p>为了讲解的有理有据，我们先来准备一个纯净精简的Nginx+PHP环境，这里我们使用Docker拉取Centos最新版本环境，来快速通过编译安装方式搭建一个Nginx+PHP环境。<br><img src="https://img.mukewang.com/596e558e0001c89b04520054.png" alt=""></p>
+<p>有了Linux环境，我们来源码编译安装Nginx、PHP，这个过程网络里有很多的教程，我们就不细说了。当然你也可以安装lnmp一键安装包来快速搭建。通过安装nginx、php，我们的Linux环境里就有了今天的这两位主角了。我们稍加配置，让Nginx可以接收请求并转发给PHP-FPM，我们目标是输出一个phpinfo()的信息。<br><img src="https://img.mukewang.com/596e55bd00019daf18940871.png" alt="phpinfo"></p>
+<p>我们通过对Nginx新增Server配置实现了nginx与PHP的一次通信，配置文件非常简单，如下图<br><img src="https://img.mukewang.com/596e56010001222706100396.png" alt="3"></p>
+<p>有了上面的一个sample示例，我们开始深入Nginx与FastCGI协议。</p>
+<h2 id="主食"><a href="#主食" class="headerlink" title="主食"></a>主食</h2><p>从上图的Nginx配置中可以注意到 fastcgi<strong> 开头的一些配置，以及引入的 fastcgi.conf 文件。其实在fastcgi.conf中，也是一堆fastcgi</strong>的配置项，只是这些配置项相对不常变，通常单独文件保管可以在多处引用。<br><img src="https://img.mukewang.com/596e56510001032007890706.png" alt="4"></p>
+<p>可以看到在fastcgi.conf中，有很多的fastcgi_param配置，结合nginx server配置中的fastcgi_pass、fastcgi_index，通常我们的同学已经能够想到Nginx与PHP之间打交道就是用的FastCGI，但再深问FastCGI是什么？它起到衔接Nginx、PHP的什么作用？等等深入的问题的时候，很多同学就卡壳了。那么，我们就来一探究竟。</p>
+<p>CGI是通用网关协议，FastCGI则是一种常住进程的CGI模式程序。我们所熟知的PHP-FPM的全称是PHP FastCGI Process Manager，即PHP-FPM会通过用户配置来管理一批FastCGI进程，例如在PHP-FPM管理下的某个FastCGI进程挂了，PHP-FPM会根据用户配置来看是否要重启补全，PHP-FPM更像是管理器，而真正衔接Nginx与PHP的则是FastCGI进程。</p>
+<p><img src="https://img.mukewang.com/596e56910001ae5d05590315.png" alt="5"></p>
+<p>如上图所示，FastCGI的下游，是CGI-APP，在我们的LNMP架构里，这个CGI-APP就是PHP程序。而FastCGI的上游是Nginx，他们之间有一个通信载体，即图中的socket。在我们上文图3的配置文件中，fastcgi_pass所配置的内容，便是告诉Nginx你接收到用户请求以后，你该往哪里转发，在我们图3中是转发到本机的一个socket文件，这里fastcgi_pass也常配置为一个http接口地址（这个可以在php-fpm.conf中配置）。而上图5中的Pre-fork，则对应着我们PHP-FPM的启动，也就是在我们启动PHP-FPM时便会根据用户配置启动诸多FastCGI触发器（FastCGI Wrapper）。</p>
+<p>对FastCGI在Nginx+PHP的模式中的定位有了一定了解后，我们再来了解下Nginx中为何能写很多fastcgi_*的配置项。这是因为Nginx的一个默认内置module实现了FastCGI的Client。关于Module <strong>ngx_http_fastcgi_module</strong>的详细文档可以查看这里: <a href="http://nginx.org/en/docs/http/ngx_http_fastcgi_module.html" target="_blank" rel="noopener">http://nginx.org/en/docs/http/ngx_http_fastcgi_module.html</a> 。我们关心一下我们图4中的这些fastcgi_param都是些什么吧，详细描述见下图。</p>
+<p><img src="https://img.mukewang.com/596e56eb0001f80908140678.png" alt="6"></p>
+<p>从图6中可以看到，fastcgi_param所声明的内容，将会被传递给“FastCGI server”，那这里指的就是fastcgi_pass所指向的server，也就是我们Nginx+PHP模式下的PHP-FPM所管理的FastCGI进程，或者说是那个socket文件载体。这时，有的同学会问：“为什么PHP-FPM管理的那些FastCGI进程要关心这些参数呢？”，好问题，我们一起想想我们做PHP应用开发时候有没有用到 $_SERVER 这个全局变量，它里面包含了很多服务器的信息，比如包含了用户的IP地址。同学们不想想我们的PHP身处socket文件之后，为什么能得到远端用户的IP呢？聪明的同学应该注意到图4中的一个fastcgi_param配置 REMOTE_ADDR ，这不正是我们在PHP中用 $_SERVER[‘REMOTE_ADDR’] 取到的用户IP么。的确，Nginx这个模块里fastcgi_param参数，就是考虑后端程序有时需要获取Webserver外部的变量以及服务器情况，那么ngx_http_fastcgi_module就帮我们做了这件事。真的是太感谢它啦！</p>
+<p>那么我们已经说清了FastCGI是个什么东东，并且它在Nginx+PHP中的定位。我们回到前面提出的问题，“它起到衔接Nginx、PHP的什么作用？”。</p>
+<p>对PHP有一定了解的同学，应该会知道PHP提供SAPI面向Webserver来提供扩展编程。但是这样的方式意味着你要是自主研发一套Webserver，你就需要学习SAPI，并且在你的Webserver程序中实现它。这意味着你的Webserver与PHP产生了耦合。在互联网的大趋势下，一般大家都不喜欢看到耦合。譬如Nginx在最初研发时候也不是为了和PHP组成黄金搭档而研发的，相信早些年的Nginx后端程序可能是其他语言开发。<strong>那么解决耦合的办法，比较好的方式是有一套通用的规范，上下游都兼容它</strong>。那么CGI协议便成了Nginx、PHP都愿意接受的一种方式，而FastCGI常住进程的模式又让上下游程序有了高并发的可能。那么，FastCGI的作用是Nginx、PHP的接口载体，就像插座与插销，让流行的WebServer与“世界上最好的语言”有了合作的可能。</p>
+<p><strong>有了这些基础背景知识与他们的缘由，我们就可以举一反三的做更多有意思的事情</strong>。譬如我在前年曾实现了Java程序中按照FastCGI Client的方式（替代Nginx）与PHP-FPM通信，实现Java项目+PHP的一种组合搭配，解决的问题是Java程序一般来说在代码调整后需要编译过程，而PHP可以随时调整代码随时生效，那么让Java作为项目外壳，一些易变的代码由PHP实现，在需要的时候Java程序通过FastCGI与PHP打交道就好。这套想法也是基于对Nginx+PHP交互模式的理解之上想到的。</p>
+<p>网络中也有一些借助FastCGI的尝试与实践，譬如《<a href="http://chriswu.me/blog/writing-hello-world-in-fcgi-with-c-plus-plus/" target="_blank" rel="noopener">Writing Hello World in FCGI with C++</a>》这篇文章，用C++实现一个FastCGI的程序，外部依然是某款Webserver来处理HTTP请求，但具体功能则有C++来实现，他们的中间交互同样适用的FastCGI。同学们有兴趣了也可以做些Geek尝试。</p>
+<p><img src="https://img.mukewang.com/596e57670001f53a13250474.png" alt="7"></p>
+<h2 id="甜品"><a href="#甜品" class="headerlink" title="甜品"></a>甜品</h2><p>通过本文的讲解，我们希望让大家看到，<strong>Nginx+PHP的工程模式下，两位主角分工明确，Nginx负责承载HTTP请求的响应与返回，以及超时控制记录日志等HTTP相关的功能，而PHP则负责处理具体请求要做的业务逻辑，它们俩的这种合作模式也是常见的分层架构设计中的一种，在它们各有专注面的同时，FastCGI又很好的将两块衔接，保障上下游通信交互</strong>，这种通过某种协议或规范来衔接好上下游的模式，在我们日常的PHP应用开发中也有这样的思想落地，譬如我们所开发的<strong>高性能API</strong>，具体的Client到底是PC、APP还是某个其他程序，我们不关心，而这些PC、APP、第三方程序也不关心我们的PHP代码实现，他们按照API的规范来请求做处理即可。同学们是不是发现<strong>技术思想是可以在各个环节融会贯通的</strong>，是不是很兴奋？很刺激？哈，同学们开心就好，祝大家在工作学习过程中，能挖掘到更多的好知识，提升自己的同时造福身边小伙伴！</p>
+<hr>
+<p>作者： Pangee<br>链接：<a href="https://www.imooc.com/article/19278" target="_blank" rel="noopener">https://www.imooc.com/article/19278</a><br>来源：慕课网<br>本文原创发布于慕课网 ，转载请注明出处，谢谢合作</p>
+
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/nginx/" rel="tag"># nginx</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/linux-supervisor-intro/" rel="next" title="使用supervisor管理后台进程">
+                <i class="fa fa-chevron-left"></i> 使用supervisor管理后台进程
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/Synchronous-Asynchronous-Blocking-Non-blocking/" rel="prev" title="同步、异步、阻塞、非阻塞区别">
+                同步、异步、阻塞、非阻塞区别 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+  </div>
+
+
+          </div>
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            Overview
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">楽猪先生</p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          
+            <nav class="site-state motion-element">
+              
+                <div class="site-state-item site-state-posts">
+                
+                  <a href="/archives/">
+                
+                    <span class="site-state-item-count">74</span>
+                    <span class="site-state-item-name">posts</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-categories">
+                  
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">17</span>
+                    <span class="site-state-item-name">categories</span>
+                  
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-tags">
+                  
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">127</span>
+                    <span class="site-state-item-name">tags</span>
+                  
+                </div>
+              
+            </nav>
+          
+
+          
+
+          
+
+          
+          
+
+          
+          
+
+          
+            
+          
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#前菜"><span class="nav-number">1.</span> <span class="nav-text">前菜</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#主食"><span class="nav-number">2.</span> <span class="nav-text">主食</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#甜品"><span class="nav-number">3.</span> <span class="nav-text">甜品</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2018</span>
+  <span class="with-love" id="animate">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">楽猪先生</span>
+
+  
+
+  
+</div>
+
+
+
+
+  <div class="powered-by">Powered by <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> v3.7.1</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">Theme – <a class="theme-link" target="_blank" href="https://theme-next.org">NexT.Gemini</a> v6.4.0</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+	
+    
+
+    
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=6.4.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=6.4.0"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=6.4.0"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=6.4.0"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=6.4.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=6.4.0"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=6.4.0"></script>
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

@@ -1,0 +1,1126 @@
+<!DOCTYPE html>
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+<html class="theme-next gemini use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=6.4.0" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=6.4.0">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=6.4.0">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=6.4.0">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=6.4.0" color="#222">
+
+
+
+
+
+
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Gemini',
+    version: '6.4.0',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: false,
+    fastclick: false,
+    lazyload: false,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+  
+
+
+
+
+  <meta name="description" content="说明在开发中常常会用到生成一些随机密码、推荐码以及一些随机数等等。那么我在开发的过程中用过很多种方法。有基于时间戳、随机函数以及UUID等等一些方法。这篇是对于目前已经用过或者学习到的一些小例子的整理，方便以后用到的时候可以快速的查阅。">
+<meta name="keywords" content="uuid,guid,random,随机数">
+<meta property="og:type" content="article">
+<meta property="og:title" content="PHP随机数生成畅想">
+<meta property="og:url" content="//keer.me/php-random-generator/index.html">
+<meta property="og:site_name" content="楽猪先生">
+<meta property="og:description" content="说明在开发中常常会用到生成一些随机密码、推荐码以及一些随机数等等。那么我在开发的过程中用过很多种方法。有基于时间戳、随机函数以及UUID等等一些方法。这篇是对于目前已经用过或者学习到的一些小例子的整理，方便以后用到的时候可以快速的查阅。">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2018-09-01T13:56:54.268Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="PHP随机数生成畅想">
+<meta name="twitter:description" content="说明在开发中常常会用到生成一些随机密码、推荐码以及一些随机数等等。那么我在开发的过程中用过很多种方法。有基于时间戳、随机函数以及UUID等等一些方法。这篇是对于目前已经用过或者学习到的一些小例子的整理，方便以后用到的时候可以快速的查阅。">
+
+
+
+
+
+
+  <link rel="canonical" href="//keer.me/php-random-generator/"/>
+
+
+
+<script type="text/javascript" id="page.configurations">
+  CONFIG.page = {
+    sidebar: "",
+  };
+</script>
+
+  <title>PHP随机数生成畅想 | 楽猪先生</title>
+  
+
+
+
+
+
+
+
+
+
+  <noscript>
+  <style type="text/css">
+    .use-motion .motion-element,
+    .use-motion .brand,
+    .use-motion .menu-item,
+    .sidebar-inner,
+    .use-motion .post-block,
+    .use-motion .pagination,
+    .use-motion .comments,
+    .use-motion .post-header,
+    .use-motion .post-body,
+    .use-motion .collection-title { opacity: initial; }
+
+    .use-motion .logo,
+    .use-motion .site-title,
+    .use-motion .site-subtitle {
+      opacity: initial;
+      top: initial;
+    }
+
+    .use-motion {
+      .logo-line-before i { left: initial; }
+      .logo-line-after i { right: initial; }
+    }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">楽猪先生</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+    
+      
+        <p class="site-subtitle">向往文艺的小清新</p>
+      
+    
+  </div>
+
+  <div class="site-nav-toggle">
+    <button aria-label="Toggle navigation bar">
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  
+    <ul id="menu" class="menu">
+      
+        
+        
+        
+          
+          <li class="menu-item menu-item-home">
+    <a href="/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-home"></i> <br />Home</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-archives">
+    <a href="/archives/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />Archives</a>
+  </li>
+
+      
+      
+    </ul>
+  
+
+  
+
+  
+</nav>
+
+
+
+  
+
+
+
+</div>
+    </header>
+
+    
+
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+            
+
+          
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="//keer.me/php-random-generator/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="楽猪先生">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="楽猪先生">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">PHP随机数生成畅想
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+
+              
+                
+              
+
+              <time title="Created: 2016-08-19 22:33:14" itemprop="dateCreated datePublished" datetime="2016-08-19T22:33:14+08:00">2016-08-19</time>
+            
+
+            
+              
+
+              
+                
+                <span class="post-meta-divider">|</span>
+                
+
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">Edited on</span>
+                
+                <time title="Modified: 2018-09-01 21:56:54" itemprop="dateModified" datetime="2018-09-01T21:56:54+08:00">2018-09-01</time>
+              
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/PHP/" itemprop="url" rel="index"><span itemprop="name">PHP</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h2 id="说明"><a href="#说明" class="headerlink" title="说明"></a>说明</h2><p>在开发中常常会用到生成一些<code>随机密码</code>、<code>推荐码</code>以及一些随机数等等。那么我在开发的过程中用过很多种方法。有基于<strong>时间戳</strong>、<strong>随机函数</strong>以及<strong>UUID</strong>等等一些方法。这篇是对于目前已经用过或者学习到的一些小例子的整理，方便以后用到的时候可以快速的查阅。<br><a id="more"></a></p>
+<h2 id="示例"><a href="#示例" class="headerlink" title="示例"></a>示例</h2><ul>
+<li><p><strong>fread</strong><br>  读取linux系统中的随机设备来生成随机码</p>
+  <figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">echo</span> bin2hex(fread(fopen(<span class="string">'/dev/urandom'</span>, <span class="string">'r'</span>), <span class="number">16</span>));</span><br><span class="line"><span class="comment">//output: 1e363b0cf43e8059b13c8f55db2b8653</span></span><br></pre></td></tr></table></figure>
+<p>  在<a href="https://github.com/paragonie/random_compat/blob/master/ERRATA.md" target="_blank" rel="noopener">paragonie/random_compat</a>这个随机库中，fread的优先级要高于下面2个函数的优先级。</p>
+</li>
+<li><p><strong>mcrypt_create_iv</strong><br>  此函数依赖于Mcrypt扩展。在PHP5.6.0以前如果不指定第二个参数，那么默认使用linux系统中的<code>/dev/random</code>作为随机数产生器，之后的已经默认使用了<code>/dev/urandom</code></p>
+  <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">echo bin2hex(mcrypt_create_iv(16));</span><br><span class="line">//output: 3f2d9e1405137674ab5b710860f0377f</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p><a href="http://www.laruence.com/2012/09/24/2810.html" target="_blank" rel="noopener">http://www.laruence.com/2012/09/24/2810.html</a><br><a href="http://php.net/manual/zh/function.mcrypt-create-iv.php" target="_blank" rel="noopener">http://php.net/manual/zh/function.mcrypt-create-iv.php</a><br><a href="http://blog.wpjam.com/m/wpjam-mcrypt" target="_blank" rel="noopener">http://blog.wpjam.com/m/wpjam-mcrypt</a> 待研究</p>
+</blockquote>
+</li>
+</ul>
+<hr>
+<ul>
+<li><strong>openssl_random_pseudo_bytes</strong><br>  此函数返回指定长度的字节流，然后可以使用<code>bin2hex</code>转换为16进制的字符串.此函数需要安装对应的php-openssl扩展，不过一般的php环境都会安装这个扩展  <figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">echo</span> bin2hex(openssl_random_pseudo_bytes(<span class="number">16</span>));</span><br><span class="line"><span class="comment">//output: 969ed13182e00505dbbcb8550659b4d7</span></span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<hr>
+<ul>
+<li><strong>file_get_contents</strong><br>  对于Linux系统来说这个可以直接读取Linux系统运行时的运行文件来获取一个UUID  <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">echo file_get_contents(&apos;/proc/sys/kernel/random/uuid&apos;);</span><br><span class="line">// 输出: 6c509fc7-328b-4d82-9af8-60c44e7b84b4</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<hr>
+<ul>
+<li><p><strong>字符池随机</strong><br>  也就是把一些字符串加入到一个池中，然后循环的方式从里面随机挑选进行组合生成。</p>
+  <figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">randomkeys</span><span class="params">($length)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    $pattern = <span class="string">'1234567890abcdefghijklmnopqrstuvwxyz</span></span><br><span class="line"><span class="string">                ABCDEFGHIJKLOMNOPQRSTUVWXYZ,./&amp;l</span></span><br><span class="line"><span class="string">                t;&gt;?;#:@~[]&#123;&#125;-_=+)(*&amp;^%$£"!'</span>;    <span class="comment">//字符池</span></span><br><span class="line">    <span class="keyword">for</span>($i=<span class="number">0</span>;$i&lt;$length;$i++)</span><br><span class="line">    &#123;</span><br><span class="line">        $key .= $pattern&#123;mt_rand(<span class="number">0</span>,<span class="number">35</span>)&#125;;    <span class="comment">//生成php随机数</span></span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> $key;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">echo</span> randomkeys(<span class="number">8</span>);</span><br></pre></td></tr></table></figure>
+<p>  另一种方法稍微做了些修改，利用chr()函数已经<a href="http://www.asciitable.com" target="_blank" rel="noopener">ASCII表</a>，省去创建字符池的步骤。</p>
+  <figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">randomkeys</span><span class="params">($length)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    $output=<span class="string">''</span>;</span><br><span class="line">    <span class="keyword">for</span> ($a = <span class="number">0</span>; $a &lt; $length; $a++) &#123;</span><br><span class="line">        $output .= chr(mt_rand(<span class="number">33</span>, <span class="number">126</span>));    <span class="comment">//可以参看ASCII表设置字符的范围</span></span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> $output;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">echo</span> randomkeys(<span class="number">8</span>);</span><br></pre></td></tr></table></figure>
+<p>  上面2个函数功能一样，只是第二个更加的简洁 </p>
+</li>
+</ul>
+<hr>
+<ul>
+<li><strong>邀请码</strong><br>  在之前的开发中生成一个邀请码的需求，要求数字加字母，参考了一些别人的推荐码都是<code>数字</code> <code>大小写字母</code> 长度一般在8-10位左右,比如<strong>R5a7Qed3</strong>  <figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">passwordChar = <span class="string">'0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ'</span>;</span><br><span class="line">$passwordLength = <span class="number">8</span>;</span><br><span class="line">$max = strlen($passwordChar) - <span class="number">1</span>;</span><br><span class="line">$password = <span class="string">''</span>;</span><br><span class="line"><span class="keyword">for</span> ($i = <span class="number">0</span>; $i &lt; $passwordLength; ++$i) &#123;</span><br><span class="line">    $password .= $passwordChar[mt_rand(<span class="number">0</span>, $max)];</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">echo</span> $password;</span><br><span class="line"><span class="comment">//possible output: 7dgG8EHu</span></span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<h2 id="文章参考"><a href="#文章参考" class="headerlink" title="文章参考"></a>文章参考</h2><blockquote>
+<p><a href="https://segmentfault.com/a/1190000004182573" target="_blank" rel="noopener">https://segmentfault.com/a/1190000004182573</a></p>
+</blockquote>
+<h2 id="类库参考"><a href="#类库参考" class="headerlink" title="类库参考"></a>类库参考</h2><blockquote>
+<p><a href="https://github.com/paragonie/random_compat" target="_blank" rel="noopener">https://github.com/paragonie/random_compat</a><br>这个库提供了只有在PHP7上才有的随机函数<code>random_int</code>和<code>random_bytes</code>，如果你想在PHP5中使用这2个函数那么可以使用这个库</p>
+</blockquote>
+<hr>
+<blockquote>
+<p><a href="https://gist.github.com/dahnielson/508447" target="_blank" rel="noopener">https://gist.github.com/dahnielson/508447</a><br> 一个github上别人写的UUID v3 v4 v5生成类</p>
+</blockquote>
+<hr>
+<blockquote>
+<p><a href="http://stackoverflow.com/questions/2040240/php-function-to-generate-v4-uuid" target="_blank" rel="noopener">http://stackoverflow.com/questions/2040240/php-function-to-generate-v4-uuid</a><br><a href="http://qa.helplib.com/296097" target="_blank" rel="noopener">http://qa.helplib.com/296097</a> 翻译的版本<br>这里面也是一些生成UUID的方法，有些可以借鉴一下</p>
+</blockquote>
+<hr>
+<blockquote>
+<p><a href="https://github.com/ramsey/uuid" target="_blank" rel="noopener">https://github.com/ramsey/uuid</a><br>依然是个生成UUID的库</p>
+</blockquote>
+<hr>
+<blockquote>
+<p><a href="http://hashids.org/" target="_blank" rel="noopener">http://hashids.org/</a><br>新发现的，待研究</p>
+</blockquote>
+
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/uuid/" rel="tag"># uuid</a>
+          
+            <a href="/tags/guid/" rel="tag"># guid</a>
+          
+            <a href="/tags/random/" rel="tag"># random</a>
+          
+            <a href="/tags/随机数/" rel="tag"># 随机数</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/homestead-installing-phpredis/" rel="next" title="Homestead PHP7安装phpredis扩展">
+                <i class="fa fa-chevron-left"></i> Homestead PHP7安装phpredis扩展
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/display-string-way/" rel="prev" title="字符串加载更多显示方式">
+                字符串加载更多显示方式 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+  </div>
+
+
+          </div>
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            Overview
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">楽猪先生</p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          
+            <nav class="site-state motion-element">
+              
+                <div class="site-state-item site-state-posts">
+                
+                  <a href="/archives/">
+                
+                    <span class="site-state-item-count">74</span>
+                    <span class="site-state-item-name">posts</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-categories">
+                  
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">17</span>
+                    <span class="site-state-item-name">categories</span>
+                  
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-tags">
+                  
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">127</span>
+                    <span class="site-state-item-name">tags</span>
+                  
+                </div>
+              
+            </nav>
+          
+
+          
+
+          
+
+          
+          
+
+          
+          
+
+          
+            
+          
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#说明"><span class="nav-number">1.</span> <span class="nav-text">说明</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#示例"><span class="nav-number">2.</span> <span class="nav-text">示例</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#文章参考"><span class="nav-number">3.</span> <span class="nav-text">文章参考</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#类库参考"><span class="nav-number">4.</span> <span class="nav-text">类库参考</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2018</span>
+  <span class="with-love" id="animate">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">楽猪先生</span>
+
+  
+
+  
+</div>
+
+
+
+
+  <div class="powered-by">Powered by <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> v3.7.1</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">Theme – <a class="theme-link" target="_blank" href="https://theme-next.org">NexT.Gemini</a> v6.4.0</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+	
+    
+
+    
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=6.4.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=6.4.0"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=6.4.0"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=6.4.0"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=6.4.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=6.4.0"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=6.4.0"></script>
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

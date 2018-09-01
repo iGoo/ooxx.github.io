@@ -1,0 +1,1105 @@
+<!DOCTYPE html>
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+<html class="theme-next gemini use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=6.4.0" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=6.4.0">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=6.4.0">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=6.4.0">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=6.4.0" color="#222">
+
+
+
+
+
+
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Gemini',
+    version: '6.4.0',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: false,
+    fastclick: false,
+    lazyload: false,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+  
+
+
+
+
+  <meta name="description" content="针对上一篇写的nginx使用nginx_lua模块配置nginx_lua_waf实现web应用防火墙，后来还发现一个很友好的库VeryNginx由春哥开源。">
+<meta name="keywords" content="VeryNginx,waf,Nginx">
+<meta property="og:type" content="article">
+<meta property="og:title" content="WAF之VeryNginx">
+<meta property="og:url" content="//keer.me/second-waf/index.html">
+<meta property="og:site_name" content="楽猪先生">
+<meta property="og:description" content="针对上一篇写的nginx使用nginx_lua模块配置nginx_lua_waf实现web应用防火墙，后来还发现一个很友好的库VeryNginx由春哥开源。">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2018-09-01T13:56:54.269Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="WAF之VeryNginx">
+<meta name="twitter:description" content="针对上一篇写的nginx使用nginx_lua模块配置nginx_lua_waf实现web应用防火墙，后来还发现一个很友好的库VeryNginx由春哥开源。">
+
+
+
+
+
+
+  <link rel="canonical" href="//keer.me/second-waf/"/>
+
+
+
+<script type="text/javascript" id="page.configurations">
+  CONFIG.page = {
+    sidebar: "",
+  };
+</script>
+
+  <title>WAF之VeryNginx | 楽猪先生</title>
+  
+
+
+
+
+
+
+
+
+
+  <noscript>
+  <style type="text/css">
+    .use-motion .motion-element,
+    .use-motion .brand,
+    .use-motion .menu-item,
+    .sidebar-inner,
+    .use-motion .post-block,
+    .use-motion .pagination,
+    .use-motion .comments,
+    .use-motion .post-header,
+    .use-motion .post-body,
+    .use-motion .collection-title { opacity: initial; }
+
+    .use-motion .logo,
+    .use-motion .site-title,
+    .use-motion .site-subtitle {
+      opacity: initial;
+      top: initial;
+    }
+
+    .use-motion {
+      .logo-line-before i { left: initial; }
+      .logo-line-after i { right: initial; }
+    }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">楽猪先生</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+    
+      
+        <p class="site-subtitle">向往文艺的小清新</p>
+      
+    
+  </div>
+
+  <div class="site-nav-toggle">
+    <button aria-label="Toggle navigation bar">
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  
+    <ul id="menu" class="menu">
+      
+        
+        
+        
+          
+          <li class="menu-item menu-item-home">
+    <a href="/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-home"></i> <br />Home</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-archives">
+    <a href="/archives/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />Archives</a>
+  </li>
+
+      
+      
+    </ul>
+  
+
+  
+
+  
+</nav>
+
+
+
+  
+
+
+
+</div>
+    </header>
+
+    
+
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+            
+
+          
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="//keer.me/second-waf/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="楽猪先生">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="楽猪先生">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">WAF之VeryNginx
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+
+              
+                
+              
+
+              <time title="Created: 2016-12-31 20:32:38" itemprop="dateCreated datePublished" datetime="2016-12-31T20:32:38+08:00">2016-12-31</time>
+            
+
+            
+              
+
+              
+                
+                <span class="post-meta-divider">|</span>
+                
+
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">Edited on</span>
+                
+                <time title="Modified: 2018-09-01 21:56:54" itemprop="dateModified" datetime="2018-09-01T21:56:54+08:00">2018-09-01</time>
+              
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/Nginx/" itemprop="url" rel="index"><span itemprop="name">Nginx</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>针对<a href="http://ooxx.com" target="_blank" rel="noopener">上一篇</a>写的nginx使用nginx_lua模块配置nginx_lua_waf实现web应用防火墙，后来还发现一个很友好的库<a href="https://github.com/alexazhou/VeryNginx" target="_blank" rel="noopener">VeryNginx</a>由春哥开源。</p>
+<a id="more"></a>
+<h2 id="什么是VeryNginx"><a href="#什么是VeryNginx" class="headerlink" title="什么是VeryNginx"></a>什么是VeryNginx</h2><blockquote>
+<p>VeryNginx 是一个功能强大而对人类友好的 Nginx 扩展程序。VeryNginx 基于 lua_nginx_module(openrestry) 开发，实现了高级的防火墙、访问统计和其他的一些功能。 集成在 Nginx 中运行，扩展了 Nginx 本身的功能，并提供了友好的 Web 交互界面。</p>
+</blockquote>
+<h2 id="编译LuaJIT"><a href="#编译LuaJIT" class="headerlink" title="编译LuaJIT"></a>编译LuaJIT</h2><p>和上一篇中的一样，同样需要先编译LuaJIT环境，因为<code>VeryNginx</code>依赖lua。</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"><span class="comment">## 下载</span></span></span><br><span class="line">wget http://lepig.qiniudn.com/LuaJIT-2.1.0-beta2.tar.gz</span><br><span class="line"><span class="meta">#</span><span class="bash"><span class="comment">## 解压</span></span></span><br><span class="line">tar -zxvf LuaJIT-2.1.0-beta2.tar.gz</span><br><span class="line"><span class="meta">#</span><span class="bash"><span class="comment">## 进入目录</span></span></span><br><span class="line">cd cd LuaJIT-2.1.0-beta2/</span><br><span class="line"><span class="meta">#</span><span class="bash"><span class="comment">## 开始编译</span></span></span><br><span class="line">make &amp;&amp; make install</span><br><span class="line"><span class="meta">#</span><span class="bash"><span class="comment">## 建立软连接</span></span></span><br><span class="line">ln -s /usr/local/lib/libluajit-5.1.so.2 /lib64/libluajit-5.1.so.2</span><br><span class="line"><span class="meta">#</span><span class="bash"><span class="comment">## 设置环境变量</span></span></span><br><span class="line">export LUAJIT_LIB=/usr/local/lib</span><br><span class="line">export LUAJIT_INC=/usr/local/include/luajit-2.1 #这个根据版本来选，我下的是luajit2.1版本</span><br></pre></td></tr></table></figure>
+<h2 id="添加lua-nginx-module模块"><a href="#添加lua-nginx-module模块" class="headerlink" title="添加lua-nginx-module模块"></a>添加lua-nginx-module模块</h2><p>克隆<code>lua-nginx-module</code>到<code>/usr/local/src</code>中，如果没有git环境你也可以去<a href="https://github.com/openresty/lua-nginx-module/archive/v0.10.7.tar.gz" target="_blank" rel="noopener">下载压缩包</a>，然后在加压过去都是一样的。</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">cd /usr/local/src</span><br><span class="line">git clone https://github.com/openresty/lua-nginx-module.git</span><br></pre></td></tr></table></figure>
+<p><strong>需要说明一下的是，VeryNginx依赖与下面3个模块</strong></p>
+<blockquote>
+<p>http_stub_status_module<br>http_ssl_module<br>lua-nginx-module<br>所以你必须先把前2个也一起安装了，因为我使用的是lnmp一键包，所以默认都已经加了参数,如果你自己编译的nginx请自己加上这2个模块参数</p>
+</blockquote>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">--with-http_ssl_module \</span><br><span class="line">--with-http_stub_status_module</span><br></pre></td></tr></table></figure>
+<p>然后就可以执行<code>./install.sh</code>脚本进行编译安装了。</p>
+<h2 id="安装VeryNginx"><a href="#安装VeryNginx" class="headerlink" title="安装VeryNginx"></a>安装VeryNginx</h2><p>上面所有环境依赖安装好后就可以正式开始安装<code>VeryNginx</code>了。</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"><span class="comment">## 克隆仓库到本地</span></span></span><br><span class="line">git clone https://github.com/alexazhou/VeryNginx.git</span><br><span class="line"><span class="meta">#</span><span class="bash"><span class="comment">## 进入目录</span></span></span><br><span class="line">cd VeryNginx </span><br><span class="line"><span class="meta">#</span><span class="bash"><span class="comment">## 安装verynginx (这条命令只会安装VeryNginx而不会一并把OpenResty也安装了)</span></span></span><br><span class="line">python install.py install verynginx</span><br><span class="line"></span><br><span class="line"><span class="meta">#</span><span class="bash"><span class="comment">## 参考:https://github.com/alexazhou/VeryNginx/wiki/Use-own-nginx</span></span></span><br></pre></td></tr></table></figure>
+<h2 id="配置VeryNginx"><a href="#配置VeryNginx" class="headerlink" title="配置VeryNginx"></a>配置VeryNginx</h2><p><code>VeryNginx</code>安装好以后，会在<code>/opt/verynginx</code>目录下生成3条对应的配置文件，分别为：</p>
+<blockquote>
+<ul>
+<li>include /opt/verynginx/verynginx/nginx_conf/in_external.conf;</li>
+<li>include /opt/verynginx/verynginx/nginx_conf/in_http_block.conf;</li>
+<li>include /opt/verynginx/verynginx/nginx_conf/in_server_block.conf;</li>
+</ul>
+</blockquote>
+<p>以上三条指令分别放在 http 配置块外部，http 配置块内部，server 配置块内部，在修改时请保留这三条。<br>当然也可以使用自己的 nginx.conf 配置文件，把这三条 include 指令加入对应的地方即可。<br>如果添加了新的 Server 配置块或 http 配置块，也需要在新的块内部加入对应的 include 行。</p>
+<p>重启NGINX，配置完成。</p>
+<hr>
+<h2 id="WEB配置界面简单使用"><a href="#WEB配置界面简单使用" class="headerlink" title="WEB配置界面简单使用"></a>WEB配置界面简单使用</h2><h3 id="进入管理界面"><a href="#进入管理界面" class="headerlink" title="进入管理界面"></a>进入管理界面</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">输入http://your.domain/verynginx/index.html进入。</span><br></pre></td></tr></table></figure>
+<h2 id="选项介绍"><a href="#选项介绍" class="headerlink" title="选项介绍"></a>选项介绍</h2><h3 id="BASIC分类"><a href="#BASIC分类" class="headerlink" title="BASIC分类"></a>BASIC分类</h3><ul>
+<li>Matcher 设定匹配规则</li>
+<li>Response 设定block时响应模板</li>
+</ul>
+<h3 id="Custom-Action分类"><a href="#Custom-Action分类" class="headerlink" title="Custom Action分类"></a>Custom Action分类</h3><ul>
+<li>Redirect 匹配成功后地址重定向</li>
+<li>URI Rewrite 匹配成功重写url地址</li>
+<li>Filter 匹配到规则后选项拒绝还是接受</li>
+</ul>
+<h2 id="碰到的问题"><a href="#碰到的问题" class="headerlink" title="碰到的问题"></a>碰到的问题</h2><p>当我在保存reponse模板的时候出现<code>Ajax request failed[status code = 200]</code>错误，去看了issue，然后看下面的疑难问题</p>
+<p>参考：<a href="https://github.com/alexazhou/VeryNginx/wiki/Trouble-Shooting" target="_blank" rel="noopener">https://github.com/alexazhou/VeryNginx/wiki/Trouble-Shooting</a><br>​    </p>
+
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/VeryNginx/" rel="tag"># VeryNginx</a>
+          
+            <a href="/tags/waf/" rel="tag"># waf</a>
+          
+            <a href="/tags/Nginx/" rel="tag"># Nginx</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/waf-first/" rel="next" title="WAF初探">
+                <i class="fa fa-chevron-left"></i> WAF初探
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/redis-persistent/" rel="prev" title="Redis持久化初探">
+                Redis持久化初探 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+  </div>
+
+
+          </div>
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            Overview
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">楽猪先生</p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          
+            <nav class="site-state motion-element">
+              
+                <div class="site-state-item site-state-posts">
+                
+                  <a href="/archives/">
+                
+                    <span class="site-state-item-count">74</span>
+                    <span class="site-state-item-name">posts</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-categories">
+                  
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">17</span>
+                    <span class="site-state-item-name">categories</span>
+                  
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-tags">
+                  
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">127</span>
+                    <span class="site-state-item-name">tags</span>
+                  
+                </div>
+              
+            </nav>
+          
+
+          
+
+          
+
+          
+          
+
+          
+          
+
+          
+            
+          
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#什么是VeryNginx"><span class="nav-number">1.</span> <span class="nav-text">什么是VeryNginx</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#编译LuaJIT"><span class="nav-number">2.</span> <span class="nav-text">编译LuaJIT</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#添加lua-nginx-module模块"><span class="nav-number">3.</span> <span class="nav-text">添加lua-nginx-module模块</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#安装VeryNginx"><span class="nav-number">4.</span> <span class="nav-text">安装VeryNginx</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#配置VeryNginx"><span class="nav-number">5.</span> <span class="nav-text">配置VeryNginx</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#WEB配置界面简单使用"><span class="nav-number">6.</span> <span class="nav-text">WEB配置界面简单使用</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#进入管理界面"><span class="nav-number">6.1.</span> <span class="nav-text">进入管理界面</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#选项介绍"><span class="nav-number">7.</span> <span class="nav-text">选项介绍</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#BASIC分类"><span class="nav-number">7.1.</span> <span class="nav-text">BASIC分类</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Custom-Action分类"><span class="nav-number">7.2.</span> <span class="nav-text">Custom Action分类</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#碰到的问题"><span class="nav-number">8.</span> <span class="nav-text">碰到的问题</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2018</span>
+  <span class="with-love" id="animate">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">楽猪先生</span>
+
+  
+
+  
+</div>
+
+
+
+
+  <div class="powered-by">Powered by <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> v3.7.1</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">Theme – <a class="theme-link" target="_blank" href="https://theme-next.org">NexT.Gemini</a> v6.4.0</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+	
+    
+
+    
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=6.4.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=6.4.0"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=6.4.0"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=6.4.0"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=6.4.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=6.4.0"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=6.4.0"></script>
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
