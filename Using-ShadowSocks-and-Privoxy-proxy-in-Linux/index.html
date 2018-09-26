@@ -1,0 +1,1115 @@
+<!DOCTYPE html>
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+<html class="theme-next gemini use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=6.4.0" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=6.4.0">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=6.4.0">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=6.4.0">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=6.4.0" color="#222">
+
+
+
+
+
+
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Gemini',
+    version: '6.4.0',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: false,
+    fastclick: false,
+    lazyload: false,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+  
+
+
+
+
+  <meta name="description" content="ShadowSocks 最近几年大火, 其简单的配置和优秀的速度让大陆地区的墙内用户爱不释手本篇文章不讨论Mac &amp;amp; Windows 等图形界面下的应用, 而是让 linux 在命令行界面下, http/https 访问也能登上梯子, 看一看外面的大千世界  最近公司的服务器连接 docker hub hub.docker.com 仓库和 node.js nodejs.org 仓库极其缓">
+<meta name="keywords" content="ss,shadowsocks,酸酸,Privoxy">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Linux中使用ShadowSocks+Privoxy代理">
+<meta property="og:url" content="//keer.me/Using-ShadowSocks-and-Privoxy-proxy-in-Linux/index.html">
+<meta property="og:site_name" content="楽猪先生">
+<meta property="og:description" content="ShadowSocks 最近几年大火, 其简单的配置和优秀的速度让大陆地区的墙内用户爱不释手本篇文章不讨论Mac &amp;amp; Windows 等图形界面下的应用, 而是让 linux 在命令行界面下, http/https 访问也能登上梯子, 看一看外面的大千世界  最近公司的服务器连接 docker hub hub.docker.com 仓库和 node.js nodejs.org 仓库极其缓">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="http://20150509.oss-cn-qingdao.aliyuncs.com/QQ20161208-1@2x.png">
+<meta property="og:updated_time" content="2018-09-26T14:40:59.854Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Linux中使用ShadowSocks+Privoxy代理">
+<meta name="twitter:description" content="ShadowSocks 最近几年大火, 其简单的配置和优秀的速度让大陆地区的墙内用户爱不释手本篇文章不讨论Mac &amp;amp; Windows 等图形界面下的应用, 而是让 linux 在命令行界面下, http/https 访问也能登上梯子, 看一看外面的大千世界  最近公司的服务器连接 docker hub hub.docker.com 仓库和 node.js nodejs.org 仓库极其缓">
+<meta name="twitter:image" content="http://20150509.oss-cn-qingdao.aliyuncs.com/QQ20161208-1@2x.png">
+
+
+
+
+
+
+  <link rel="canonical" href="//keer.me/Using-ShadowSocks-and-Privoxy-proxy-in-Linux/"/>
+
+
+
+<script type="text/javascript" id="page.configurations">
+  CONFIG.page = {
+    sidebar: "",
+  };
+</script>
+
+  <title>Linux中使用ShadowSocks+Privoxy代理 | 楽猪先生</title>
+  
+
+
+
+
+
+
+
+
+
+  <noscript>
+  <style type="text/css">
+    .use-motion .motion-element,
+    .use-motion .brand,
+    .use-motion .menu-item,
+    .sidebar-inner,
+    .use-motion .post-block,
+    .use-motion .pagination,
+    .use-motion .comments,
+    .use-motion .post-header,
+    .use-motion .post-body,
+    .use-motion .collection-title { opacity: initial; }
+
+    .use-motion .logo,
+    .use-motion .site-title,
+    .use-motion .site-subtitle {
+      opacity: initial;
+      top: initial;
+    }
+
+    .use-motion {
+      .logo-line-before i { left: initial; }
+      .logo-line-after i { right: initial; }
+    }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">楽猪先生</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+    
+      
+        <p class="site-subtitle">向往文艺的小清新</p>
+      
+    
+  </div>
+
+  <div class="site-nav-toggle">
+    <button aria-label="Toggle navigation bar">
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  
+    <ul id="menu" class="menu">
+      
+        
+        
+        
+          
+          <li class="menu-item menu-item-home">
+    <a href="/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-home"></i> <br />Home</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-archives">
+    <a href="/archives/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />Archives</a>
+  </li>
+
+      
+      
+    </ul>
+  
+
+  
+
+  
+</nav>
+
+
+
+  
+
+
+
+</div>
+    </header>
+
+    
+
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+            
+
+          
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="//keer.me/Using-ShadowSocks-and-Privoxy-proxy-in-Linux/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="楽猪先生">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="楽猪先生">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">Linux中使用ShadowSocks+Privoxy代理
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+
+              
+                
+              
+
+              <time title="Created: 2018-09-26 09:58:55 / Modified: 22:40:59" itemprop="dateCreated datePublished" datetime="2018-09-26T09:58:55+08:00">2018-09-26</time>
+            
+
+            
+              
+
+              
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/Linux/" itemprop="url" rel="index"><span itemprop="name">Linux</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <blockquote>
+<p>ShadowSocks 最近几年大火, 其简单的配置和优秀的速度让大陆地区的墙内用户爱不释手本篇文章不讨论Mac &amp; Windows 等图形界面下的应用, 而是让 linux 在命令行界面下, http/https 访问也能登上梯子, 看一看外面的大千世界</p>
+</blockquote>
+<p>最近公司的服务器连接 docker hub <a href="http://hub.docker.com/" target="_blank" rel="noopener">hub.docker.com</a> 仓库和 node.js <a href="http://nodejs.org/" target="_blank" rel="noopener">nodejs.org</a> 仓库极其缓慢, 使用了各种国内的各种加速服务才勉强解决了燃眉之急(分别使用了 daocloud 的镜像加速和淘宝的加速服务)</p>
+<p>本篇文章就是介绍如何实现 Linux 中的 http/https 请求翻墙的需求</p>
+<a id="more"></a>
+<h1 id="安装-ss-客户端"><a href="#安装-ss-客户端" class="headerlink" title="安装 ss 客户端"></a><strong>安装 ss 客户端</strong></h1><p><em>shadowsocks安装时是不分客户端还是服务器端的, 只不过安装后有两个脚本一个是sslocal代表以客户端模式工作，一个是ssserver代表以服务器端模式工作</em></p>
+<pre><code>yum install python-pip
+
+pip install shadowsocks
+</code></pre><h2 id="在后台启动-ss-客户端"><a href="#在后台启动-ss-客户端" class="headerlink" title="在后台启动 ss 客户端"></a><strong>在后台启动 ss 客户端</strong></h2><pre><code>nohup sslocal -s your_server_ip -p your_server_port -l 1080 -k your_server_passwd -t 600 -m rc4-md5 &gt; /dev/null 2&gt;&amp;1 &amp;
+</code></pre><p><strong>注意:</strong></p>
+<ul>
+<li>使用的是 <code>sslocal</code> 这个命令，表示 <code>shadowsocks</code> 以客户端模式工作</li>
+<li>将上述命令里的 <code>your_server_ip</code>, <code>your_server_port</code>, <code>your_server_passwd</code> 换成自己的, 这三个分别代表服务器ip, 服务器上 <code>shadowsocks</code> 的端口以及密码.后面的 <code>rc4-md5</code> 加密方式也要换成跟 <code>server</code> 端一致。</li>
+<li><p>前面的nohub 和最后的 &amp; 表示后台执行且关闭 session 后仍然在后台执行，否则将会阻塞shell端口.为了更方便, 建议新建一个.json的文件, 将上述信息放里面,如新建<code>/etc/shadowsocks.json</code>文件, 内容为：</p>
+<pre><code>{
+    &quot;server&quot;:&quot;your_server_ip&quot;, #ss服务器IP
+    &quot;server_port&quot;:your_server_port, #端口
+    &quot;local_address&quot;: &quot;127.0.0.1&quot;, #本地ip
+    &quot;local_port&quot;:1080, #本地端口
+    &quot;password&quot;:&quot;your_server_passwd&quot;,#连接ss密码
+    &quot;timeout&quot;:300, #等待超时
+    &quot;method&quot;:&quot;rc4-md5&quot;, #加密方式
+    &quot;fast_open&quot;: false, # true 或 false。如果你的服务器 Linux 内核在3.7+，可以开启 fast_open 以降低延迟。开启方法： echo 3 &gt; /proc/sys/net/ipv4/tcp_fastopen 开启之后，将 fast_open 的配置设置为 true 即可
+    &quot;workers&quot;: 1 # 工作线程数
+}
+</code></pre><p>  然后运行一下命令启动shadowsocks</p>
+<pre><code>nohup sslocal -c /etc/shadowsocks.json /dev/null 2&gt;&amp;1 &amp;
+</code></pre></li>
+<li><p>如果想增加开启自动启动，执行：<code>echo &quot;nohup sslocal -c /etc/shadowsocks.json /dev/null 2&gt;&amp;1 &amp;&quot; /etc/rc.local</code></p>
+</li>
+<li>执行<code>ps aux |grep sslocal |grep -v &quot;grep&quot;</code>查看后台sslocal是否运行</li>
+</ul>
+<h1 id="安装Privoxy"><a href="#安装Privoxy" class="headerlink" title="安装Privoxy"></a><strong>安装Privoxy</strong></h1><p>上述安好了<code>shadowsocks</code>，但它是 <code>socks5</code> 代理，我门在 <code>shell</code> 里执行的命令，发起的网络请求现在还不支持 <code>socks5</code> 代理，只支持 <code>http/https</code> 代理。为了我门需要安装 <code>privoxy</code> 代理，它能把电脑上所有http请求转发给 <code>shadowsocks</code></p>
+<pre><code>yum install privoxy -y
+</code></pre><ul>
+<li>查看 <code>vim /usr/local/etc/privoxy/config</code> 文件，先搜索关键字 <code>listen-address</code> 找到 <code>listen-address 127.0.0.1:8118</code> 这一句，保证这一句没有注释，8118就是将来http代理要输入的端口。然后搜索 <code>forward-socks5t</code>, 将 <code>#forward-socks5t / 127.0.0.1:1080 .</code> 此句前面的注释去掉, 意思是转发流量到本地的1080端口, 而1080端口正是 ss 监听的端口</li>
+</ul>
+<h2 id="启动privoxy"><a href="#启动privoxy" class="headerlink" title="启动privoxy"></a><strong>启动privoxy</strong></h2><pre><code>systemctl restart privoxy &gt; systemctl enable privoxy
+</code></pre><h1 id="转发配置"><a href="#转发配置" class="headerlink" title="转发配置"></a><strong>转发配置</strong></h1><p>写在 profile 中</p>
+<pre><code>&gt; vim /etc/profile
+export http_proxy=http://127.0.0.1:8118
+export https_proxy=http://127.0.0.1:8118
+&gt; source /etc/profile
+</code></pre><p>在当前 session 执行</p>
+<pre><code>export http_proxy=http://127.0.0.1:8118
+export https_proxy=http://127.0.0.1:8118
+</code></pre><h1 id="测试翻墙"><a href="#测试翻墙" class="headerlink" title="测试翻墙"></a><strong>测试翻墙</strong></h1><pre><code>curl www.google.com
+</code></pre><h1 id="问题解决"><a href="#问题解决" class="headerlink" title="问题解决"></a><strong>问题解决</strong></h1><p>如果不能访问, 请重启机器, 依次打开shadowsocks和privoxy再测试</p>
+<pre><code>&gt; nohup sslocal -c /etc/shadowsocks.json /dev/null 2&gt;&amp;1 &amp;
+&gt; privoxy --user privoxy /usr/local/etc/privoxy/config
+</code></pre><p><img src="http://20150509.oss-cn-qingdao.aliyuncs.com/QQ20161208-1@2x.png" alt=""></p>
+<p><a href="https://docs.lvrui.io/2016/12/12/Linux%E4%B8%AD%E4%BD%BF%E7%94%A8ShadowSocks-Privoxy%E4%BB%A3%E7%90%86/" target="_blank" rel="noopener">Linux中使用ShadowSocks+Privoxy代理</a></p>
+
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/ss/" rel="tag"># ss</a>
+          
+            <a href="/tags/shadowsocks/" rel="tag"># shadowsocks</a>
+          
+            <a href="/tags/酸酸/" rel="tag"># 酸酸</a>
+          
+            <a href="/tags/Privoxy/" rel="tag"># Privoxy</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/Using-mkcert-to-generate-local-HTTPS-certificates/" rel="next" title="使用mkcert生成本地HTTPS证书">
+                <i class="fa fa-chevron-left"></i> 使用mkcert生成本地HTTPS证书
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+  </div>
+
+
+          </div>
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            Overview
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">楽猪先生</p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          
+            <nav class="site-state motion-element">
+              
+                <div class="site-state-item site-state-posts">
+                
+                  <a href="/archives/">
+                
+                    <span class="site-state-item-count">75</span>
+                    <span class="site-state-item-name">posts</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-categories">
+                  
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">17</span>
+                    <span class="site-state-item-name">categories</span>
+                  
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-tags">
+                  
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">131</span>
+                    <span class="site-state-item-name">tags</span>
+                  
+                </div>
+              
+            </nav>
+          
+
+          
+
+          
+
+          
+          
+
+          
+          
+
+          
+            
+          
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#安装-ss-客户端"><span class="nav-number">1.</span> <span class="nav-text">安装 ss 客户端</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#在后台启动-ss-客户端"><span class="nav-number">1.1.</span> <span class="nav-text">在后台启动 ss 客户端</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#安装Privoxy"><span class="nav-number">2.</span> <span class="nav-text">安装Privoxy</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#启动privoxy"><span class="nav-number">2.1.</span> <span class="nav-text">启动privoxy</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#转发配置"><span class="nav-number">3.</span> <span class="nav-text">转发配置</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#测试翻墙"><span class="nav-number">4.</span> <span class="nav-text">测试翻墙</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#问题解决"><span class="nav-number">5.</span> <span class="nav-text">问题解决</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2018</span>
+  <span class="with-love" id="animate">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">楽猪先生</span>
+
+  
+
+  
+</div>
+
+
+
+
+  <div class="powered-by">Powered by <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> v3.7.1</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">Theme – <a class="theme-link" target="_blank" href="https://theme-next.org">NexT.Gemini</a> v6.4.0</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+	
+    
+
+    
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=6.4.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=6.4.0"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=6.4.0"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=6.4.0"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=6.4.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=6.4.0"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=6.4.0"></script>
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
