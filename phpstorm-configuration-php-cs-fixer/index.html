@@ -108,21 +108,21 @@
 
 
 
-  <meta name="description" content="安装php-cs-fixer(PHP Coding Standards Fixer)php-cs-fixer目前已经有发展到v2版本，所以我们使用最新的版本， 官方现在有两个版本 v1 和 v2 ，其中 v1 需要php 5.3.6 版本以上， v2 需要 php 5.6 版本以上。">
+  <meta name="description" content="良好的代码规范可以提高代码可读性，团队沟通维护成本。最推荐大家遵守的是 php-fig（PHP Framework Interop Group） 组织定义的 PSR-1 、 PSR-2 两个。不了解的同学可以先通过连接点击过去阅读下。 这篇文章主要介绍下两个工具让你的代码符合规范。 php-cs-fixer目前已经有发展到v2版本，所以我们使用最新的版本， 官方现在有两个版本 v1 和 v2 ，其">
 <meta name="keywords" content="php-cs-fixer,phpstorm">
 <meta property="og:type" content="article">
 <meta property="og:title" content="phpstorm配置php-cs-fixer">
 <meta property="og:url" content="//keer.me/phpstorm-configuration-php-cs-fixer/index.html">
 <meta property="og:site_name" content="楽猪先生">
-<meta property="og:description" content="安装php-cs-fixer(PHP Coding Standards Fixer)php-cs-fixer目前已经有发展到v2版本，所以我们使用最新的版本， 官方现在有两个版本 v1 和 v2 ，其中 v1 需要php 5.3.6 版本以上， v2 需要 php 5.6 版本以上。">
+<meta property="og:description" content="良好的代码规范可以提高代码可读性，团队沟通维护成本。最推荐大家遵守的是 php-fig（PHP Framework Interop Group） 组织定义的 PSR-1 、 PSR-2 两个。不了解的同学可以先通过连接点击过去阅读下。 这篇文章主要介绍下两个工具让你的代码符合规范。 php-cs-fixer目前已经有发展到v2版本，所以我们使用最新的版本， 官方现在有两个版本 v1 和 v2 ，其">
 <meta property="og:locale" content="zh-Hans">
 <meta property="og:image" content="https://staticache.oss-cn-hangzhou.aliyuncs.com/18-9-27/66355373.jpg">
 <meta property="og:image" content="https://staticache.oss-cn-hangzhou.aliyuncs.com/18-9-27/14612915.jpg">
 <meta property="og:image" content="https://staticache.oss-cn-hangzhou.aliyuncs.com/18-9-27/2040256.jpg">
-<meta property="og:updated_time" content="2018-09-27T13:35:18.875Z">
+<meta property="og:updated_time" content="2018-09-27T13:45:09.762Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="phpstorm配置php-cs-fixer">
-<meta name="twitter:description" content="安装php-cs-fixer(PHP Coding Standards Fixer)php-cs-fixer目前已经有发展到v2版本，所以我们使用最新的版本， 官方现在有两个版本 v1 和 v2 ，其中 v1 需要php 5.3.6 版本以上， v2 需要 php 5.6 版本以上。">
+<meta name="twitter:description" content="良好的代码规范可以提高代码可读性，团队沟通维护成本。最推荐大家遵守的是 php-fig（PHP Framework Interop Group） 组织定义的 PSR-1 、 PSR-2 两个。不了解的同学可以先通过连接点击过去阅读下。 这篇文章主要介绍下两个工具让你的代码符合规范。 php-cs-fixer目前已经有发展到v2版本，所以我们使用最新的版本， 官方现在有两个版本 v1 和 v2 ，其">
 <meta name="twitter:image" content="https://staticache.oss-cn-hangzhou.aliyuncs.com/18-9-27/66355373.jpg">
 
 
@@ -348,7 +348,7 @@
                 
                   <span class="post-meta-item-text">Edited on</span>
                 
-                <time title="Modified: 2018-09-27 21:35:18" itemprop="dateModified" datetime="2018-09-27T21:35:18+08:00">2018-09-27</time>
+                <time title="Modified: 2018-09-27 21:45:09" itemprop="dateModified" datetime="2018-09-27T21:45:09+08:00">2018-09-27</time>
               
             
           </span>
@@ -399,10 +399,12 @@
       
 
       
-        <h2 id="安装php-cs-fixer-PHP-Coding-Standards-Fixer"><a href="#安装php-cs-fixer-PHP-Coding-Standards-Fixer" class="headerlink" title="安装php-cs-fixer(PHP Coding Standards Fixer)"></a>安装php-cs-fixer(PHP Coding Standards Fixer)</h2><p>php-cs-fixer目前已经有发展到v2版本，所以我们使用最新的版本，</p>
+        <p>良好的代码规范可以提高代码可读性，团队沟通维护成本。最推荐大家遵守的是 <a href="http://php-fig.org/" target="_blank" rel="noopener">php-fig</a>（PHP Framework Interop Group） 组织定义的 <a href="https://github.com/PizzaLiu/PHP-FIG/blob/master/PSR-1-basic-coding-standard-cn.md" target="_blank" rel="noopener">PSR-1</a> 、 <a href="https://github.com/PizzaLiu/PHP-FIG/blob/master/PSR-2-coding-style-guide-cn.md" target="_blank" rel="noopener">PSR-2</a> 两个。不了解的同学可以先通过连接点击过去阅读下。</p>
+<p>这篇文章主要介绍下两个工具让你的代码符合规范。</p>
+<p>php-cs-fixer目前已经有发展到v2版本，所以我们使用最新的版本，</p>
 <p>官方现在有两个版本 v1 和 v2 ，其中 v1 需要php 5.3.6 版本以上， v2 需要 php 5.6 版本以上。</p>
 <a id="more"></a>
-<p>安装方式有很多种，可以直接下载.phar文件，也可以通过composer的方式进行全局安装。更多安装方法可以参考</p>
+<h2 id="安装php-cs-fixer-PHP-Coding-Standards-Fixer"><a href="#安装php-cs-fixer-PHP-Coding-Standards-Fixer" class="headerlink" title="安装php-cs-fixer(PHP Coding Standards Fixer)"></a>安装php-cs-fixer(PHP Coding Standards Fixer)</h2><p>安装方式有很多种，可以直接下载.phar文件，也可以通过composer的方式进行全局安装。更多安装方法可以参考</p>
 <p><a href="https://github.com/FriendsOfPHP/PHP-CS-Fixer/blob/2.12/README.rst#installation" target="_blank" rel="noopener">FriendsOfPHP/PHP-CS-Fixer</a></p>
 <p>安装方式</p>
 <p>这里我使用的是Windos7环境，所以我使用的是Locally模式，也就是直接下载了.phar文件</p>
