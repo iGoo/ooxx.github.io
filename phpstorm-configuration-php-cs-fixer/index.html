@@ -108,21 +108,21 @@
 
 
 
-  <meta name="description" content="良好的代码规范可以提高代码可读性，团队沟通维护成本。最推荐大家遵守的是 php-fig（PHP Framework Interop Group） 组织定义的 PSR-1 、 PSR-2 两个。不了解的同学可以先通过连接点击过去阅读下。 这篇文章主要介绍下两个工具让你的代码符合规范。 php-cs-fixer目前已经有发展到v2版本，所以我们使用最新的版本， 官方现在有两个版本 v1 和 v2 ，其">
+  <meta name="description" content="良好的代码规范可以提高代码可读性，团队沟通维护成本。最推荐大家遵守的是 php-fig（PHP Framework Interop Group） 组织定义的 PSR-1 、 PSR-2 两个。不了解的同学可以先通过连接点击过去阅读下。 这篇文章主要介绍下php-cs-fixer格式化代码工具，让你的代码符合规范。 php-cs-fixer(PHP Coding Standards Fixer)目前">
 <meta name="keywords" content="php-cs-fixer,phpstorm">
 <meta property="og:type" content="article">
-<meta property="og:title" content="phpstorm配置php-cs-fixer">
+<meta property="og:title" content="PhpStorm配置php-cs-fixer">
 <meta property="og:url" content="//keer.me/phpstorm-configuration-php-cs-fixer/index.html">
 <meta property="og:site_name" content="楽猪先生">
-<meta property="og:description" content="良好的代码规范可以提高代码可读性，团队沟通维护成本。最推荐大家遵守的是 php-fig（PHP Framework Interop Group） 组织定义的 PSR-1 、 PSR-2 两个。不了解的同学可以先通过连接点击过去阅读下。 这篇文章主要介绍下两个工具让你的代码符合规范。 php-cs-fixer目前已经有发展到v2版本，所以我们使用最新的版本， 官方现在有两个版本 v1 和 v2 ，其">
+<meta property="og:description" content="良好的代码规范可以提高代码可读性，团队沟通维护成本。最推荐大家遵守的是 php-fig（PHP Framework Interop Group） 组织定义的 PSR-1 、 PSR-2 两个。不了解的同学可以先通过连接点击过去阅读下。 这篇文章主要介绍下php-cs-fixer格式化代码工具，让你的代码符合规范。 php-cs-fixer(PHP Coding Standards Fixer)目前">
 <meta property="og:locale" content="zh-Hans">
 <meta property="og:image" content="https://staticache.oss-cn-hangzhou.aliyuncs.com/18-9-27/66355373.jpg">
 <meta property="og:image" content="https://staticache.oss-cn-hangzhou.aliyuncs.com/18-9-27/14612915.jpg">
 <meta property="og:image" content="https://staticache.oss-cn-hangzhou.aliyuncs.com/18-9-27/2040256.jpg">
-<meta property="og:updated_time" content="2018-09-27T13:45:09.762Z">
+<meta property="og:updated_time" content="2018-09-28T14:15:07.781Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="phpstorm配置php-cs-fixer">
-<meta name="twitter:description" content="良好的代码规范可以提高代码可读性，团队沟通维护成本。最推荐大家遵守的是 php-fig（PHP Framework Interop Group） 组织定义的 PSR-1 、 PSR-2 两个。不了解的同学可以先通过连接点击过去阅读下。 这篇文章主要介绍下两个工具让你的代码符合规范。 php-cs-fixer目前已经有发展到v2版本，所以我们使用最新的版本， 官方现在有两个版本 v1 和 v2 ，其">
+<meta name="twitter:title" content="PhpStorm配置php-cs-fixer">
+<meta name="twitter:description" content="良好的代码规范可以提高代码可读性，团队沟通维护成本。最推荐大家遵守的是 php-fig（PHP Framework Interop Group） 组织定义的 PSR-1 、 PSR-2 两个。不了解的同学可以先通过连接点击过去阅读下。 这篇文章主要介绍下php-cs-fixer格式化代码工具，让你的代码符合规范。 php-cs-fixer(PHP Coding Standards Fixer)目前">
 <meta name="twitter:image" content="https://staticache.oss-cn-hangzhou.aliyuncs.com/18-9-27/66355373.jpg">
 
 
@@ -140,7 +140,7 @@
   };
 </script>
 
-  <title>phpstorm配置php-cs-fixer | 楽猪先生</title>
+  <title>PhpStorm配置php-cs-fixer | 楽猪先生</title>
   
 
 
@@ -306,7 +306,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">phpstorm配置php-cs-fixer
+          <h1 class="post-title" itemprop="name headline">PhpStorm配置php-cs-fixer
               
             
           </h1>
@@ -348,7 +348,7 @@
                 
                   <span class="post-meta-item-text">Edited on</span>
                 
-                <time title="Modified: 2018-09-27 21:45:09" itemprop="dateModified" datetime="2018-09-27T21:45:09+08:00">2018-09-27</time>
+                <time title="Modified: 2018-09-28 22:15:07" itemprop="dateModified" datetime="2018-09-28T22:15:07+08:00">2018-09-28</time>
               
             
           </span>
@@ -410,17 +410,17 @@
 
       
         <p>良好的代码规范可以提高代码可读性，团队沟通维护成本。最推荐大家遵守的是 <a href="http://php-fig.org/" target="_blank" rel="noopener">php-fig</a>（PHP Framework Interop Group） 组织定义的 <a href="https://github.com/PizzaLiu/PHP-FIG/blob/master/PSR-1-basic-coding-standard-cn.md" target="_blank" rel="noopener">PSR-1</a> 、 <a href="https://github.com/PizzaLiu/PHP-FIG/blob/master/PSR-2-coding-style-guide-cn.md" target="_blank" rel="noopener">PSR-2</a> 两个。不了解的同学可以先通过连接点击过去阅读下。</p>
-<p>这篇文章主要介绍下两个工具让你的代码符合规范。</p>
-<p>php-cs-fixer目前已经有发展到v2版本，所以我们使用最新的版本，</p>
+<p>这篇文章主要介绍下php-cs-fixer格式化代码工具，让你的代码符合规范。</p>
+<p>php-cs-fixer(PHP Coding Standards Fixer)目前已经有发展到v2版本，所以我们使用最新的版本，</p>
 <p>官方现在有两个版本 v1 和 v2 ，其中 v1 需要php 5.3.6 版本以上， v2 需要 php 5.6 版本以上。</p>
 <a id="more"></a>
-<h2 id="安装php-cs-fixer-PHP-Coding-Standards-Fixer"><a href="#安装php-cs-fixer-PHP-Coding-Standards-Fixer" class="headerlink" title="安装php-cs-fixer(PHP Coding Standards Fixer)"></a>安装php-cs-fixer(PHP Coding Standards Fixer)</h2><p>安装方式有很多种，可以直接下载.phar文件，也可以通过composer的方式进行全局安装。更多安装方法可以参考</p>
+<h2 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h2><p>安装方式有很多种，可以直接下载.phar文件，也可以通过composer的方式进行全局安装。更多安装方法可以参考</p>
 <p><a href="https://github.com/FriendsOfPHP/PHP-CS-Fixer/blob/2.12/README.rst#installation" target="_blank" rel="noopener">FriendsOfPHP/PHP-CS-Fixer</a></p>
 <p>安装方式</p>
 <p>这里我使用的是Windos7环境，所以我使用的是Locally模式，也就是直接下载了.phar文件</p>
 <p><a href="https://cs.sensiolabs.org/download/php-cs-fixer-v2.phar" target="_blank" rel="noopener"></a></p>
 <p>将下载的<code>php-cs-fixer-v2.phar</code>文件重命名为php-cs-fixer.phar然后我放到了<code>E:\DevTools\php-cs-fixer.phar</code>。你可以放到你的任意目录，但请记住这个地址，后面配置phpstorm的时候会用到。</p>
-<h2 id="phpstorm配置php-cs-fixer"><a href="#phpstorm配置php-cs-fixer" class="headerlink" title="phpstorm配置php-cs-fixer"></a>phpstorm配置php-cs-fixer</h2><p>打开phpstorm设置项，依次Tools→External Tools,点击加号(+)</p>
+<h2 id="配置"><a href="#配置" class="headerlink" title="配置"></a>配置</h2><p>打开phpstorm设置项，依次Tools→External Tools,点击加号(+)</p>
 <p><img src="https://staticache.oss-cn-hangzhou.aliyuncs.com/18-9-27/66355373.jpg" alt=""></p>
 <p>Program: 填写你的PHP可执行文件路径</p>
 <p>Arguments: 填写刚刚上面让你记住的php-cs-fixer.phar的路径地址, 我的配置如下</p>
@@ -445,7 +445,7 @@ $FileDir$\$FileName$
 </code></pre><p>可以看出基本上相同，主要就是增加了<code>—dry-run</code>和<code>—diff</code>参数，至于<code>—using-cache</code>可加可不加。最后依然配置一个快捷键(alt+f)。执行效果如下</p>
 <p><img src="https://staticache.oss-cn-hangzhou.aliyuncs.com/18-9-27/2040256.jpg" alt=""></p>
 <p>可以看到，将要被转换的代码都已经标识出来了，类似于git diff后的效果。</p>
-<h2 id="使用配置文件方式设置rules规则"><a href="#使用配置文件方式设置rules规则" class="headerlink" title="使用配置文件方式设置rules规则"></a>使用配置文件方式设置rules规则</h2><p>上面我们把格式化规则已经写在了命令行后面，这样其实已经可以达到我们的预期了。但是php-cs-fixer还支持将规则等配置写入一个配置文件，默认为<code>.php_cs</code>。你可以使用<code>—config</code>来指定你的配置文件。</p>
+<h2 id="配置文件方式配置rules"><a href="#配置文件方式配置rules" class="headerlink" title="配置文件方式配置rules"></a>配置文件方式配置rules</h2><p>上面我们把格式化规则已经写在了命令行后面，这样其实已经可以达到我们的预期了。但是php-cs-fixer还支持将规则等配置写入一个配置文件，默认为<code>.php_cs</code>。你可以使用<code>—config</code>来指定你的配置文件。</p>
 <p>总的来说，使用配置文件的方式最大的一个好处是可以团队成员共用。如果你的团队制定了代码规范，那么把配置文件提交到版本控制大家可以共用一套代码规范，而不需要每个人都要配置一遍。但是最基本的php-cs-fixer的安装和ide集成工作还是要做的。</p>
 <p>首先我们删除ide里配置的规则。将Arguments配置中的—rules选项删除，最终的结果类似如下</p>
 <pre><code>E:\DevTools\php-cs-fixer.phar
@@ -970,7 +970,7 @@ return PhpCsFixer\Config::create()
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#安装php-cs-fixer-PHP-Coding-Standards-Fixer"><span class="nav-number">1.</span> <span class="nav-text">安装php-cs-fixer(PHP Coding Standards Fixer)</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#phpstorm配置php-cs-fixer"><span class="nav-number">2.</span> <span class="nav-text">phpstorm配置php-cs-fixer</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#使用配置文件方式设置rules规则"><span class="nav-number">3.</span> <span class="nav-text">使用配置文件方式设置rules规则</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#安装"><span class="nav-number">1.</span> <span class="nav-text">安装</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#配置"><span class="nav-number">2.</span> <span class="nav-text">配置</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#配置文件方式配置rules"><span class="nav-number">3.</span> <span class="nav-text">配置文件方式配置rules</span></a></li></ol></div>
             
 
           </div>
