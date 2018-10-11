@@ -11,10 +11,8 @@
 
 
 
-  
 
-
-<html class="theme-next gemini use-motion" lang="zh-Hans">
+<html class="theme-next gemini" lang="zh-Hans">
 <head>
   <meta charset="UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=edge" />
@@ -91,7 +89,7 @@
     fastclick: false,
     lazyload: false,
     tabs: true,
-    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    motion: {"enable":false,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
     algolia: {
       applicationID: '',
       apiKey: '',
@@ -119,7 +117,8 @@
 <meta property="og:image" content="https://staticache.oss-cn-hangzhou.aliyuncs.com/18-10-6/31508663.jpg">
 <meta property="og:image" content="https://staticache.oss-cn-hangzhou.aliyuncs.com/18-10-6/54146423.jpg">
 <meta property="og:image" content="https://staticache.oss-cn-hangzhou.aliyuncs.com/18-10-6/88717434.jpg">
-<meta property="og:updated_time" content="2018-10-06T12:31:39.437Z">
+<meta property="og:image" content="https://staticache.oss-cn-hangzhou.aliyuncs.com/18-10-7/49233078.jpg">
+<meta property="og:updated_time" content="2018-10-07T14:27:53.673Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Vscode配置系统代理安装golang扩展">
 <meta name="twitter:description" content="前言在使用了很久的SublimeText后，我开始接触了一段时间的visual studio code(vscode)。不得不说这款编辑器的确称得上是微软的良心之作。从刚开始写PHP开始我就一直使用的SublimeText，后来在学Laravel的时候也混合这用PhpStorm。 但是当我学Golang的时候看到很多人使用的是vscode，所以也接触了下。今天主要讲的是在安装了Go插件之后一些扩展">
@@ -331,12 +330,24 @@
                 
               
 
-              <time title="Created: 2018-10-06 19:42:30 / Modified: 20:31:39" itemprop="dateCreated datePublished" datetime="2018-10-06T19:42:30+08:00">2018-10-06</time>
+              <time title="Created: 2018-10-06 19:42:30" itemprop="dateCreated datePublished" datetime="2018-10-06T19:42:30+08:00">2018-10-06</time>
             
 
             
               
 
+              
+                
+                <span class="post-meta-divider">|</span>
+                
+
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">Edited on</span>
+                
+                <time title="Modified: 2018-10-07 22:27:53" itemprop="dateModified" datetime="2018-10-07T22:27:53+08:00">2018-10-07</time>
               
             
           </span>
@@ -428,6 +439,14 @@
 <blockquote>
 <p>其实这个配置项在<code>.json</code>中是<code>&quot;http.proxy&quot;: &quot;http://127.0.0.1:31210&quot;,</code></p>
 </blockquote>
+<hr>
+<p>2018-10-07更新: 增加一张完整安装图</p>
+<p><img src="https://staticache.oss-cn-hangzhou.aliyuncs.com/18-10-7/49233078.jpg" alt="完整安装golang扩展"></p>
+<hr>
+<blockquote>
+<p>后续参考: <a href="https://go.googlesource.com/tools/" target="_blank" rel="noopener">https://go.googlesource.com/tools/</a></p>
+</blockquote>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">➜  x git:(master) ✗ <span class="built_in">pwd</span></span><br><span class="line">/Users/lePig/go/src/golang.org/x</span><br><span class="line">➜  x git:(master) ✗ git <span class="built_in">clone</span> https://go.googlesource.com/tools</span><br></pre></td></tr></table></figure>
 
       
     </div>
