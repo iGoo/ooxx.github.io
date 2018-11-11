@@ -296,6 +296,179 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="//keer.me/build-orderNo-for-php/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="楽猪先生">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="https://staticache.oss-cn-hangzhou.aliyuncs.com/o_1cqpk2o9h3l112sh19do2iu84fa.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="楽猪先生">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/build-orderNo-for-php/" itemprop="url">
+                  PHP生成订单号方法汇总
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+
+              
+                
+              
+
+              <time title="Created: 2016-06-15 17:23:33" itemprop="dateCreated datePublished" datetime="2016-06-15T17:23:33+08:00">2016-06-15</time>
+            
+
+            
+              
+
+              
+                
+                <span class="post-meta-divider">|</span>
+                
+
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">Edited on</span>
+                
+                <time title="Modified: 2018-09-01 21:56:54" itemprop="dateModified" datetime="2018-09-01T21:56:54+08:00">2018-09-01</time>
+              
+            
+          </span>
+
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/build-orderNo-for-php/#comments" itemprop="discussionUrl">
+                  <span class="post-meta-item-text">Comments: </span> <span class="post-comments-count valine-comment-count" data-xid="/build-orderNo-for-php/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          <blockquote>
+<p>项目使用到了订单号生成的需求，看了一遍基本上是时间戳加随机数的思路。<br>于是找了一些<code>PHP</code>生成订单流水号的具体代码，作为记录。</p>
+</blockquote>
+<h3 id="一-从ECSHOP中扒了一段订单号生成代码"><a href="#一-从ECSHOP中扒了一段订单号生成代码" class="headerlink" title="(一) 从ECSHOP中扒了一段订单号生成代码"></a>(一) 从<code>ECSHOP</code>中扒了一段订单号生成代码</h3><figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">build_order_no</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="comment">/* 选择一个随机的方案 */</span></span><br><span class="line">    mt_srand((double) microtime() * <span class="number">1000000</span>);</span><br><span class="line">    <span class="comment">/* 日期前缀+一个1-999999的六位随机数不满6未前位补0 */</span></span><br><span class="line">    <span class="keyword">return</span> date(<span class="string">'ymd'</span>) . str_pad(mt_rand(<span class="number">1</span>, <span class="number">999999</span>), <span class="number">6</span>, <span class="string">'0'</span>, STR_PAD_LEFT);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>本机(cpu:i5 mem:1G)测试生成10万订单号、重复代码在1万左右，对于目前系统业务来说绝对够用了。</p>
+<blockquote>
+<p>如果不放心可以在生成订单号后查询下数据库是否有对应的order_no如果有重新生成</p>
+</blockquote>
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/build-orderNo-for-php/#more" rel="contents">
+              Read more &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="//keer.me/uuid-extension-for-php/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1957,178 +2130,11 @@
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="//keer.me/Linux查看进程的可执行程序路径/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="楽猪先生">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="https://staticache.oss-cn-hangzhou.aliyuncs.com/o_1cqpk2o9h3l112sh19do2iu84fa.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="楽猪先生">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/Linux查看进程的可执行程序路径/" itemprop="url">
-                  Linux查看进程的可执行程序路径
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-
-            
-            
-            
-
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Posted on</span>
-              
-
-              
-                
-              
-
-              <time title="Created: 2016-05-03 23:48:43" itemprop="dateCreated datePublished" datetime="2016-05-03T23:48:43+08:00">2016-05-03</time>
-            
-
-            
-              
-
-              
-                
-                <span class="post-meta-divider">|</span>
-                
-
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-calendar-check-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">Edited on</span>
-                
-                <time title="Modified: 2018-09-01 21:56:54" itemprop="dateModified" datetime="2018-09-01T21:56:54+08:00">2018-09-01</time>
-              
-            
-          </span>
-
-          
-
-          
-            
-              <span class="post-comments-count">
-                <span class="post-meta-divider">|</span>
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-comment-o"></i>
-                </span>
-                <a href="/Linux查看进程的可执行程序路径/#comments" itemprop="discussionUrl">
-                  <span class="post-meta-item-text">Comments: </span> <span class="post-comments-count valine-comment-count" data-xid="/Linux查看进程的可执行程序路径/" itemprop="commentCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          <p>Linux下，如果某些程序启动的时候没有加上绝对路径，直接在当前目录用“./程序名 参数表”的方式启动的话，使用ps或者top命令查看后台进程的时候，显示的Comand栏也只是“./程序名 参数表”的形式，为了找到该程序的绝对路径，想必大家最先想到的是用find命令全盘搜索，但是这样做的代价太大，而且当有多个同名文件时还不一定能区分开来，这里教大家一个更简单有效的办法。<br>因为任何一个程序启动以后，Linux系统会为其分配一个ID，即我们熟悉的PID，称为进程号，与此同时，系统会在/proc目录下为其创建一个独立的文件夹，文件夹以PID命名，在该文件夹内保存着该进程运行相关的详细信息，有兴趣的朋友可以进到这个目录下好好研究研究，不过今天的重点是获得该进程的绝对路径。在该目录下有一个名为exe的文件，像Windows系统下的可执行文件，这其实是一个符号链接（类似于Windows下的快捷方式），它指向该进程对应程序的绝对路径。用file命令或ls命令查看该符号链接的属性即可获取它所指向的绝对路径。</p>
-<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">ls -l /proc/PID/exe</span><br><span class="line">file /proc/PID/exe</span><br></pre></td></tr></table></figure>
-          <!--noindex-->
-          <div class="post-button text-center">
-            <a class="btn" href="/Linux查看进程的可执行程序路径/#more" rel="contents">
-              Read more &raquo;
-            </a>
-          </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
   <nav class="pagination">
-    <a class="extend prev" rel="prev" href="/page/6/"><i class="fa fa-angle-left" aria-label="Previous page"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/6/">6</a><span class="page-number current">7</span><a class="page-number" href="/page/8/">8</a><a class="extend next" rel="next" href="/page/8/"><i class="fa fa-angle-right" aria-label="Next page"></i></a>
+    <a class="extend prev" rel="prev" href="/page/6/"><i class="fa fa-angle-left" aria-label="Previous page"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/6/">6</a><span class="page-number current">7</span><a class="page-number" href="/page/8/">8</a><a class="page-number" href="/page/9/">9</a><a class="extend next" rel="next" href="/page/8/"><i class="fa fa-angle-right" aria-label="Next page"></i></a>
   </nav>
 
 
@@ -2175,7 +2181,7 @@
                 
                   <a href="/archives/">
                 
-                    <span class="site-state-item-count">80</span>
+                    <span class="site-state-item-count">81</span>
                     <span class="site-state-item-name">posts</span>
                   </a>
                 </div>
@@ -2226,7 +2232,9 @@
                     
                       
                     
-                    <span class="site-state-item-count">19</span>
+                      
+                    
+                    <span class="site-state-item-count">20</span>
                     <span class="site-state-item-name">categories</span>
                   </a>
                 </div>
@@ -2519,7 +2527,9 @@
                     
                       
                     
-                    <span class="site-state-item-count">140</span>
+                      
+                    
+                    <span class="site-state-item-count">141</span>
                     <span class="site-state-item-name">tags</span>
                   </a>
                 </div>
