@@ -1,0 +1,1298 @@
+<!DOCTYPE html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<html class="theme-next gemini" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=6.4.2" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=6.4.2">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=6.4.2">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=6.4.2">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=6.4.2" color="#222">
+
+
+
+
+
+
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Gemini',
+    version: '6.4.2',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: false,
+    fastclick: false,
+    lazyload: false,
+    tabs: true,
+    motion: {"enable":false,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+  
+
+
+
+
+  <meta name="description" content="简介这篇文章是对原作者文章的一个转载，以防止文章丢失。对应的更新了文中的图片链接，其余内容均未修改。">
+<meta name="keywords" content="刷机,k3">
+<meta property="og:type" content="article">
+<meta property="og:title" content="斐讯K3 固件降级刷官改固件详细图文教程">
+<meta property="og:url" content="//keer.me/k3-shuaji-wenzhang-beifen/index.html">
+<meta property="og:site_name" content="楽猪先生">
+<meta property="og:description" content="简介这篇文章是对原作者文章的一个转载，以防止文章丢失。对应的更新了文中的图片链接，其余内容均未修改。">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="https://static.hlynford.cn/wp-content/uploads/2018/05/2018061412521320.png">
+<meta property="og:image" content="https://static.hlynford.cn/wp-content/uploads/2018/05/2018061412525730.png">
+<meta property="og:image" content="https://static.hlynford.cn/wp-content/uploads/2018/05/2018061412532063.png">
+<meta property="og:image" content="https://static.hlynford.cn/wp-content/uploads/2018/05/201806141253431.png">
+<meta property="og:image" content="https://static.hlynford.cn/wp-content/uploads/2018/05/201806141254102.png">
+<meta property="og:image" content="https://static.hlynford.cn/wp-content/uploads/2018/05/201806141254269.png">
+<meta property="og:image" content="https://static.hlynford.cn/wp-content/uploads/2018/05/2018061412545072.png">
+<meta property="og:image" content="https://static.hlynford.cn/wp-content/uploads/2018/05/2018061412550731.png">
+<meta property="og:image" content="https://static.hlynford.cn/wp-content/uploads/2018/05/2018061412552529.png">
+<meta property="og:image" content="https://static.hlynford.cn/wp-content/uploads/2018/05/2018061412554463.png">
+<meta property="og:image" content="https://static.hlynford.cn/wp-content/uploads/2018/05/2018061412555725.png">
+<meta property="og:image" content="https://static.hlynford.cn/wp-content/uploads/2018/05/2018061412562747.png">
+<meta property="og:image" content="https://static.hlynford.cn/wp-content/uploads/2018/05/2018061412572533.png">
+<meta property="og:image" content="https://static.hlynford.cn/wp-content/uploads/2018/05/2018061412580159.png">
+<meta property="og:image" content="https://static.hlynford.cn/wp-content/uploads/2018/05/2018061412584633.png">
+<meta property="og:image" content="https://static.hlynford.cn/wp-content/uploads/2018/05/2018061412590881.png">
+<meta property="og:updated_time" content="2018-11-24T12:14:22.215Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="斐讯K3 固件降级刷官改固件详细图文教程">
+<meta name="twitter:description" content="简介这篇文章是对原作者文章的一个转载，以防止文章丢失。对应的更新了文中的图片链接，其余内容均未修改。">
+<meta name="twitter:image" content="https://static.hlynford.cn/wp-content/uploads/2018/05/2018061412521320.png">
+
+
+
+
+
+
+  <link rel="canonical" href="//keer.me/k3-shuaji-wenzhang-beifen/"/>
+
+
+
+<script type="text/javascript" id="page.configurations">
+  CONFIG.page = {
+    sidebar: "",
+  };
+</script>
+
+  <title>斐讯K3 固件降级刷官改固件详细图文教程 | 楽猪先生</title>
+  
+
+
+
+
+
+
+
+
+
+  <noscript>
+  <style type="text/css">
+    .use-motion .motion-element,
+    .use-motion .brand,
+    .use-motion .menu-item,
+    .sidebar-inner,
+    .use-motion .post-block,
+    .use-motion .pagination,
+    .use-motion .comments,
+    .use-motion .post-header,
+    .use-motion .post-body,
+    .use-motion .collection-title { opacity: initial; }
+
+    .use-motion .logo,
+    .use-motion .site-title,
+    .use-motion .site-subtitle {
+      opacity: initial;
+      top: initial;
+    }
+
+    .use-motion {
+      .logo-line-before i { left: initial; }
+      .logo-line-after i { right: initial; }
+    }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">楽猪先生</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+    
+      
+        <p class="site-subtitle">向往文艺的小清新</p>
+      
+    
+  </div>
+
+  <div class="site-nav-toggle">
+    <button aria-label="Toggle navigation bar">
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  
+    <ul id="menu" class="menu">
+      
+        
+        
+        
+          
+          <li class="menu-item menu-item-home">
+    <a href="/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-home"></i> <br />Home</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-tags">
+    <a href="/tags/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />Tags</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-categories">
+    <a href="/categories/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-th"></i> <br />Categories</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-archives">
+    <a href="/archives/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />Archives</a>
+  </li>
+
+      
+      
+    </ul>
+  
+
+  
+
+  
+</nav>
+
+
+
+  
+
+
+
+</div>
+    </header>
+
+    
+
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+            
+
+          
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="//keer.me/k3-shuaji-wenzhang-beifen/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="楽猪先生">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="https://staticache.oss-cn-hangzhou.aliyuncs.com/o_1cqpk2o9h3l112sh19do2iu84fa.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="楽猪先生">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">斐讯K3 固件降级刷官改固件详细图文教程
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+
+              
+                
+              
+
+              <time title="Created: 2018-11-24 20:11:44 / Modified: 20:14:22" itemprop="dateCreated datePublished" datetime="2018-11-24T20:11:44+08:00">2018-11-24</time>
+            
+
+            
+              
+
+              
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/路由器/" itemprop="url" rel="index"><span itemprop="name">路由器</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/k3-shuaji-wenzhang-beifen/#comments" itemprop="discussionUrl">
+                  <span class="post-meta-item-text">Comments: </span> <span class="post-comments-count valine-comment-count" data-xid="/k3-shuaji-wenzhang-beifen/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h3 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h3><p>这篇文章是对原作者文章的一个转载，以防止文章丢失。对应的更新了文中的图片链接，其余内容均未修改。</p>
+<a id="more"></a>
+<h3 id="正文"><a href="#正文" class="headerlink" title="正文"></a>正文</h3><p>在购买了斐讯<a href="https://hlynford.com/tag/k3" target="_blank" rel="noopener">K3</a>后，第一件事就是刷机，以下是具体操作步骤，建议全程处于 chrome 浏览器的“无痕窗口”下进行。</p>
+<p><strong>第一部分</strong></p>
+<p><strong>官方固件降级 58 固件，降级 246 固件</strong></p>
+<p>输入路由器地址 p.to 或者 192.168.2.1 进入路由器后台页面，找到“功能设置”，点击“系统状态”<br><a href="https://static.hlynford.cn/wp-content/uploads/2018/05/2018061412521320.png" target="_blank" rel="noopener"><img src="https://static.hlynford.cn/wp-content/uploads/2018/05/2018061412521320.png" alt="img"></a></p>
+<p>然后查看“硬件版本”和“软件版本”我这边的“硬件版本”是“A2”，“软件版本”是 V21.6.12.6<br><a href="https://static.hlynford.cn/wp-content/uploads/2018/05/2018061412525730.png" target="_blank" rel="noopener"><img src="https://static.hlynford.cn/wp-content/uploads/2018/05/2018061412525730.png" alt="img"></a></p>
+<p>我们需要将软件版本“V21.6.12.6”先降级为“V21.6.11.58”，在“功能设置”选项中往下滑，找到“手动升级”选项<br><a href="https://static.hlynford.cn/wp-content/uploads/2018/05/2018061412532063.png" target="_blank" rel="noopener"><img src="https://static.hlynford.cn/wp-content/uploads/2018/05/2018061412532063.png" alt="img"></a></p>
+<p>选择固件“<a href="https://hlynford.com/tag/k3" target="_blank" rel="noopener">K3</a>_V21.6.11.58p.bin”，然后点击“上传升级”<br><a href="https://static.hlynford.cn/wp-content/uploads/2018/05/201806141253431.png" target="_blank" rel="noopener"><img src="https://static.hlynford.cn/wp-content/uploads/2018/05/201806141253431.png" alt="img"></a></p>
+<p>然后会提示“正在升级”，<a href="https://hlynford.com/tag/k3" target="_blank" rel="noopener">K3</a>的屏幕上面会显示“系统升级中”<br><a href="https://static.hlynford.cn/wp-content/uploads/2018/05/201806141254102.png" target="_blank" rel="noopener"><img src="https://static.hlynford.cn/wp-content/uploads/2018/05/201806141254102.png" alt="img"></a></p>
+<p>升级完成会自动刷新网页，重新进入“手动升级”页面。，可以看到当前版本为“V21.6.11.58”，然后我们还需要再次降级，降级为“V21.5.37.246”我们再选择“升级文件”，选择“<a href="https://hlynford.com/tag/k3" target="_blank" rel="noopener">K3</a>_V21.5.37.246.bin”，然后点击“上传升级”，然后会再次进入如上图一样的“正在升级”页面。<br><a href="https://static.hlynford.cn/wp-content/uploads/2018/05/201806141254269.png" target="_blank" rel="noopener"><img src="https://static.hlynford.cn/wp-content/uploads/2018/05/201806141254269.png" alt="img"></a></p>
+<p>升级成功后，登录<a href="https://hlynford.com/tag/k3" target="_blank" rel="noopener">K3</a>，我们打开“功能设置”中的“系统状态”，可以看到固件版本已经降级为了“V21.5.37.246”，然后执行一次重启路由器操作，确保接下来的操作不出问题。<br><a href="https://static.hlynford.cn/wp-content/uploads/2018/05/2018061412545072.png" target="_blank" rel="noopener"><img src="https://static.hlynford.cn/wp-content/uploads/2018/05/2018061412545072.png" alt="img"></a></p>
+<p><strong>第二部分</strong></p>
+<p><strong>激活 telnet 端口，备份K3</strong></p>
+<p>激活 telnet 工具地址：<a href="http://www.right.com.cn/forum/thread-261028-1-1.html" target="_blank" rel="noopener">http://www.right.com.cn/forum/thread-261028-1-1.html</a></p>
+<p>打开 RoutAckProV1B2.exe，“路由器 IP”默认为 192.168.2.1，斐讯默认的路由器地址，不需要更改，然后先点击“打开 Telnet”，然后点击“设置永久标志”，输出信息如下“收到应答信号，打开 Telnet 完成，收到应答信号，设置永久标志完成”，最后关掉软件即可<br><a href="https://static.hlynford.cn/wp-content/uploads/2018/05/2018061412550731.png" target="_blank" rel="noopener"><img src="https://static.hlynford.cn/wp-content/uploads/2018/05/2018061412550731.png" alt="img"></a></p>
+<p>插入 U 盘，然后前往“存储管理”中查看 U 盘是否正常识别<br><a href="https://static.hlynford.cn/wp-content/uploads/2018/05/2018061412552529.png" target="_blank" rel="noopener"><img src="https://static.hlynford.cn/wp-content/uploads/2018/05/2018061412552529.png" alt="img"></a></p>
+<p>打开软件“PuTTY”连接 K3 的 Telnet，“主机名称（或 IP 地址）”处填写路由器地址 192.168.2.1，“连接类型”选择”Telnet”，然后点击“打开”<br><a href="https://static.hlynford.cn/wp-content/uploads/2018/05/2018061412554463.png" target="_blank" rel="noopener"><img src="https://static.hlynford.cn/wp-content/uploads/2018/05/2018061412554463.png" alt="img"></a></p>
+<p>输入命令“mount”查看 U 盘是否挂在成功，成功的话会看到 sda 开头的设备，我这边是显示 sda1<br><a href="https://static.hlynford.cn/wp-content/uploads/2018/05/2018061412555725.png" target="_blank" rel="noopener"><img src="https://static.hlynford.cn/wp-content/uploads/2018/05/2018061412555725.png" alt="img"></a></p>
+<p>输入如下命令进行备份操作</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">cd /tmp/share/sda1                  (进入 U 盘,注意 sda1)mkdir backup                        (建立备份文件夹)cd backup                           (进入 backup 目录)cat /dev/mtdblock0 &gt; mtdblock0.bin  (备份 CFE)cat /dev/mtdblock5 &gt; mtdblock5.bin  (备份设备信息)cat /dev/mtdblock6 &gt; mtdblock6.bin  (备份固件)ls                                  （查看当前目录文件）</span><br></pre></td></tr></table></figure>
+<p><a href="https://static.hlynford.cn/wp-content/uploads/2018/05/2018061412562747.png" target="_blank" rel="noopener"><img src="https://static.hlynford.cn/wp-content/uploads/2018/05/2018061412562747.png" alt="img"></a></p>
+<p>备份完成后，进入“存储管理”中点击“安全移除”，如果无法移除，那就直接拔 U 盘，然后将备份的文件拷贝到电脑或者网盘进行二次备份。</p>
+<p><strong>第三部分</strong></p>
+<p><strong>刷入官改固件</strong></p>
+<p>打开”Tftpd64.exe”,”Current Diectory”为路由器固件所在的文件夹，点击“Browes”可修改，一般默认既为 Tftpd64 所在文件夹的路径，“Server interfaces”为连接路由所获取到的本机电脑的 ip 地址，手动选择 ip 地址为“192.168.2.x”，x 为路由自动获取到的地址，可能不一样，我这边的 ip 地址为 192.168.2.100<br><a href="https://static.hlynford.cn/wp-content/uploads/2018/05/2018061412572533.png" target="_blank" rel="noopener"><img src="https://static.hlynford.cn/wp-content/uploads/2018/05/2018061412572533.png" alt="img"></a></p>
+<p>再次打开“PuTTY”，如上次步骤输入 ip 地址为 192.168.2.1，连接类型为“Telnet”，然后单击“开始”进行连接，然后输入如下命令刷入。</p>
+<p>蓝色字体为固件名称，我这边名称为“k3_v15.bin”；红色字体为本机电脑 ip 地址，我这边 ip 地址为“192.168.2.100”</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">cd /tmp; tftp -g -r k3_v15.bin 192.168.2.100</span><br></pre></td></tr></table></figure>
+<p><a href="https://static.hlynford.cn/wp-content/uploads/2018/05/2018061412580159.png" target="_blank" rel="noopener"><img src="https://static.hlynford.cn/wp-content/uploads/2018/05/2018061412580159.png" alt="img"></a></p>
+<p>上传成功后输入刷入固件命令</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">cat k3_v15.bin &gt; /dev/mtdblock6 &amp;&amp; reboot</span><br></pre></td></tr></table></figure>
+<p>稍等片刻，会出现如下错误，rmmod dhd failed: No such file or directory，说明路由器已经断开了 PuTTY 的连接，K3 的屏幕上也显示为“系统升级中”，这时候等了 2,3 分钟进入 192.168.2.1 即可。<br><a href="https://static.hlynford.cn/wp-content/uploads/2018/05/2018061412584633.png" target="_blank" rel="noopener"><img src="https://static.hlynford.cn/wp-content/uploads/2018/05/2018061412584633.png" alt="img"></a></p>
+<p>成功后打开 192.168.2.1 登录后台，查看“系统信息”，可以看到已经已经刷入成功，至此刷入完成<br><a href="https://static.hlynford.cn/wp-content/uploads/2018/05/2018061412590881.png" target="_blank" rel="noopener"><img src="https://static.hlynford.cn/wp-content/uploads/2018/05/2018061412590881.png" alt="img"></a></p>
+<p>链接: <a href="https://hlynford.com/go.html?url=https://pan.baidu.com/s/18WTuEoHgLwcIHAwzQugNeg" target="_blank" rel="noopener">https://pan.baidu.com/s/18WTuEoHgLwcIHAwzQugNeg</a> 密码: 462p</p>
+
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+
+    
+      <div>
+        <ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>Post author:  </strong>楽猪先生</li>
+  <li class="post-copyright-link">
+    <strong>Post link: </strong>
+    <a href="//keer.me/k3-shuaji-wenzhang-beifen/" title="斐讯K3 固件降级刷官改固件详细图文教程">//keer.me/k3-shuaji-wenzhang-beifen/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>Copyright Notice:  </strong>All articles in this blog are licensed under <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" rel="external nofollow" target="_blank">CC BY-NC-SA 4.0</a> unless stating additionally.</li>
+</ul>
+
+      </div>
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/刷机/" rel="tag"># 刷机</a>
+          
+            <a href="/tags/k3/" rel="tag"># k3</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/K3-routing-redesign/" rel="next" title="K3路由刷官改版">
+                <i class="fa fa-chevron-left"></i> K3路由刷官改版
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+  </div>
+
+
+          </div>
+          
+
+  
+    <div class="comments" id="comments">
+    </div>
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            Overview
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="https://staticache.oss-cn-hangzhou.aliyuncs.com/o_1cqpk2o9h3l112sh19do2iu84fa.jpg"
+                alt="楽猪先生" />
+            
+              <p class="site-author-name" itemprop="name">楽猪先生</p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          
+            <nav class="site-state motion-element">
+              
+                <div class="site-state-item site-state-posts">
+                
+                  <a href="/archives/">
+                
+                    <span class="site-state-item-count">84</span>
+                    <span class="site-state-item-name">posts</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-categories">
+                  <a href="/categories/index.html">
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">22</span>
+                    <span class="site-state-item-name">categories</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-tags">
+                  <a href="/tags/index.html">
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">145</span>
+                    <span class="site-state-item-name">tags</span>
+                  </a>
+                </div>
+              
+            </nav>
+          
+
+          
+
+          
+
+          
+          
+
+          
+          
+            <div class="links-of-blogroll motion-element links-of-blogroll-inline">
+              <div class="links-of-blogroll-title">
+                <i class="fa  fa-fw fa-link"></i>
+                Links
+              </div>
+              <ul class="links-of-blogroll-list">
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="http://file.leanapp.cn/" title="自用图床" target="_blank">自用图床</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="http://vmpic.cn/" title="唯美图屋" target="_blank">唯美图屋</a>
+                  </li>
+                
+              </ul>
+            </div>
+          
+
+          
+            
+          
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#简介"><span class="nav-number">1.</span> <span class="nav-text">简介</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#正文"><span class="nav-number">2.</span> <span class="nav-text">正文</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2018</span>
+  <span class="with-love" id="animate">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">楽猪先生</span>
+
+  
+
+  
+</div>
+
+
+
+
+
+
+
+
+
+
+  <div class="footer-custom"><a target="_blank" rel="external nofollow" href="https://www.upyun.com/?utm_source=lianmeng&utm_medium=referral"><img src="https://img.keer.me/upyun-logo.png" width="80"></a></div>
+
+
+        
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+	
+    
+
+    
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=6.4.2"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=6.4.2"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=6.4.2"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=6.4.2"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=6.4.2"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=6.4.2"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=6.4.2"></script>
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+
+
+  <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+  
+  
+  <script src="//unpkg.com/valine/dist/Valine.min.js"></script>
+  
+  <script type="text/javascript">
+    var GUEST = ['nick','mail','link'];
+    var guest = 'nick,mail,link';
+    guest = guest.split(',').filter(function (item) {
+      return GUEST.indexOf(item)>-1;
+    });
+    new Valine({
+        el: '#comments' ,
+        verify: false,
+        notify: false,
+        appId: 'JL9DlIQzRPXRzPcfKHc1DY0W-gzGzoHsz',
+        appKey: 'bX1f6oSbTroEDIz50Ic1iPlq',
+        placeholder: 'Just go go',
+        avatar:'mm',
+        meta:guest,
+        pageSize:'10' || 10,
+        visitor: false
+    });
+  </script>
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+  <style>
+    .copy-btn {
+      display: inline-block;
+      padding: 6px 12px;
+      font-size: 13px;
+      font-weight: 700;
+      line-height: 20px;
+      color: #333;
+      white-space: nowrap;
+      vertical-align: middle;
+      cursor: pointer;
+      background-color: #eee;
+      background-image: linear-gradient(#fcfcfc, #eee);
+      border: 1px solid #d5d5d5;
+      border-radius: 3px;
+      user-select: none;
+      outline: 0;
+    }
+
+    .highlight-wrap .copy-btn {
+      transition: opacity .3s ease-in-out;
+      opacity: 0;
+      padding: 2px 6px;
+      position: absolute;
+      right: 4px;
+      top: 8px;
+    }
+
+    .highlight-wrap:hover .copy-btn,
+    .highlight-wrap .copy-btn:focus {
+      opacity: 1
+    }
+
+    .highlight-wrap {
+      position: relative;
+    }
+  </style>
+  <script>
+    $('.highlight').each(function (i, e) {
+      var $wrap = $('<div>').addClass('highlight-wrap')
+      $(e).after($wrap)
+      $wrap.append($('<button>').addClass('copy-btn').append('Copy').on('click', function (e) {
+        var code = $(this).parent().find('.code').find('.line').map(function (i, e) {
+          return $(e).text()
+        }).toArray().join('\n')
+        var ta = document.createElement('textarea')
+        document.body.appendChild(ta)
+        ta.style.position = 'absolute'
+        ta.style.top = '0px'
+        ta.style.left = '0px'
+        ta.value = code
+        ta.select()
+        ta.focus()
+        var result = document.execCommand('copy')
+        document.body.removeChild(ta)
+        
+          if(result)$(this).text('Copied')
+          else $(this).text('Copy failed')
+        
+        $(this).blur()
+      })).on('mouseleave', function (e) {
+        var $b = $(this).find('.copy-btn')
+        setTimeout(function () {
+          $b.text('Copy')
+        }, 300)
+      }).append(e)
+    })
+  </script>
+
+
+</body>
+</html>
