@@ -106,15 +106,24 @@
 
 
 
-  <meta name="keywords" content="K3,刷机">
+  <meta name="description" content="前言自从去年买了斐讯的K3路由一直用着还挺好的，但是从前几个月开始陆续开始弹广告了，而且这几天频率越来越严重。所以不得已才下定决心开始刷机。然后就开始参考了恩山论坛中的很多帖子，刚开始看的时候踩了不少坑。">
+<meta name="keywords" content="K3,刷机">
 <meta property="og:type" content="article">
 <meta property="og:title" content="K3路由刷官改版">
 <meta property="og:url" content="//keer.me/K3-routing-redesign/index.html">
 <meta property="og:site_name" content="楽猪先生">
+<meta property="og:description" content="前言自从去年买了斐讯的K3路由一直用着还挺好的，但是从前几个月开始陆续开始弹广告了，而且这几天频率越来越严重。所以不得已才下定决心开始刷机。然后就开始参考了恩山论坛中的很多帖子，刚开始看的时候踩了不少坑。">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2018-11-24T11:29:48.056Z">
+<meta property="og:image" content="https://u.vmpic.cn/2018/11/24/_20181124013530.png">
+<meta property="og:image" content="https://u.vmpic.cn/2018/11/24/2018061412545072.png">
+<meta property="og:image" content="https://u.vmpic.cn/2018/11/24/E9567965-3B69-4DBC-AAB7-853014D5E9B7.jpg">
+<meta property="og:image" content="https://u.vmpic.cn/2018/11/24/_20181124123535.png">
+<meta property="og:image" content="https://u.vmpic.cn/2018/11/24/_20181124123403.png">
+<meta property="og:updated_time" content="2018-11-24T12:04:52.632Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="K3路由刷官改版">
+<meta name="twitter:description" content="前言自从去年买了斐讯的K3路由一直用着还挺好的，但是从前几个月开始陆续开始弹广告了，而且这几天频率越来越严重。所以不得已才下定决心开始刷机。然后就开始参考了恩山论坛中的很多帖子，刚开始看的时候踩了不少坑。">
+<meta name="twitter:image" content="https://u.vmpic.cn/2018/11/24/_20181124013530.png">
 
 
 
@@ -338,7 +347,7 @@
                 
               
 
-              <time title="Created: 2018-11-24 19:16:39 / Modified: 19:29:48" itemprop="dateCreated datePublished" datetime="2018-11-24T19:16:39+08:00">2018-11-24</time>
+              <time title="Created: 2018-11-24 19:16:39 / Modified: 20:04:52" itemprop="dateCreated datePublished" datetime="2018-11-24T19:16:39+08:00">2018-11-24</time>
             
 
             
@@ -404,7 +413,22 @@
       
 
       
-        
+        <h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h3><p>自从去年买了斐讯的K3路由一直用着还挺好的，但是从前几个月开始陆续开始弹广告了，而且这几天频率越来越严重。所以不得已才下定决心开始刷机。然后就开始参考了<a href="https://www.right.com.cn/FORUM/forum.php" target="_blank" rel="noopener">恩山论坛</a>中的很多帖子，刚开始看的时候踩了不少坑。</p>
+<a id="more"></a>
+<p>比如，我目前的K3路由固件版本是官方的<code>V21.6.14.109</code>版本，导致我参考了<a href="https://www.right.com.cn/FORUM/thread-259012-1-1.html" target="_blank" rel="noopener">这个帖子</a>在浏览器中输入类似这样的地址<code>&lt;http://192.168.2.1/do.htm?cmd=flash+-noheader+192.168.2.2:/k3_v10.bin+nflash0.trx&gt;</code>的时候死活不弹出进度条，每次回车都出现这个东西</p>
+<p><img src="https://u.vmpic.cn/2018/11/24/_20181124013530.png" alt="刷机1"></p>
+<h3 id="搜索"><a href="#搜索" class="headerlink" title="搜索"></a>搜索</h3><p>于是继续搜索，发现了<a href="https://hlynford.com/202.html" target="_blank" rel="noopener">一篇文章</a>但是第一部分的时候就出现了我的官方固件版本太高，导致手动升级失败。后来直接重启到CFE模式，也就是按住<code>复位键</code>+<code>开机键</code>，输入<code>192.168.2.1</code>进入到的页面。点击<code>upload</code>按钮来选择<code>V21.6.11.58.bin</code>，等待一段时间重启后，再次进入到这个页面。继续选择<code>V21.6.11.58.bin</code>这个固件，等待几分钟后再次重新，这次正常重启就可以了。</p>
+<p>最后打开<code>192.168.2.1</code>进入路由管理页面。点击“系统状态”应该就可以看到下面的信息了</p>
+<p><img src="https://u.vmpic.cn/2018/11/24/2018061412545072.png" alt=""></p>
+<p>然后继续参考<a href="https://hlynford.com/202.html" target="_blank" rel="noopener">这篇文章</a>的第二部分开始。后面的就按照此篇文章的步骤来操作了，一路下来没什么问题。</p>
+<p>当最后执行</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">cat k3_v15.bin &gt; /dev/mtdblock6 &amp;&amp; reboot</span><br></pre></td></tr></table></figure>
+<p>以后，稍微多等一会。因为不会立马来显示屏上出现<code>系统升级中</code>的字样。</p>
+<p><img src="https://u.vmpic.cn/2018/11/24/E9567965-3B69-4DBC-AAB7-853014D5E9B7.jpg" alt="系统升级"></p>
+<p>最后放2张完成后的截图吧。</p>
+<p><img src="https://u.vmpic.cn/2018/11/24/_20181124123535.png" alt="刷机完成"></p>
+<p><img src="https://u.vmpic.cn/2018/11/24/_20181124123403.png" alt="刷机完成"></p>
+
       
     </div>
 
@@ -509,8 +533,17 @@
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            Overview
+          </li>
+        </ul>
+      
 
-      <section class="site-overview-wrap sidebar-panel sidebar-panel-active">
+      <section class="site-overview-wrap sidebar-panel">
         <div class="site-overview">
           <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
             
@@ -929,6 +962,22 @@
         </div>
       </section>
 
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#前言"><span class="nav-number">1.</span> <span class="nav-text">前言</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#搜索"><span class="nav-number">2.</span> <span class="nav-text">搜索</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
       
 
       
