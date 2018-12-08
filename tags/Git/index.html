@@ -390,7 +390,7 @@
                 
                   <a href="/archives/">
                 
-                    <span class="site-state-item-count">85</span>
+                    <span class="site-state-item-count">86</span>
                     <span class="site-state-item-name">posts</span>
                   </a>
                 </div>
@@ -756,7 +756,9 @@
                     
                       
                     
-                    <span class="site-state-item-count">148</span>
+                      
+                    
+                    <span class="site-state-item-count">149</span>
                     <span class="site-state-item-name">tags</span>
                   </a>
                 </div>
@@ -1053,6 +1055,33 @@
           return $(e).text()
         }).toArray().join('\n')
         var ta = document.createElement('textarea')
+        document.body.appendChild(ta)
+        ta.style.position = 'absolute'
+        ta.style.top = '0px'
+        ta.style.left = '0px'
+        ta.value = code
+        ta.select()
+        ta.focus()
+        var result = document.execCommand('copy')
+        document.body.removeChild(ta)
+        
+          if(result)$(this).text('Copied')
+          else $(this).text('Copy failed')
+        
+        $(this).blur()
+      })).on('mouseleave', function (e) {
+        var $b = $(this).find('.copy-btn')
+        setTimeout(function () {
+          $b.text('Copy')
+        }, 300)
+      }).append(e)
+    })
+  </script>
+
+
+</body>
+</html>
+   var ta = document.createElement('textarea')
         document.body.appendChild(ta)
         ta.style.position = 'absolute'
         ta.style.top = '0px'
