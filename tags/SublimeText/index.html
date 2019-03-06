@@ -109,7 +109,7 @@
   <meta name="keywords" content="Hexo, Golang, Laravel, Git, Docker">
 <meta property="og:type" content="website">
 <meta property="og:title" content="楽猪先生">
-<meta property="og:url" content="//keer.me/tags/SublimeText/index.html">
+<meta property="og:url" content="//keer.me/tags/sublimetext/index.html">
 <meta property="og:site_name" content="楽猪先生">
 <meta property="og:locale" content="zh-Hans">
 <meta name="twitter:card" content="summary">
@@ -120,7 +120,7 @@
 
 
 
-  <link rel="canonical" href="//keer.me/tags/SublimeText/"/>
+  <link rel="canonical" href="//keer.me/tags/sublimetext/"/>
 
 
 
@@ -130,7 +130,7 @@
   };
 </script>
 
-  <title>Tag: SublimeText | 楽猪先生</title>
+  <title>Tag: sublimetext | 楽猪先生</title>
   
 
 
@@ -305,7 +305,7 @@
 
     <div id="posts" class="posts-collapse">
       <div class="collection-title">
-        <h1>SublimeText<small>Tag</small>
+        <h1>sublimetext<small>Tag</small>
         </h1>
       </div>
 
@@ -317,37 +317,9 @@
 
       <h2 class="post-title">
         
-            <a class="post-title-link" href="/sublimetext-build-for-php/" itemprop="url">
+            <a class="post-title-link" href="/my-phpstorm-setting-lists/" itemprop="url">
               
-                <span itemprop="name">SublimeText3运行PHP代码</span>
-              
-            </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2016-07-12T18:07:23+08:00"
-              content="2016-07-12" >
-          07-12
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-      
-        
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="/SublimeText-Plugins/" itemprop="url">
-              
-                <span itemprop="name">SublimeText插件备忘</span>
+                <span itemprop="name">我的PhpStorm配置单</span>
               
             </a>
         
@@ -355,9 +327,9 @@
 
       <div class="post-meta">
         <time class="post-time" itemprop="dateCreated"
-              datetime="2016-06-12T23:19:45+08:00"
-              content="2016-06-12" >
-          06-12
+              datetime="2019-03-06T22:56:27+08:00"
+              content="2019-03-06" >
+          03-06
         </time>
       </div>
 
@@ -418,7 +390,7 @@
                 
                   <a href="/archives/">
                 
-                    <span class="site-state-item-count">87</span>
+                    <span class="site-state-item-count">88</span>
                     <span class="site-state-item-name">posts</span>
                   </a>
                 </div>
@@ -475,7 +447,9 @@
                     
                       
                     
-                    <span class="site-state-item-count">22</span>
+                      
+                    
+                    <span class="site-state-item-count">23</span>
                     <span class="site-state-item-name">categories</span>
                   </a>
                 </div>
@@ -790,7 +764,9 @@
                     
                       
                     
-                    <span class="site-state-item-count">151</span>
+                      
+                    
+                    <span class="site-state-item-count">152</span>
                     <span class="site-state-item-name">tags</span>
                   </a>
                 </div>
@@ -848,7 +824,7 @@
 
     <footer id="footer" class="footer">
       <div class="footer-inner">
-        <div class="copyright">&copy; <span itemprop="copyrightYear">2018</span>
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
   <span class="with-love" id="animate">
     <i class="fa fa-user"></i>
   </span>
@@ -1087,6 +1063,33 @@
           return $(e).text()
         }).toArray().join('\n')
         var ta = document.createElement('textarea')
+        document.body.appendChild(ta)
+        ta.style.position = 'absolute'
+        ta.style.top = '0px'
+        ta.style.left = '0px'
+        ta.value = code
+        ta.select()
+        ta.focus()
+        var result = document.execCommand('copy')
+        document.body.removeChild(ta)
+        
+          if(result)$(this).text('Copied')
+          else $(this).text('Copy failed')
+        
+        $(this).blur()
+      })).on('mouseleave', function (e) {
+        var $b = $(this).find('.copy-btn')
+        setTimeout(function () {
+          $b.text('Copy')
+        }, 300)
+      }).append(e)
+    })
+  </script>
+
+
+</body>
+</html>
+ateElement('textarea')
         document.body.appendChild(ta)
         ta.style.position = 'absolute'
         ta.style.top = '0px'
