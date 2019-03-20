@@ -296,6 +296,202 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="//keer.me/MySQL-random-sort-ORDER-BY-RAND-performance-optimization/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="楽猪先生">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="https://staticache.oss-cn-hangzhou.aliyuncs.com/o_1cqpk2o9h3l112sh19do2iu84fa.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="楽猪先生">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/MySQL-random-sort-ORDER-BY-RAND-performance-optimization/" itemprop="url">
+                  MySQL 随机排序 ORDER BY RAND() 性能优化
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+
+              
+                
+              
+
+              <time title="Created: 2018-03-26 22:47:26" itemprop="dateCreated datePublished" datetime="2018-03-26T22:47:26+08:00">2018-03-26</time>
+            
+
+            
+              
+
+              
+                
+                <span class="post-meta-divider">|</span>
+                
+
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">Edited on</span>
+                
+                <time title="Modified: 2018-09-01 21:56:54" itemprop="dateModified" datetime="2018-09-01T21:56:54+08:00">2018-09-01</time>
+              
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/MySQL/" itemprop="url" rel="index"><span itemprop="name">MySQL</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/MySQL-random-sort-ORDER-BY-RAND-performance-optimization/#comments" itemprop="discussionUrl">
+                  <span class="post-meta-item-text">Comments: </span> <span class="post-comments-count valine-comment-count" data-xid="/MySQL-random-sort-ORDER-BY-RAND-performance-optimization/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <blockquote>
+<p>表记录1876302，totalScore创建了索引。</p>
+</blockquote>
+<h3 id="第一种：MySQL-随机排序常规写法："><a href="#第一种：MySQL-随机排序常规写法：" class="headerlink" title="第一种：MySQL 随机排序常规写法："></a>第一种：MySQL 随机排序常规写法：</h3><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> * <span class="keyword">FROM</span> <span class="keyword">users</span> <span class="keyword">WHERE</span> totalScore <span class="keyword">BETWEEN</span> <span class="number">5</span> <span class="keyword">AND</span> <span class="number">100</span> <span class="keyword">ORDER</span> <span class="keyword">BY</span> <span class="keyword">RAND</span>() <span class="keyword">LIMIT</span> <span class="number">100</span>;</span><br></pre></td></tr></table></figure>
+<p>执行耗时1.18s</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> * <span class="keyword">FROM</span> <span class="keyword">users</span> <span class="keyword">WHERE</span> totalScore <span class="keyword">BETWEEN</span> <span class="number">5</span> <span class="keyword">AND</span> <span class="number">100</span> <span class="keyword">ORDER</span> <span class="keyword">BY</span> <span class="keyword">RAND</span>() <span class="keyword">LIMIT</span> <span class="number">100</span>;</span><br></pre></td></tr></table></figure>
+<p>执行耗时1.25s</p>
+<p>这样的耗时不能接受。</p>
+<h3 id="第二种：stackoverflow上找了一个黑科技写法："><a href="#第二种：stackoverflow上找了一个黑科技写法：" class="headerlink" title="第二种：stackoverflow上找了一个黑科技写法："></a>第二种：stackoverflow上找了一个黑科技写法：</h3><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> * <span class="keyword">FROM</span> <span class="keyword">users</span> <span class="keyword">WHERE</span> totalScore <span class="keyword">BETWEEN</span> <span class="number">5</span> <span class="keyword">AND</span> <span class="number">100</span> <span class="keyword">ORDER</span> <span class="keyword">BY</span> <span class="number">37</span>*(<span class="keyword">UNIX_TIMESTAMP</span>() ^ <span class="keyword">id</span>) &amp; <span class="number">0xffff</span> <span class="keyword">LIMIT</span> <span class="number">100</span>;</span><br></pre></td></tr></table></figure>
+<p>执行耗时150ms</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> * <span class="keyword">FROM</span> <span class="keyword">users</span> <span class="keyword">WHERE</span> totalScore <span class="keyword">BETWEEN</span> <span class="number">5</span> <span class="keyword">AND</span> <span class="number">100</span> <span class="keyword">ORDER</span> <span class="keyword">BY</span> <span class="number">37</span>*(<span class="keyword">UNIX_TIMESTAMP</span>() ^ <span class="keyword">id</span>) &amp; <span class="number">0xffff</span> <span class="keyword">LIMIT</span> <span class="number">100</span>;</span><br></pre></td></tr></table></figure>
+<p>执行耗时153ms</p>
+<p>执行耗时直接缩短至150ms，已经比上一个写法快很多了，而且LIMIT 1000时耗时也是150ms左右。</p>
+<h3 id="第三种方式："><a href="#第三种方式：" class="headerlink" title="第三种方式："></a>第三种方式：</h3><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> *</span><br><span class="line"><span class="keyword">FROM</span> <span class="keyword">users</span> <span class="keyword">AS</span> u</span><br><span class="line"><span class="keyword">INNER</span> <span class="keyword">JOIN</span> (<span class="keyword">SELECT</span> <span class="keyword">id</span> <span class="keyword">FROM</span> <span class="keyword">users</span> <span class="keyword">WHERE</span> totalScore <span class="keyword">BETWEEN</span> <span class="number">5</span> <span class="keyword">AND</span> <span class="number">100</span> <span class="keyword">ORDER</span> <span class="keyword">BY</span> <span class="keyword">RAND</span>() <span class="keyword">LIMIT</span> <span class="number">100</span>) <span class="keyword">AS</span> t <span class="keyword">ON</span> t.id=u.id</span><br><span class="line"><span class="keyword">WHERE</span> <span class="number">1</span></span><br></pre></td></tr></table></figure>
+<p>执行耗时110ms</p>
+<p>LIMIT 1000时耗时也稳定在110ms左右。</p>
+<p>耗时最少，推荐使用第三种。</p>
+
+          
+        
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="//keer.me/Synchronous-Asynchronous-Blocking-Non-blocking/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1962,177 +2158,11 @@
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="//keer.me/linux-installed-docker1-13-1/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="楽猪先生">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="https://staticache.oss-cn-hangzhou.aliyuncs.com/o_1cqpk2o9h3l112sh19do2iu84fa.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="楽猪先生">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/linux-installed-docker1-13-1/" itemprop="url">
-                  CentOS7安装Docker1.13.1
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-
-            
-            
-            
-
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Posted on</span>
-              
-
-              
-                
-              
-
-              <time title="Created: 2017-12-03 17:30:34" itemprop="dateCreated datePublished" datetime="2017-12-03T17:30:34+08:00">2017-12-03</time>
-            
-
-            
-              
-
-              
-                
-                <span class="post-meta-divider">|</span>
-                
-
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-calendar-check-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">Edited on</span>
-                
-                <time title="Modified: 2018-10-26 18:04:58" itemprop="dateModified" datetime="2018-10-26T18:04:58+08:00">2018-10-26</time>
-              
-            
-          </span>
-
-          
-
-          
-            
-              <span class="post-comments-count">
-                <span class="post-meta-divider">|</span>
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-comment-o"></i>
-                </span>
-                <a href="/linux-installed-docker1-13-1/#comments" itemprop="discussionUrl">
-                  <span class="post-meta-item-text">Comments: </span> <span class="post-comments-count valine-comment-count" data-xid="/linux-installed-docker1-13-1/" itemprop="commentCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          <p>由于目前CentOS7使用yum源里默认收录的的Docker版本为1.12.6，所以如果安装1.13.1的话就要重新获取最新的yum源了。</p>
-          <!--noindex-->
-          <div class="post-button text-center">
-            <a class="btn" href="/linux-installed-docker1-13-1/#more" rel="contents">
-              Read more &raquo;
-            </a>
-          </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
   <nav class="pagination">
-    <a class="extend prev" rel="prev" href="/page/2/"><i class="fa fa-angle-left" aria-label="Previous page"></i></a><a class="page-number" href="/">1</a><a class="page-number" href="/page/2/">2</a><span class="page-number current">3</span><a class="page-number" href="/page/4/">4</a><span class="space">&hellip;</span><a class="page-number" href="/page/9/">9</a><a class="extend next" rel="next" href="/page/4/"><i class="fa fa-angle-right" aria-label="Next page"></i></a>
+    <a class="extend prev" rel="prev" href="/page/2/"><i class="fa fa-angle-left" aria-label="Previous page"></i></a><a class="page-number" href="/">1</a><a class="page-number" href="/page/2/">2</a><span class="page-number current">3</span><a class="page-number" href="/page/4/">4</a><span class="space">&hellip;</span><a class="page-number" href="/page/10/">10</a><a class="extend next" rel="next" href="/page/4/"><i class="fa fa-angle-right" aria-label="Next page"></i></a>
   </nav>
 
 
@@ -2179,7 +2209,7 @@
                 
                   <a href="/archives/">
                 
-                    <span class="site-state-item-count">90</span>
+                    <span class="site-state-item-count">91</span>
                     <span class="site-state-item-name">posts</span>
                   </a>
                 </div>
@@ -2557,7 +2587,11 @@
                     
                       
                     
-                    <span class="site-state-item-count">154</span>
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">156</span>
                     <span class="site-state-item-name">tags</span>
                   </a>
                 </div>
