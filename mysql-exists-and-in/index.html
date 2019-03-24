@@ -106,18 +106,18 @@
 
 
 
-  <meta name="description" content="待补充引言">
+  <meta name="description" content="在学习Laravel的has和whereHas的时候打印了下执行的sql语句。发现生成的语句使用的是exists从句的子查询。对于在mysql中还尚未使用过exists这个关键字，所以就仔细的研究了下。 最后发现说的最多的还是拿来和IN来做比较，所以也就有了下文。">
 <meta name="keywords" content="exists,in">
 <meta property="og:type" content="article">
 <meta property="og:title" content="MySQL关键字EXISTS和IN">
 <meta property="og:url" content="//keer.me/mysql-exists-and-in/index.html">
 <meta property="og:site_name" content="楽猪先生">
-<meta property="og:description" content="待补充引言">
+<meta property="og:description" content="在学习Laravel的has和whereHas的时候打印了下执行的sql语句。发现生成的语句使用的是exists从句的子查询。对于在mysql中还尚未使用过exists这个关键字，所以就仔细的研究了下。 最后发现说的最多的还是拿来和IN来做比较，所以也就有了下文。">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2019-03-20T15:33:11.482Z">
+<meta property="og:updated_time" content="2019-03-24T14:07:58.771Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="MySQL关键字EXISTS和IN">
-<meta name="twitter:description" content="待补充引言">
+<meta name="twitter:description" content="在学习Laravel的has和whereHas的时候打印了下执行的sql语句。发现生成的语句使用的是exists从句的子查询。对于在mysql中还尚未使用过exists这个关键字，所以就仔细的研究了下。 最后发现说的最多的还是拿来和IN来做比较，所以也就有了下文。">
 
 
 
@@ -341,12 +341,24 @@
                 
               
 
-              <time title="Created: 2019-03-20 23:31:10 / Modified: 23:33:11" itemprop="dateCreated datePublished" datetime="2019-03-20T23:31:10+08:00">2019-03-20</time>
+              <time title="Created: 2019-03-20 23:31:10" itemprop="dateCreated datePublished" datetime="2019-03-20T23:31:10+08:00">2019-03-20</time>
             
 
             
               
 
+              
+                
+                <span class="post-meta-divider">|</span>
+                
+
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">Edited on</span>
+                
+                <time title="Modified: 2019-03-24 22:07:58" itemprop="dateModified" datetime="2019-03-24T22:07:58+08:00">2019-03-24</time>
               
             
           </span>
@@ -407,17 +419,27 @@
       
 
       
-        <blockquote>
-<p>待补充引言</p>
-</blockquote>
+        <p>在学习Laravel的<code>has</code>和<code>whereHas</code>的时候打印了下执行的sql语句。发现生成的语句使用的是exists从句的子查询。对于在mysql中还尚未使用过exists这个关键字，所以就仔细的研究了下。</p>
+<p>最后发现说的最多的还是拿来和<code>IN</code>来做比较，所以也就有了下文。</p>
 <a id="more"></a>
+<h3 id="Laravel的has和whereHas"><a href="#Laravel的has和whereHas" class="headerlink" title="Laravel的has和whereHas"></a>Laravel的has和whereHas</h3><ul>
+<li><p>has</p>
+  <figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$post = Post::has(<span class="string">'comments'</span>, <span class="string">'&gt;='</span>, <span class="number">1</span>)-&gt;get([<span class="string">'title'</span>]);</span><br></pre></td></tr></table></figure>
+  <figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> <span class="string">`title`</span></span><br><span class="line"><span class="keyword">FROM</span> <span class="string">`posts`</span></span><br><span class="line"><span class="keyword">WHERE</span> <span class="keyword">EXISTS</span> (</span><br><span class="line">    <span class="keyword">SELECT</span> *</span><br><span class="line">    <span class="keyword">FROM</span> <span class="string">`comments`</span></span><br><span class="line">    <span class="keyword">WHERE</span> <span class="string">`posts`</span>.<span class="string">`id`</span> = <span class="string">`comments`</span>.<span class="string">`post_id`</span></span><br><span class="line">)</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>whereHas</p>
+<p>  whereHas其实在底层也是调用了has方法，只是将回调函数的位置向前提了。</p>
+  <figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">$post = Post::whereHas(<span class="string">'comments'</span>, <span class="function"><span class="keyword">function</span><span class="params">($query)</span> </span>&#123;</span><br><span class="line">    $query-&gt;where(<span class="string">'content'</span>, <span class="string">'like'</span>, <span class="string">'%1%'</span>);</span><br><span class="line">&#125;, <span class="string">'&gt;='</span>, <span class="number">1</span>)-&gt;get();</span><br></pre></td></tr></table></figure>
+  <figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> *</span><br><span class="line"><span class="keyword">FROM</span> <span class="string">`posts`</span></span><br><span class="line"><span class="keyword">WHERE</span> <span class="keyword">EXISTS</span> (</span><br><span class="line">	<span class="keyword">SELECT</span> *</span><br><span class="line">	<span class="keyword">FROM</span> <span class="string">`comments`</span></span><br><span class="line">	<span class="keyword">WHERE</span> <span class="string">`posts`</span>.<span class="string">`id`</span> = <span class="string">`comments`</span>.<span class="string">`post_id`</span></span><br><span class="line">		<span class="keyword">AND</span> <span class="string">`content`</span> <span class="keyword">LIKE</span> <span class="string">'%1%'</span></span><br><span class="line">)</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
 <h3 id="EXISTS"><a href="#EXISTS" class="headerlink" title="EXISTS"></a>EXISTS</h3><p><strong>概述</strong></p>
 <p>当exists里的条件语句能够返回记录时(无论记录行多少，只要能返回)，条件就为真，返回当前loop到的这条记录。反之如果exists里的条件语句不能返回记录行，则条件为假，那么当前loop到的这条记录被丢弃。</p>
 <p>exists的条件就像是一个boolean条件，当有结果集则为true，不能返回结果集则为false.</p>
 <p><strong>语法格式</strong></p>
 <figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> * <span class="keyword">FROM</span> TABLE_NAME <span class="keyword">WHERE</span> [<span class="keyword">NOT</span>] <span class="keyword">EXISTS</span> (SELECT...)</span><br></pre></td></tr></table></figure>
 <p><strong>示例</strong></p>
-<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> * <span class="keyword">FROM</span> <span class="string">`posts`</span> <span class="keyword">WHERE</span> <span class="keyword">EXISTS</span> (<span class="keyword">SELECT</span> <span class="number">1</span> <span class="keyword">FROM</span> <span class="string">`comments`</span> <span class="keyword">WHERE</span> comments.post_id = posts.id)</span><br></pre></td></tr></table></figure>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> *</span><br><span class="line"><span class="keyword">FROM</span> <span class="string">`posts`</span></span><br><span class="line"><span class="keyword">WHERE</span> <span class="keyword">EXISTS</span> (</span><br><span class="line">	<span class="keyword">SELECT</span> <span class="number">1</span></span><br><span class="line">	<span class="keyword">FROM</span> <span class="string">`comments`</span></span><br><span class="line">	<span class="keyword">WHERE</span> comments.post_id = posts.id</span><br><span class="line">)</span><br></pre></td></tr></table></figure>
 <blockquote>
 <p>从这里也可以看出exists里的条件语句<code>SELECT 1</code>即可以是<code>1</code>也可以是<code>*</code> .因为只要有结果集返回就可以。</p>
 </blockquote>
@@ -1011,7 +1033,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#EXISTS"><span class="nav-number">1.</span> <span class="nav-text">EXISTS</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#IN"><span class="nav-number">2.</span> <span class="nav-text">IN</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#EXISTS与IN的关系和区别"><span class="nav-number">3.</span> <span class="nav-text">EXISTS与IN的关系和区别</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#总结"><span class="nav-number">4.</span> <span class="nav-text">总结</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#Laravel的has和whereHas"><span class="nav-number">1.</span> <span class="nav-text">Laravel的has和whereHas</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#EXISTS"><span class="nav-number">2.</span> <span class="nav-text">EXISTS</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#IN"><span class="nav-number">3.</span> <span class="nav-text">IN</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#EXISTS与IN的关系和区别"><span class="nav-number">4.</span> <span class="nav-text">EXISTS与IN的关系和区别</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#总结"><span class="nav-number">5.</span> <span class="nav-text">总结</span></a></li></ol></div>
             
 
           </div>
