@@ -1,0 +1,1311 @@
+<!DOCTYPE html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<html class="theme-next gemini" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=6.4.2" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=6.4.2">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=6.4.2">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=6.4.2">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=6.4.2" color="#222">
+
+
+
+
+
+
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Gemini',
+    version: '6.4.2',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: false,
+    fastclick: false,
+    lazyload: false,
+    tabs: true,
+    motion: {"enable":false,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+  
+
+
+
+
+  <meta name="description" content="Go 语言也提供了接口类型，使得我们可以面向接口编程，将实现和接口分离。在我看来，软件的抽象之美也应该以此来表达，和 Java 语言不同的是 Go 并不是那么 “强制”，它使用了一种 鸭子类型 的方式让动态类型成为可能。">
+<meta name="keywords" content="interface,接口">
+<meta property="og:type" content="article">
+<meta property="og:title" content="【转载】理解和使用 Go 接口">
+<meta property="og:url" content="//keer.me/learn-golang-interfaces/index.html">
+<meta property="og:site_name" content="楽猪先生">
+<meta property="og:description" content="Go 语言也提供了接口类型，使得我们可以面向接口编程，将实现和接口分离。在我看来，软件的抽象之美也应该以此来表达，和 Java 语言不同的是 Go 并不是那么 “强制”，它使用了一种 鸭子类型 的方式让动态类型成为可能。">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="https://u.vmpic.cn/2019/05/18/6jis.png">
+<meta property="og:image" content="https://u.vmpic.cn/2019/05/18/6J24.png">
+<meta property="og:updated_time" content="2019-05-18T08:41:55.567Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="【转载】理解和使用 Go 接口">
+<meta name="twitter:description" content="Go 语言也提供了接口类型，使得我们可以面向接口编程，将实现和接口分离。在我看来，软件的抽象之美也应该以此来表达，和 Java 语言不同的是 Go 并不是那么 “强制”，它使用了一种 鸭子类型 的方式让动态类型成为可能。">
+<meta name="twitter:image" content="https://u.vmpic.cn/2019/05/18/6jis.png">
+
+
+
+
+
+
+  <link rel="canonical" href="//keer.me/learn-golang-interfaces/"/>
+
+
+
+<script type="text/javascript" id="page.configurations">
+  CONFIG.page = {
+    sidebar: "",
+  };
+</script>
+
+  <title>【转载】理解和使用 Go 接口 | 楽猪先生</title>
+  
+
+
+
+
+
+
+
+
+
+  <noscript>
+  <style type="text/css">
+    .use-motion .motion-element,
+    .use-motion .brand,
+    .use-motion .menu-item,
+    .sidebar-inner,
+    .use-motion .post-block,
+    .use-motion .pagination,
+    .use-motion .comments,
+    .use-motion .post-header,
+    .use-motion .post-body,
+    .use-motion .collection-title { opacity: initial; }
+
+    .use-motion .logo,
+    .use-motion .site-title,
+    .use-motion .site-subtitle {
+      opacity: initial;
+      top: initial;
+    }
+
+    .use-motion {
+      .logo-line-before i { left: initial; }
+      .logo-line-after i { right: initial; }
+    }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">楽猪先生</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+    
+      
+        <p class="site-subtitle">向往文艺的小清新</p>
+      
+    
+  </div>
+
+  <div class="site-nav-toggle">
+    <button aria-label="Toggle navigation bar">
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  
+    <ul id="menu" class="menu">
+      
+        
+        
+        
+          
+          <li class="menu-item menu-item-home">
+    <a href="/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-home"></i> <br />Home</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-tags">
+    <a href="/tags/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />Tags</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-categories">
+    <a href="/categories/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-th"></i> <br />Categories</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-archives">
+    <a href="/archives/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />Archives</a>
+  </li>
+
+      
+      
+    </ul>
+  
+
+  
+
+  
+</nav>
+
+
+
+  
+
+
+
+</div>
+    </header>
+
+    
+
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+            
+
+          
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="//keer.me/learn-golang-interfaces/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="楽猪先生">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="https://staticache.oss-cn-hangzhou.aliyuncs.com/o_1cqpk2o9h3l112sh19do2iu84fa.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="楽猪先生">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">【转载】理解和使用 Go 接口
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+
+              
+                
+              
+
+              <time title="Created: 2019-05-18 16:38:10 / Modified: 16:41:55" itemprop="dateCreated datePublished" datetime="2019-05-18T16:38:10+08:00">2019-05-18</time>
+            
+
+            
+              
+
+              
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/Golang/" itemprop="url" rel="index"><span itemprop="name">Golang</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/learn-golang-interfaces/#comments" itemprop="discussionUrl">
+                  <span class="post-meta-item-text">Comments: </span> <span class="post-comments-count valine-comment-count" data-xid="/learn-golang-interfaces/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>Go 语言也提供了接口类型，使得我们可以面向接口编程，将实现和接口分离。在我看来，软件的抽象之美也应该以此来表达，和 Java 语言不同的是 Go 并不是那么 “强制”，它使用了一种 <a href="https://zh.wikipedia.org/wiki/%E9%B8%AD%E5%AD%90%E7%B1%BB%E5%9E%8B" target="_blank" rel="noopener">鸭子类型</a> 的方式让动态类型成为可能。</p>
+<a id="more"></a>
+<h1 id="Duck-Typing"><a href="#Duck-Typing" class="headerlink" title="Duck Typing"></a>Duck Typing</h1><p>在 Go 中没有 <code>implements</code> 和 <code>extends</code> 这种关键字，这对我们而言反倒轻松了一些，它认为 Go 的接口就像鸭子测试里的描述：</p>
+<blockquote>
+<p>当看到一只鸟走起来像鸭子、游泳起来像鸭子、叫起来也像鸭子，那么这只鸟就可以被称为鸭子。</p>
+</blockquote>
+<p>在鸭子类型中，<strong>关注点在于对象的行为</strong>，能作什么；而不是关注对象所属的类型。例如，在不使用鸭子类型的语言中，我们可以编写一个函数，它接受一个类型为 “鸭子” 的对象，并调用它的 “走” 和 “叫” 方法。</p>
+<p>在使用鸭子类型的语言中，这样的一个函数可以接受一个任意类型的对象，并调用它的 “走” 和 “叫” 方法。如果这些需要被调用的方法不存在，那么将引发一个运行时错误。</p>
+<p>任何拥有这样的正确的 “走” 和 “叫” 方法的对象都可被函数接受的这种行为引出了以上表述，这种决定类型的方式因此得名。</p>
+<h1 id="举个例子"><a href="#举个例子" class="headerlink" title="举个例子"></a>举个例子</h1><p>我们用 Go 语言来实现一个鸭子类型：</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">type</span> Duck <span class="keyword">interface</span> &#123;</span><br><span class="line">    Swim()    <span class="comment">// 游泳</span></span><br><span class="line">    Feathers() <span class="comment">// 羽毛</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>这里使用 Go 提供的 <code>interface</code> 关键字定义了一个鸭子接口类型，这个接口中提供了鸭子的两种行为：游泳和羽毛是什么样的，但是没有提供实现。</p>
+<p>我们见过的鸭子类型可多了去了，下面是你可能见过的：</p>
+<p><img src="https://u.vmpic.cn/2019/05/18/6jis.png" alt="鸭子类型"></p>
+<h1 id="组合接口"><a href="#组合接口" class="headerlink" title="组合接口"></a>组合接口</h1><p>现在我们给鸭子再添加一种嘎嘎叫的能力，一种方式是在原有的接口上添加 “嘎嘎叫” 方法，这样做的话就表示所有的鸭子都应该拥有此能力，假设我们的玩具鸭并不能开口嘎嘎叫，所以它没有这种能力。这时候我们可以将会嘎嘎叫的鸭子单独定义一种类型，在 Go 可以使用组合的方式来实现：</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">type</span> QuackDuck <span class="keyword">interface</span> &#123;</span><br><span class="line">    Quack()  <span class="comment">// 嘎嘎叫</span></span><br><span class="line">    Duck     <span class="comment">// 嵌入接口</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>这样 <code>QuackDuck</code> 类型就拥有了之前 <code>Duck</code> 提供的两种抽象能力，同时还应该拥有嘎嘎叫的能力。</p>
+<h1 id="接口实现"><a href="#接口实现" class="headerlink" title="接口实现"></a>接口实现</h1><p>前面我们只给出了鸭子的能力定义，还没有任何实现，由于 Go 中没有继承和实现的关键字，想成为上述接口的实现非常简单，只要实现它们定义的方法就可以了。</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// RealDuck - 真正的鸭子</span></span><br><span class="line"><span class="keyword">type</span> RealDuck <span class="keyword">struct</span> &#123; &#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="params">(RealDuck)</span> <span class="title">Swim</span><span class="params">()</span></span> &#123;</span><br><span class="line">    fmt.Println(<span class="string">"用鸭璞向后划水"</span>)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="params">(RealDuck)</span> <span class="title">Feathers</span><span class="params">()</span></span> &#123;</span><br><span class="line">    fmt.Println(<span class="string">"遇到水也不会湿的羽毛"</span>)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="params">(RealDuck)</span> <span class="title">Quack</span><span class="params">()</span></span> &#123;</span><br><span class="line">    fmt.Println(<span class="string">"嘎~ 嘎~ 嘎~"</span>)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// ToyDuck - 玩具鸭</span></span><br><span class="line"><span class="keyword">type</span> ToyDuck <span class="keyword">struct</span> &#123; &#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="params">(ToyDuck)</span> <span class="title">Swim</span><span class="params">()</span></span> &#123;</span><br><span class="line">    fmt.Println(<span class="string">"以固定的速度向前移动"</span>)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="params">(ToyDuck)</span> <span class="title">Feathers</span><span class="params">()</span></span> &#123;</span><br><span class="line">    fmt.Println(<span class="string">"白色的固定的塑料羽毛"</span>)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>可以看到我们定义了两种鸭子类型，一种是真正的鸭子，它还多实现了一种嘎嘎叫方法，另一个玩具鸭子只有游泳和羽毛这两种行为。</p>
+<p>这个编程方式和我们写普通的结构体方法没什么区别，只是对应的方法签名相同，其实这种方式在 Go 语言的标准库中有特别多的应用，比如：<a href="https://golang.org/pkg/io/#Reader" target="_blank" rel="noopener">io.Reader</a>、<a href="https://golang.org/pkg/io/#Writer" target="_blank" rel="noopener">io.Writer</a> 和 <a href="https://golang.org/pkg/io/#Closer" target="_blank" rel="noopener">io.Closer</a>。</p>
+<h1 id="接口使用"><a href="#接口使用" class="headerlink" title="接口使用"></a>接口使用</h1><p>接下来我们可以使用一下这个类型了：</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> duck Duck</span><br><span class="line">duck = ToyDuck&#123;&#125;</span><br><span class="line">duck.Swim()</span><br><span class="line">duck.Feathers()</span><br></pre></td></tr></table></figure>
+<p>输出</p>
+<figure class="highlight tex"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">以固定的速度向前移动</span><br><span class="line">白色的固定的塑料羽毛</span><br></pre></td></tr></table></figure>
+<p>由于玩具鸭没有嘎嘎叫的能力，所以如果你这么写编译无法通过</p>
+<p><img src="https://u.vmpic.cn/2019/05/18/6J24.png" alt="错误实现"></p>
+<hr>
+<p>我们也可以用一种工厂的方式来进行调用：</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">Factory</span><span class="params">(name <span class="keyword">string</span>)</span> <span class="title">Duck</span></span> &#123;</span><br><span class="line">    <span class="keyword">switch</span> name &#123;</span><br><span class="line">    <span class="keyword">case</span> <span class="string">"toy"</span>:</span><br><span class="line">        <span class="keyword">return</span> &amp;ToyDuck&#123;&#125;</span><br><span class="line">    <span class="keyword">case</span> <span class="string">"real"</span>:</span><br><span class="line">        <span class="keyword">return</span> &amp;RealDuck&#123;&#125;</span><br><span class="line">    <span class="keyword">default</span>:</span><br><span class="line">        <span class="built_in">panic</span>(<span class="string">"No such duck"</span>)</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">main</span><span class="params">()</span></span> &#123;</span><br><span class="line">    duck := Factory(<span class="string">"toy"</span>)</span><br><span class="line">    duck.Swim()</span><br><span class="line">    duck.Feathers()</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h1 id="小结"><a href="#小结" class="headerlink" title="小结"></a>小结</h1><p>其实这就是 Go 中的多态体现，仔细体会其中的味道，在阅读其他源码的时候你会更加熟练。但是也有一个问题当代码工程庞大的时候你很难知道一个接口体到底实现了哪些接口，不过有幸的是我们生在最智能的 IDE 时代，在 GoLand 中可以帮你提示 :D</p>
+<h2 id="转载于"><a href="#转载于" class="headerlink" title="转载于"></a>转载于</h2><p><a href="https://blog.biezhi.me/2019/01/learn-golang-interfaces.html" target="_blank" rel="noopener">https://blog.biezhi.me/2019/01/learn-golang-interfaces.html</a></p>
+
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+
+    
+      <div>
+        <ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>Post author:  </strong>楽猪先生</li>
+  <li class="post-copyright-link">
+    <strong>Post link: </strong>
+    <a href="//keer.me/learn-golang-interfaces/" title="【转载】理解和使用 Go 接口">//keer.me/learn-golang-interfaces/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>Copyright Notice:  </strong>All articles in this blog are licensed under <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" rel="external nofollow" target="_blank">CC BY-NC-SA 4.0</a> unless stating additionally.</li>
+</ul>
+
+      </div>
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/interface/" rel="tag"># interface</a>
+          
+            <a href="/tags/接口/" rel="tag"># 接口</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/values-or-pointers-in-golang/" rel="next" title="【转载】Golang 中该使用指针类型还是值类型？">
+                <i class="fa fa-chevron-left"></i> 【转载】Golang 中该使用指针类型还是值类型？
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+  </div>
+
+
+          </div>
+          
+
+  
+    <div class="comments" id="comments">
+    </div>
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            Overview
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="https://staticache.oss-cn-hangzhou.aliyuncs.com/o_1cqpk2o9h3l112sh19do2iu84fa.jpg"
+                alt="楽猪先生" />
+            
+              <p class="site-author-name" itemprop="name">楽猪先生</p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          
+            <nav class="site-state motion-element">
+              
+                <div class="site-state-item site-state-posts">
+                
+                  <a href="/archives/">
+                
+                    <span class="site-state-item-count">93</span>
+                    <span class="site-state-item-name">posts</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-categories">
+                  <a href="/categories/index.html">
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">22</span>
+                    <span class="site-state-item-name">categories</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-tags">
+                  <a href="/tags/index.html">
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">160</span>
+                    <span class="site-state-item-name">tags</span>
+                  </a>
+                </div>
+              
+            </nav>
+          
+
+          
+
+          
+
+          
+          
+
+          
+          
+            <div class="links-of-blogroll motion-element links-of-blogroll-inline">
+              <div class="links-of-blogroll-title">
+                <i class="fa  fa-fw fa-link"></i>
+                Links
+              </div>
+              <ul class="links-of-blogroll-list">
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="http://file.leanapp.cn/" title="自用图床" target="_blank">自用图床</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="http://vmpic.cn/" title="唯美图屋" target="_blank">唯美图屋</a>
+                  </li>
+                
+              </ul>
+            </div>
+          
+
+          
+            
+          
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Duck-Typing"><span class="nav-number">1.</span> <span class="nav-text">Duck Typing</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#举个例子"><span class="nav-number">2.</span> <span class="nav-text">举个例子</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#组合接口"><span class="nav-number">3.</span> <span class="nav-text">组合接口</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#接口实现"><span class="nav-number">4.</span> <span class="nav-text">接口实现</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#接口使用"><span class="nav-number">5.</span> <span class="nav-text">接口使用</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#小结"><span class="nav-number">6.</span> <span class="nav-text">小结</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#转载于"><span class="nav-number">6.1.</span> <span class="nav-text">转载于</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
+  <span class="with-love" id="animate">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">楽猪先生</span>
+
+  
+
+  
+</div>
+
+
+
+
+
+
+
+
+
+
+  <div class="footer-custom"><a target="_blank" rel="external nofollow" href="https://www.upyun.com/?utm_source=lianmeng&utm_medium=referral"><img src="https://img.keer.me/upyun-logo.png" width="80"></a></div>
+
+
+        
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+	
+    
+
+    
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=6.4.2"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=6.4.2"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=6.4.2"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=6.4.2"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=6.4.2"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=6.4.2"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=6.4.2"></script>
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+
+
+  <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+  
+  
+  <script src="//unpkg.com/valine/dist/Valine.min.js"></script>
+  
+  <script type="text/javascript">
+    var GUEST = ['nick','mail','link'];
+    var guest = 'nick,mail,link';
+    guest = guest.split(',').filter(function (item) {
+      return GUEST.indexOf(item)>-1;
+    });
+    new Valine({
+        el: '#comments' ,
+        verify: false,
+        notify: false,
+        appId: 'JL9DlIQzRPXRzPcfKHc1DY0W-gzGzoHsz',
+        appKey: 'bX1f6oSbTroEDIz50Ic1iPlq',
+        placeholder: 'Just go go',
+        avatar:'mm',
+        meta:guest,
+        pageSize:'10' || 10,
+        visitor: false
+    });
+  </script>
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+  <style>
+    .copy-btn {
+      display: inline-block;
+      padding: 6px 12px;
+      font-size: 13px;
+      font-weight: 700;
+      line-height: 20px;
+      color: #333;
+      white-space: nowrap;
+      vertical-align: middle;
+      cursor: pointer;
+      background-color: #eee;
+      background-image: linear-gradient(#fcfcfc, #eee);
+      border: 1px solid #d5d5d5;
+      border-radius: 3px;
+      user-select: none;
+      outline: 0;
+    }
+
+    .highlight-wrap .copy-btn {
+      transition: opacity .3s ease-in-out;
+      opacity: 0;
+      padding: 2px 6px;
+      position: absolute;
+      right: 4px;
+      top: 8px;
+    }
+
+    .highlight-wrap:hover .copy-btn,
+    .highlight-wrap .copy-btn:focus {
+      opacity: 1
+    }
+
+    .highlight-wrap {
+      position: relative;
+    }
+  </style>
+  <script>
+    $('.highlight').each(function (i, e) {
+      var $wrap = $('<div>').addClass('highlight-wrap')
+      $(e).after($wrap)
+      $wrap.append($('<button>').addClass('copy-btn').append('Copy').on('click', function (e) {
+        var code = $(this).parent().find('.code').find('.line').map(function (i, e) {
+          return $(e).text()
+        }).toArray().join('\n')
+        var ta = document.createElement('textarea')
+        document.body.appendChild(ta)
+        ta.style.position = 'absolute'
+        ta.style.top = '0px'
+        ta.style.left = '0px'
+        ta.value = code
+        ta.select()
+        ta.focus()
+        var result = document.execCommand('copy')
+        document.body.removeChild(ta)
+        
+          if(result)$(this).text('Copied')
+          else $(this).text('Copy failed')
+        
+        $(this).blur()
+      })).on('mouseleave', function (e) {
+        var $b = $(this).find('.copy-btn')
+        setTimeout(function () {
+          $b.text('Copy')
+        }, 300)
+      }).append(e)
+    })
+  </script>
+
+
+</body>
+</html>
