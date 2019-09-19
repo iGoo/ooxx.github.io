@@ -1,0 +1,1369 @@
+<!DOCTYPE html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<html class="theme-next gemini" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=6.4.2" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=6.4.2">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=6.4.2">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=6.4.2">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=6.4.2" color="#222">
+
+
+
+
+
+
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Gemini',
+    version: '6.4.2',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: false,
+    fastclick: false,
+    lazyload: false,
+    tabs: true,
+    motion: {"enable":false,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+  
+
+
+
+
+  <meta name="description" content="git 的教程可以查看廖雪峰老师的官网：https://www.liaoxuefeng.com/wiki/896043488029600，讲解的非常详细也非常好，基本可以满足正常的工作需求使用。 基本流程就是： 1、新建本地开发分支（比如 yangzhenhua 分支），提交也是提交的开发分支。 2、本地测试无问题之后合并到 master 分支。 3、然后 git push origin mast">
+<meta name="keywords" content="gitserver,rsa,部署">
+<meta property="og:type" content="article">
+<meta property="og:title" content="【转载】配置git hook部署项目代码">
+<meta property="og:url" content="//keer.me/git-hook-deploy-code/index.html">
+<meta property="og:site_name" content="楽猪先生">
+<meta property="og:description" content="git 的教程可以查看廖雪峰老师的官网：https://www.liaoxuefeng.com/wiki/896043488029600，讲解的非常详细也非常好，基本可以满足正常的工作需求使用。 基本流程就是： 1、新建本地开发分支（比如 yangzhenhua 分支），提交也是提交的开发分支。 2、本地测试无问题之后合并到 master 分支。 3、然后 git push origin mast">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2019-09-19T14:24:36.461Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="【转载】配置git hook部署项目代码">
+<meta name="twitter:description" content="git 的教程可以查看廖雪峰老师的官网：https://www.liaoxuefeng.com/wiki/896043488029600，讲解的非常详细也非常好，基本可以满足正常的工作需求使用。 基本流程就是： 1、新建本地开发分支（比如 yangzhenhua 分支），提交也是提交的开发分支。 2、本地测试无问题之后合并到 master 分支。 3、然后 git push origin mast">
+
+
+
+
+
+
+  <link rel="canonical" href="//keer.me/git-hook-deploy-code/"/>
+
+
+
+<script type="text/javascript" id="page.configurations">
+  CONFIG.page = {
+    sidebar: "",
+  };
+</script>
+
+  <title>【转载】配置git hook部署项目代码 | 楽猪先生</title>
+  
+
+
+
+
+
+
+
+
+
+  <noscript>
+  <style type="text/css">
+    .use-motion .motion-element,
+    .use-motion .brand,
+    .use-motion .menu-item,
+    .sidebar-inner,
+    .use-motion .post-block,
+    .use-motion .pagination,
+    .use-motion .comments,
+    .use-motion .post-header,
+    .use-motion .post-body,
+    .use-motion .collection-title { opacity: initial; }
+
+    .use-motion .logo,
+    .use-motion .site-title,
+    .use-motion .site-subtitle {
+      opacity: initial;
+      top: initial;
+    }
+
+    .use-motion {
+      .logo-line-before i { left: initial; }
+      .logo-line-after i { right: initial; }
+    }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">楽猪先生</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+    
+      
+        <p class="site-subtitle">向往文艺的小清新</p>
+      
+    
+  </div>
+
+  <div class="site-nav-toggle">
+    <button aria-label="Toggle navigation bar">
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  
+    <ul id="menu" class="menu">
+      
+        
+        
+        
+          
+          <li class="menu-item menu-item-home">
+    <a href="/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-home"></i> <br />Home</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-tags">
+    <a href="/tags/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />Tags</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-categories">
+    <a href="/categories/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-th"></i> <br />Categories</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-archives">
+    <a href="/archives/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />Archives</a>
+  </li>
+
+      
+      
+    </ul>
+  
+
+  
+
+  
+</nav>
+
+
+
+  
+
+
+
+</div>
+    </header>
+
+    
+
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+            
+
+          
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="//keer.me/git-hook-deploy-code/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="楽猪先生">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="https://staticache.oss-cn-hangzhou.aliyuncs.com/o_1cqpk2o9h3l112sh19do2iu84fa.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="楽猪先生">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">【转载】配置git hook部署项目代码
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+
+              
+                
+              
+
+              <time title="Created: 2019-09-19 22:22:55 / Modified: 22:24:36" itemprop="dateCreated datePublished" datetime="2019-09-19T22:22:55+08:00">2019-09-19</time>
+            
+
+            
+              
+
+              
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/Git/" itemprop="url" rel="index"><span itemprop="name">Git</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/git-hook-deploy-code/#comments" itemprop="discussionUrl">
+                  <span class="post-meta-item-text">Comments: </span> <span class="post-comments-count valine-comment-count" data-xid="/git-hook-deploy-code/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>git 的教程可以查看廖雪峰老师的官网：<a href="https://www.liaoxuefeng.com/wiki/896043488029600，讲解的非常详细也非常好，基本可以满足正常的工作需求使用。" target="_blank" rel="noopener">https://www.liaoxuefeng.com/wiki/896043488029600，讲解的非常详细也非常好，基本可以满足正常的工作需求使用。</a></p>
+<p>基本流程就是：</p>
+<p>1、新建本地开发分支（比如 yangzhenhua 分支），提交也是提交的开发分支。</p>
+<p>2、本地测试无问题之后合并到 master 分支。</p>
+<p>3、然后 git push origin master 分支到 git 服务器。</p>
+<p>4、服务器钩子自动 git pull origin master 分支到项目目录。</p>
+<p>这样我们就在 yangzhenhua 分支工作开发，然后提交也可以提交到 yangzhenhua 分支上，因为服务器钩子虽然是本地提交才会触发，但是钩子是更新的 master 分支，所以提交开发分支并不会影响生产环境项目目录，什么时候想上线了，直接本地分支合并到 master 分支然后 git push origin master 分支就可以了。</p>
+<a id="more"></a>
+<p><strong>准备工作</strong></p>
+<p><strong>1、服务器端安装 git</strong></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">[root@localhost ~]<span class="comment"># yum install git</span></span><br><span class="line">[root@localhost ~]<span class="comment"># git version</span></span><br></pre></td></tr></table></figure>
+<p><strong>2、客户端安装 git</strong></p>
+<p>我是 windows 环境直接在<a href="https://git-scm.com/downloads下载客户端安装，然后使用" target="_blank" rel="noopener">https://git-scm.com/downloads下载客户端安装，然后使用</a> Git Bash 作为命令行客户端。安装完成后可以查看下 git 版本。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ git version</span><br><span class="line">git version 2.9.2.windows.1</span><br></pre></td></tr></table></figure>
+<p><strong>搭建 git 服务器</strong></p>
+<p><strong>1、服务器端创建 git 用户来管理 git 服务</strong></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">[root@localhost ~]<span class="comment"># id git</span></span><br><span class="line">id: git: no such user</span><br><span class="line">[root@localhost ~]<span class="comment"># useradd git</span></span><br><span class="line">[root@localhost ~]<span class="comment"># passwd git</span></span><br><span class="line">New password: </span><br><span class="line">BAD PASSWORD: The password contains the user name <span class="keyword">in</span> some form</span><br><span class="line">Retype new password: </span><br><span class="line">passwd: all authentication tokens updated successfully.</span><br></pre></td></tr></table></figure>
+<p><strong>2、创建证书登录</strong></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">[root@localhost ~]<span class="comment"># cd /home/git/</span></span><br><span class="line">[root@localhost git]<span class="comment"># sudo -u git mkdir .ssh</span></span><br><span class="line">[root@localhost git]<span class="comment"># chmod 700 .ssh/</span></span><br><span class="line">[root@localhost git]<span class="comment"># sudo -u git touch .ssh/authorized_keys </span></span><br><span class="line">[root@localhost git]<span class="comment"># chmod 600 .ssh/authorized_keys</span></span><br></pre></td></tr></table></figure>
+<p><strong>3、服务器端创建 git 服务器</strong></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">[root@localhost ~]<span class="comment"># mkdir -p /home/data/git/gittest.git</span></span><br><span class="line">[root@localhost ~]<span class="comment"># git init --bare /home/data/git/gittest.git/</span></span><br><span class="line">Initialized empty Git repository <span class="keyword">in</span> /home/data/git/gittest.git/</span><br><span class="line">[root@localhost home]<span class="comment"># cd /home/data/git/</span></span><br><span class="line">[root@localhost git]<span class="comment"># ll</span></span><br><span class="line">总用量 4</span><br><span class="line">drwxr-xr-x 7 root root 4096 5月   9 01:17 gittest.git</span><br><span class="line">[root@localhost git]<span class="comment"># chown -R git:git gittest.git/</span></span><br><span class="line">[root@localhost git]<span class="comment"># ll</span></span><br><span class="line">总用量 4</span><br><span class="line">drwxr-xr-x 7 git git 4096 5月   9 01:17 gittest.git</span><br></pre></td></tr></table></figure>
+<p>我们默认设置 /home/data/git/gittest.git 为 git 仓库，当我们执行完 git init –bare /home/data/git/gittest.git/ 命令时，git 就会创建一个裸仓库，裸仓库没有工作区，因为服务器上的 git 仓库只是为了共享，所以不让用户直接登录到服务器上去改工作区，并且服务器上的 git 仓库通常都以 .git 结尾，然后把权限改为 git</p>
+<p><strong>客户端 clone 远程仓库</strong></p>
+<p><strong>1、客户端开发目录下打开你的 Git Bash 终端克隆远程仓库</strong></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">$ git <span class="built_in">clone</span> git@192.168.160.130:/home/data/git/gittest.git www.yanghaihua.com</span><br><span class="line">Cloning into <span class="string">'gittest'</span>...</span><br><span class="line">The authenticity of host <span class="string">'192.168.160.130 (192.168.160.130)'</span> can<span class="string">'t be established.</span></span><br><span class="line"><span class="string">ECDSA key fingerprint is SHA256:r1PfMrvkpc+X/Cqef9As7RvLix8kXZ2dyAfYmkDsDds.</span></span><br><span class="line"><span class="string">Are you sure you want to continue connecting (yes/no)? yes</span></span><br><span class="line"><span class="string">Warning: Permanently added '</span>192.168.160.130<span class="string">' (ECDSA) to the list of known hosts.</span></span><br><span class="line"><span class="string">git@192.168.160.130'</span>s password:</span><br><span class="line">warning: You appear to have cloned an empty repository.</span><br><span class="line">Checking connectivity... <span class="keyword">done</span>.</span><br></pre></td></tr></table></figure>
+<p>当链接第一次链接到 git 服务器时会有一个提示 …(yes/no) 选择 yes，此时在你的 .ssh 多出来一个 known_hosts 文件</p>
+<p><strong>2、客户端创建 ssh 公钥和私钥</strong></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ ssh-keygen -t rsa -C <span class="string">'xxxxxx'</span></span><br></pre></td></tr></table></figure>
+<p>-t：指定要创建的密钥类型，可以使用：”rsa1”(SSH-1) “rsa”(SSH-2) “dsa”(SSH-2)</p>
+<p>-C：一个注释</p>
+<p>然后敲击两次回车就可以了，因为我这里已经有了，所以就创建了。执行完成后会在你的用户家目录 .ssh 文件夹中出现 id_rsa (私钥) id_rsa.pub (公钥)。这样一个空的仓库就完成了，然后我们把项目迁移到这个空仓库中。（如果已经有就不要创建了，直接使用就好，如果没有就创建）</p>
+<p><strong>3、客户端测试 git 是否配置成功</strong></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">$ ll</span><br><span class="line">total 1</span><br><span class="line">-rw-r--r-- 1 Administrator 197121 11 五月  8 18:34 readme.txt</span><br><span class="line">$ cat readme.txt</span><br><span class="line">version.1.0</span><br></pre></td></tr></table></figure>
+<p>这里为了测试，我在仓库目录中只新建了一个 readme.txt 文件，然后内容是 version.1.0</p>
+<p><strong>4、客户端提交项目</strong></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">$ git add .</span><br><span class="line">$ git status</span><br><span class="line">$ git commit -m <span class="string">'version.1.0'</span></span><br><span class="line">$ git push origin master</span><br><span class="line">git@192.168.160.130<span class="string">'s password:</span></span><br><span class="line"><span class="string">Counting objects: 3, done.</span></span><br><span class="line"><span class="string">Writing objects: 100% (3/3), 224 bytes | 0 bytes/s, done.</span></span><br><span class="line"><span class="string">Total 3 (delta 0), reused 0 (delta 0)</span></span><br><span class="line"><span class="string">To git@192.168.160.130:/home/data/git/gittest.git</span></span><br><span class="line"><span class="string"> * [new branch]      master -&gt; master</span></span><br></pre></td></tr></table></figure>
+<p>这里就是平时开发时候的正常提交流程。输入密码，然后提交成功。这时候是需要输入密码的，因为我们没有将本地的公钥导入到 /home/git/.ssh/authorized_keys 这个文件中。</p>
+<p><strong>5、客户端导入公钥到服务器端实现免密提交</strong></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">$ cat readme.txt</span><br><span class="line">version.1.0</span><br><span class="line">version.1.1</span><br><span class="line">$ git add .</span><br><span class="line">$ git commit -m <span class="string">'version.1.1'</span></span><br><span class="line">$ git push origin master</span><br><span class="line">Counting objects: 3, <span class="keyword">done</span>.</span><br><span class="line">Writing objects: 100% (3/3), 260 bytes | 0 bytes/s, <span class="keyword">done</span>.</span><br><span class="line">Total 3 (delta 0), reused 0 (delta 0)</span><br><span class="line">To git@192.168.160.130:/home/data/git/gittest.git</span><br><span class="line">   8c49f3d..5501923  master -&gt; master</span><br></pre></td></tr></table></figure>
+<p>将客户端中的公钥导入 /home/git/.ssh/authorized_keys 文件中，公钥就在我们家目录中的 .ssh/id_rsa.pub 文件中。然后我们再次修改 readme.txt 文件，增加一行 version1.1 字符串，然后再次提交测试。（这里就不做测试了，配置好后就可以实现免密使用 git 了）</p>
+<p><strong>服务器端 clone 仓库（基本流程和客户端差不多）</strong></p>
+<p><strong>1、服务器端克隆仓库</strong></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">[root@localhost ~]<span class="comment"># cd /home/wwwroot/</span></span><br><span class="line">[root@localhost wwwroot]<span class="comment"># sudo -u www git clone git@127.0.0.1:/home/data/git/gittest.git/ www.yanghaihua.com</span></span><br><span class="line">正克隆到 <span class="string">'www.yanghaihua.com'</span>...</span><br><span class="line">The authenticity of host <span class="string">'127.0.0.1 (127.0.0.1)'</span> can<span class="string">'t be established.</span></span><br><span class="line"><span class="string">ECDSA key fingerprint is e4:5a:53:73:8a:03:6b:5f:f7:2f:67:38:3c:a1:b3:b3.</span></span><br><span class="line"><span class="string">Are you sure you want to continue connecting (yes/no)? yes</span></span><br><span class="line"><span class="string">Warning: Permanently added '</span>127.0.0.1<span class="string">' (ECDSA) to the list of known hosts.</span></span><br><span class="line"><span class="string">git@127.0.0.1'</span>s password: </span><br><span class="line">remote: Counting objects: 10, <span class="keyword">done</span>.</span><br><span class="line">remote: Compressing objects: 100% (4/4), <span class="keyword">done</span>.</span><br><span class="line">remote: Total 10 (delta 1), reused 0 (delta 0)</span><br><span class="line">接收对象中: 100% (10/10), <span class="keyword">done</span>.</span><br><span class="line">处理 delta 中: 100% (1/1), <span class="keyword">done</span>.</span><br></pre></td></tr></table></figure>
+<p>假设我们的项目都放在 /home/wwwroot/ 目录下，这里我们用 www 权限来 clone 版本库，因为我们的项目运行权限都是 www 运行权限。</p>
+<p><strong>2、服务器端生成 ssh 公钥和私钥</strong></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">[root@localhost .git]<span class="comment"># sudo -u www ssh-keygen -t rsa -C "server@163.com"  </span></span><br><span class="line">Generating public/private rsa key pair.</span><br><span class="line">Enter file <span class="keyword">in</span> <span class="built_in">which</span> to save the key (/home/www/.ssh/id_rsa): </span><br><span class="line">Enter passphrase (empty <span class="keyword">for</span> no passphrase): </span><br><span class="line">Enter same passphrase again: </span><br><span class="line">Your identification has been saved <span class="keyword">in</span> /home/www/.ssh/id_rsa.</span><br><span class="line">Your public key has been saved <span class="keyword">in</span> /home/www/.ssh/id_rsa.pub.</span><br><span class="line">The key fingerprint is:</span><br><span class="line">50:14:<span class="built_in">cd</span>:b2:ff:0b:48:f3:a4:f0:b7:a8:6d:03:e4:af server@163.com</span><br><span class="line">The key<span class="string">'s randomart image is:</span></span><br><span class="line"><span class="string">+--[ RSA 2048]----+</span></span><br><span class="line"><span class="string">|       .++       |</span></span><br><span class="line"><span class="string">|       .. o      |</span></span><br><span class="line"><span class="string">|      .  o       |</span></span><br><span class="line"><span class="string">|      ...        |</span></span><br><span class="line"><span class="string">|     o. S..      |</span></span><br><span class="line"><span class="string">|      o+ *.      |</span></span><br><span class="line"><span class="string">|       o+ +.     |</span></span><br><span class="line"><span class="string">|       .+o o.    |</span></span><br><span class="line"><span class="string">|      E+o.. ..   |</span></span><br><span class="line"><span class="string">+-----------------+</span></span><br></pre></td></tr></table></figure>
+<p><strong>3、服务器端测试 git 是否正常</strong></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">[root@localhost www.yanghaihua.com]<span class="comment"># sudo -u www git pull</span></span><br><span class="line">git@127.0.0.1<span class="string">'s password: </span></span><br><span class="line"><span class="string">Already up-to-date.</span></span><br></pre></td></tr></table></figure>
+<p>正常使用，需要输入密码，导入公钥到服务器端 /home/git/.ssh/authorized_keys 文件中。</p>
+<p><strong>4、服务器端导入公钥到 /home/git/.ssh/authorized_keys 文件中实现免密</strong></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">[root@localhost www.yanghaihua.com]<span class="comment"># sudo -u www git pull</span></span><br><span class="line">Already up-to-date.</span><br></pre></td></tr></table></figure>
+<p>到这里服务器仓库就配置好了，因为这个仓库是项目目录不需要提交和修改，只需要等下配置好钩子之后 git pull 就可以了。</p>
+<p><strong>服务器端配置钩子</strong></p>
+<p>先看看官网怎么定义：和其它版本控制系统一样，git 能在特定的重要动作发生时触发自定义脚本。有两组这样的钩子：客户端的和服务器端的。客户端钩子由诸如提交和合并这样的操作所调用，而服务器端钩子作用于诸如接收被推送的提交这样的联网操作。 你可以随心所欲地运用这些钩子。<a href="https://www.git-scm.com/book/zh/v2/自定义-Git-Git-钩子" target="_blank" rel="noopener">https://www.git-scm.com/book/zh/v2/自定义-Git-Git-钩子</a></p>
+<p><strong>1、配置钩子</strong></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">[root@localhost www.yanghaihua.com]<span class="comment"># cd /home/data/git/gittest.git/hooks</span></span><br><span class="line">[root@localhost hooks]<span class="comment"># sudo -u git vim post-receive</span></span><br><span class="line"><span class="meta">#!/bin/sh</span></span><br><span class="line"></span><br><span class="line"><span class="built_in">cd</span> /home/wwwroot/www.yanghaihua.com</span><br><span class="line"><span class="built_in">unset</span> GIT_DIR</span><br><span class="line"></span><br><span class="line">git config --list</span><br><span class="line">sudo -u www git pull origin master</span><br></pre></td></tr></table></figure>
+<p>钩子其实就是一个 shell 脚本，在客户端提交或者推送的时候调用它，上面的配置大概就是进入项目目录，然后使用 www 用户更新项目到项目目录，就是这么简单的一个配置，客户端修改代码，服务端只做更新不做任何修改。</p>
+<p><strong>2、修改钩子权限</strong></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[root@localhost hooks]<span class="comment"># chmod u+x post-receive</span></span><br></pre></td></tr></table></figure>
+<p><strong>3、测试钩子是否可以正常运行</strong></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">[root@localhost hooks]<span class="comment"># sudo -u git ./post-receive </span></span><br><span class="line">core.repositoryformatversion=0</span><br><span class="line">core.filemode=<span class="literal">true</span></span><br><span class="line">core.bare=<span class="literal">false</span></span><br><span class="line">core.logallrefupdates=<span class="literal">true</span></span><br><span class="line">remote.origin.url=git@127.0.0.1:/home/data/git/gittest.git/</span><br><span class="line">remote.origin.fetch=+refs/heads/*:refs/remotes/origin/*</span><br><span class="line">branch.master.remote=origin</span><br><span class="line">branch.master.merge=refs/heads/master</span><br><span class="line">[sudo] password <span class="keyword">for</span> git: </span><br><span class="line">git 不在 sudoers 文件中。此事将被报告。</span><br></pre></td></tr></table></figure>
+<p>因为这个钩子是 git 用户在运行，所以我们要用 git 用户身份来测试，测试过程中发生错误，因为在 sudoers 文件中 git 用户没有这个权限，我们 visudo 编辑下这个文件</p>
+<p><strong>4、增加 git sudo 权限，在 root 这一行下面增加</strong></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">root    ALL=(ALL)       ALL</span><br><span class="line">git     ALL=(ALL)       NOPASSWD:ALL <span class="comment">#NOPASSWD 执行时免密</span></span><br></pre></td></tr></table></figure>
+<p><strong>5、再次测试</strong></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">[root@localhost hooks]<span class="comment"># sudo -u git ./post-receive </span></span><br><span class="line">core.repositoryformatversion=0</span><br><span class="line">core.filemode=<span class="literal">true</span></span><br><span class="line">core.bare=<span class="literal">false</span></span><br><span class="line">core.logallrefupdates=<span class="literal">true</span></span><br><span class="line">remote.origin.url=git@127.0.0.1:/home/data/git/gittest.git/</span><br><span class="line">remote.origin.fetch=+refs/heads/*:refs/remotes/origin/*</span><br><span class="line">branch.master.remote=origin</span><br><span class="line">branch.master.merge=refs/heads/master</span><br><span class="line">来自 127.0.0.1:/home/data/git/gittest</span><br><span class="line"> * branch            master     -&gt; FETCH_HEAD</span><br><span class="line">Already up-to-date.</span><br></pre></td></tr></table></figure>
+<p>钩子配置成功，在上面钩子文件中，我们使用了 www 用户权限执行了 git push origin master 命令，是因为我们的项目是用的 www 权限执行的，但是 git 的钩子操作是用的 git 权限来操作的，如果不用 www 权限，那么钩子更新下来的文件权限就是 git 权限，所以为了保证 nginx 下项目目录运行权限是 www 用户，我们加上了 sudo -u www xxxxxx 来操作。这里基本就完成了，我们可以测试下整体流程操作。</p>
+<p><strong>测试</strong></p>
+<p><strong>1、客户端提交代码</strong></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">$ cat readme.txt</span><br><span class="line">version.1.0</span><br><span class="line">version.1.1</span><br><span class="line">version.1.2</span><br><span class="line">$ git add .</span><br><span class="line">$ git commit -m <span class="string">'version.1.2'</span></span><br><span class="line">$ git push</span><br><span class="line">Counting objects: 3, <span class="keyword">done</span>.</span><br><span class="line">Writing objects: 100% (3/3), 263 bytes | 0 bytes/s, <span class="keyword">done</span>.</span><br><span class="line">Total 3 (delta 0), reused 0 (delta 0)</span><br><span class="line">remote: core.repositoryformatversion=0</span><br><span class="line">remote: core.filemode=<span class="literal">true</span></span><br><span class="line">remote: core.bare=<span class="literal">false</span></span><br><span class="line">remote: core.logallrefupdates=<span class="literal">true</span></span><br><span class="line">remote: remote.origin.url=git@127.0.0.1:/home/data/git/gittest.git/</span><br><span class="line">remote: remote.origin.fetch=+refs/heads/*:refs/remotes/origin/*</span><br><span class="line">remote: branch.master.remote=origin</span><br><span class="line">remote: branch.master.merge=refs/heads/master</span><br><span class="line">remote: sudo：抱歉，您必须拥有一个终端来执行 sudo</span><br><span class="line">To git@192.168.160.130:/home/data/git/gittest.git</span><br><span class="line">   13b9970..990b6ee  master -&gt; master</span><br></pre></td></tr></table></figure>
+<p>再次修改 readme.txt 文件，增加一行 version.1.2 字符串，然后提交的后看 git 的反馈，说明提交已经成功，但是调用钩子的时候报错了，需要一个终端来执行 sudo，解决办法就是编辑 /etc/sudoers 文件：</p>
+<p><strong>2、修改 /etc/sudoers 文件</strong></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">[root@localhost ~]<span class="comment"># visudo</span></span><br><span class="line">.</span><br><span class="line">.</span><br><span class="line">.</span><br><span class="line">Defaults	requiretty</span><br><span class="line">改为：</span><br><span class="line"><span class="comment">#Defaults	requiretty #表示不需要控制终端</span></span><br><span class="line"></span><br><span class="line">Defaults	requiretty</span><br><span class="line">改为：</span><br><span class="line">Defaults:git    !requiretty <span class="comment">#表示仅git用户不需要控制终端（我使用的这个）</span></span><br></pre></td></tr></table></figure>
+<p><strong>3、再次提交测试</strong></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line">$ cat readme.txt</span><br><span class="line">version.1.0</span><br><span class="line">version.1.1</span><br><span class="line">version.1.2</span><br><span class="line">version.1.3</span><br><span class="line">$ git add .</span><br><span class="line">$ git commit -m <span class="string">'version.1.3'</span></span><br><span class="line">$ git push</span><br><span class="line">Counting objects: 3, <span class="keyword">done</span>.</span><br><span class="line">Writing objects: 100% (3/3), 265 bytes | 0 bytes/s, <span class="keyword">done</span>.</span><br><span class="line">Total 3 (delta 0), reused 0 (delta 0)</span><br><span class="line">remote: core.repositoryformatversion=0</span><br><span class="line">remote: core.filemode=<span class="literal">true</span></span><br><span class="line">remote: core.bare=<span class="literal">false</span></span><br><span class="line">remote: core.logallrefupdates=<span class="literal">true</span></span><br><span class="line">remote: remote.origin.url=git@127.0.0.1:/home/data/git/gittest.git/</span><br><span class="line">remote: remote.origin.fetch=+refs/heads/*:refs/remotes/origin/*</span><br><span class="line">remote: branch.master.remote=origin</span><br><span class="line">remote: branch.master.merge=refs/heads/master</span><br><span class="line">remote: 来自 127.0.0.1:/home/data/git/gittest</span><br><span class="line">remote:  * branch            master     -&gt; FETCH_HEAD</span><br><span class="line">remote: 更新 8d17b41..ab39eb6</span><br><span class="line">remote: Fast-forward</span><br><span class="line">remote:  readme.txt | 3 ++-</span><br><span class="line">remote:  1 file changed, 2 insertions(+), 1 deletion(-)</span><br><span class="line">remote: --钩子拉取项目成功--</span><br><span class="line">To git@192.168.160.130:/home/data/git/gittest.git</span><br><span class="line">   8d17b41..ab39eb6  master -&gt; master</span><br></pre></td></tr></table></figure>
+<p>再次修改 readme.txt 文件，增加一行 version.1.3 字符串，然后再次提交。钩子中的命令都已经执行。接下来看下服务器端项目目录是否正常。</p>
+<p><strong>3、查看服务端 readme.txt 文件</strong></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">[root@localhost www.yanghaihua.com]<span class="comment"># less readme.txt </span></span><br><span class="line">version.1.0</span><br><span class="line">version.1.1</span><br><span class="line">version.1.2</span><br><span class="line">version.1.3</span><br></pre></td></tr></table></figure>
+<p><strong>4、禁用服务端 git 用户 shell 登录</strong></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">[root@localhost ~]<span class="comment"># vi /etc/passwd</span></span><br><span class="line">.</span><br><span class="line">.</span><br><span class="line">.</span><br><span class="line">git:x:1001:1001::/home/git:/usr/bin/git-shell</span><br></pre></td></tr></table></figure>
+<p>这样 git 用户就可以正常通过 ssh 使用 shell，但是不可以登录 shell。到这里使用 git 提交，然后服务器端钩子更新代码到项目目录就基本上行完成了。</p>
+<p>基本大致流程就是客户端 push 到服务器，然后服务器再用钩子 pull 到项目目录，服务器端只做更新而不做任何的修改和提交。主要就是权限的分配和分支的开发。开发一定要新建一个分支，然后没有问题之后再合并到主分支，然后再 push 到服务器上，否则如果直接提交的 master 分支就会直接到被钩子更新到项目目录了。</p>
+<p>这只是一个简单的部署流程，中间还有很多细节问题需要我们去配置和探索。</p>
+<blockquote>
+<p>转载于：<a href="https://www.yanghaihua.com/content/2019-04-09/1033.shtml" target="_blank" rel="noopener">https://www.yanghaihua.com/content/2019-04-09/1033.shtml</a></p>
+</blockquote>
+
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+
+    
+      <div>
+        <ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>Post author:  </strong>楽猪先生</li>
+  <li class="post-copyright-link">
+    <strong>Post link: </strong>
+    <a href="//keer.me/git-hook-deploy-code/" title="【转载】配置git hook部署项目代码">//keer.me/git-hook-deploy-code/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>Copyright Notice:  </strong>All articles in this blog are licensed under <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" rel="external nofollow" target="_blank">CC BY-NC-SA 4.0</a> unless stating additionally.</li>
+</ul>
+
+      </div>
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/gitserver/" rel="tag"># gitserver</a>
+          
+            <a href="/tags/rsa/" rel="tag"># rsa</a>
+          
+            <a href="/tags/部署/" rel="tag"># 部署</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/shadowsocksr-settings/" rel="next" title="Shadowsocks(R)设置：系统代理模式、PAC、代理规则">
+                <i class="fa fa-chevron-left"></i> Shadowsocks(R)设置：系统代理模式、PAC、代理规则
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+  </div>
+
+
+          </div>
+          
+
+  
+    <div class="comments" id="comments">
+    </div>
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+
+      <section class="site-overview-wrap sidebar-panel sidebar-panel-active">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="https://staticache.oss-cn-hangzhou.aliyuncs.com/o_1cqpk2o9h3l112sh19do2iu84fa.jpg"
+                alt="楽猪先生" />
+            
+              <p class="site-author-name" itemprop="name">楽猪先生</p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          
+            <nav class="site-state motion-element">
+              
+                <div class="site-state-item site-state-posts">
+                
+                  <a href="/archives/">
+                
+                    <span class="site-state-item-count">98</span>
+                    <span class="site-state-item-name">posts</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-categories">
+                  <a href="/categories/index.html">
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">24</span>
+                    <span class="site-state-item-name">categories</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-tags">
+                  <a href="/tags/index.html">
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">173</span>
+                    <span class="site-state-item-name">tags</span>
+                  </a>
+                </div>
+              
+            </nav>
+          
+
+          
+
+          
+
+          
+          
+
+          
+          
+            <div class="links-of-blogroll motion-element links-of-blogroll-inline">
+              <div class="links-of-blogroll-title">
+                <i class="fa  fa-fw fa-link"></i>
+                Links
+              </div>
+              <ul class="links-of-blogroll-list">
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="http://file.leanapp.cn/" title="自用图床" target="_blank">自用图床</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="http://vmpic.cn/" title="唯美图屋" target="_blank">唯美图屋</a>
+                  </li>
+                
+              </ul>
+            </div>
+          
+
+          
+            
+          
+          
+
+        </div>
+      </section>
+
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
+  <span class="with-love" id="animate">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">楽猪先生</span>
+
+  
+
+  
+</div>
+
+
+
+
+
+
+
+
+
+
+  <div class="footer-custom"><a target="_blank" rel="external nofollow" href="https://www.upyun.com/?utm_source=lianmeng&utm_medium=referral"><img src="https://img.keer.me/upyun-logo.png" width="80"></a></div>
+
+
+        
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+	
+    
+
+    
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=6.4.2"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=6.4.2"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=6.4.2"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=6.4.2"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=6.4.2"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=6.4.2"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=6.4.2"></script>
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+
+
+  <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+  
+  
+  <script src="//unpkg.com/valine/dist/Valine.min.js"></script>
+  
+  <script type="text/javascript">
+    var GUEST = ['nick','mail','link'];
+    var guest = 'nick,mail,link';
+    guest = guest.split(',').filter(function (item) {
+      return GUEST.indexOf(item)>-1;
+    });
+    new Valine({
+        el: '#comments' ,
+        verify: false,
+        notify: false,
+        appId: 'JL9DlIQzRPXRzPcfKHc1DY0W-gzGzoHsz',
+        appKey: 'bX1f6oSbTroEDIz50Ic1iPlq',
+        placeholder: 'Just go go',
+        avatar:'mm',
+        meta:guest,
+        pageSize:'10' || 10,
+        visitor: false
+    });
+  </script>
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+  <style>
+    .copy-btn {
+      display: inline-block;
+      padding: 6px 12px;
+      font-size: 13px;
+      font-weight: 700;
+      line-height: 20px;
+      color: #333;
+      white-space: nowrap;
+      vertical-align: middle;
+      cursor: pointer;
+      background-color: #eee;
+      background-image: linear-gradient(#fcfcfc, #eee);
+      border: 1px solid #d5d5d5;
+      border-radius: 3px;
+      user-select: none;
+      outline: 0;
+    }
+
+    .highlight-wrap .copy-btn {
+      transition: opacity .3s ease-in-out;
+      opacity: 0;
+      padding: 2px 6px;
+      position: absolute;
+      right: 4px;
+      top: 8px;
+    }
+
+    .highlight-wrap:hover .copy-btn,
+    .highlight-wrap .copy-btn:focus {
+      opacity: 1
+    }
+
+    .highlight-wrap {
+      position: relative;
+    }
+  </style>
+  <script>
+    $('.highlight').each(function (i, e) {
+      var $wrap = $('<div>').addClass('highlight-wrap')
+      $(e).after($wrap)
+      $wrap.append($('<button>').addClass('copy-btn').append('Copy').on('click', function (e) {
+        var code = $(this).parent().find('.code').find('.line').map(function (i, e) {
+          return $(e).text()
+        }).toArray().join('\n')
+        var ta = document.createElement('textarea')
+        document.body.appendChild(ta)
+        ta.style.position = 'absolute'
+        ta.style.top = '0px'
+        ta.style.left = '0px'
+        ta.value = code
+        ta.select()
+        ta.focus()
+        var result = document.execCommand('copy')
+        document.body.removeChild(ta)
+        
+          if(result)$(this).text('Copied')
+          else $(this).text('Copy failed')
+        
+        $(this).blur()
+      })).on('mouseleave', function (e) {
+        var $b = $(this).find('.copy-btn')
+        setTimeout(function () {
+          $b.text('Copy')
+        }, 300)
+      }).append(e)
+    })
+  </script>
+
+
+</body>
+</html>
