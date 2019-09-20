@@ -106,13 +106,13 @@
 
 
 
-  <meta name="description" content="看到一篇对epoll讲解很到位的文章，转载收藏一下。 从事服务端开发，少不了要接触网络编程。epoll 作为 Linux 下高性能网络服务器的必备技术至关重要，nginx、Redis、Skynet 和大部分游戏服务器都使用到这一多路复用技术。 epoll 很重要，但是 epoll 与 select 的区别是什么呢？epoll 高效的原因是什么？  网上虽然也有不少讲解 epoll 的文章，但要么是">
+  <meta name="description" content="看到一篇对epoll讲解很到位的文章，转载收藏一下。 从事服务端开发，少不了要接触网络编程。epoll 作为 Linux 下高性能网络服务器的必备技术至关重要，nginx、Redis、Skynet 和大部分游戏服务器都使用到这一多路复用技术。 epoll 很重要，但是 epoll 与 select 的区别是什么呢？epoll 高效的原因是什么？">
 <meta name="keywords" content="nginx,epoll">
 <meta property="og:type" content="article">
 <meta property="og:title" content="epoll的本质是什么">
 <meta property="og:url" content="//keer.me/what-is-the-nature-of-epoll/index.html">
 <meta property="og:site_name" content="楽猪先生">
-<meta property="og:description" content="看到一篇对epoll讲解很到位的文章，转载收藏一下。 从事服务端开发，少不了要接触网络编程。epoll 作为 Linux 下高性能网络服务器的必备技术至关重要，nginx、Redis、Skynet 和大部分游戏服务器都使用到这一多路复用技术。 epoll 很重要，但是 epoll 与 select 的区别是什么呢？epoll 高效的原因是什么？  网上虽然也有不少讲解 epoll 的文章，但要么是">
+<meta property="og:description" content="看到一篇对epoll讲解很到位的文章，转载收藏一下。 从事服务端开发，少不了要接触网络编程。epoll 作为 Linux 下高性能网络服务器的必备技术至关重要，nginx、Redis、Skynet 和大部分游戏服务器都使用到这一多路复用技术。 epoll 很重要，但是 epoll 与 select 的区别是什么呢？epoll 高效的原因是什么？">
 <meta property="og:locale" content="zh-Hans">
 <meta property="og:image" content="https://u.vmpic.cn/2019/07/22/DU7p.png">
 <meta property="og:image" content="https://u.vmpic.cn/2019/07/22/DbTV.png">
@@ -136,10 +136,10 @@
 <meta property="og:image" content="https://u.vmpic.cn/2019/07/22/DCeu.png">
 <meta property="og:image" content="https://u.vmpic.cn/2019/07/22/DT88.png">
 <meta property="og:image" content="https://u.vmpic.cn/2019/07/22/DcTX.png">
-<meta property="og:updated_time" content="2019-09-19T14:20:46.097Z">
+<meta property="og:updated_time" content="2019-09-20T16:12:12.674Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="epoll的本质是什么">
-<meta name="twitter:description" content="看到一篇对epoll讲解很到位的文章，转载收藏一下。 从事服务端开发，少不了要接触网络编程。epoll 作为 Linux 下高性能网络服务器的必备技术至关重要，nginx、Redis、Skynet 和大部分游戏服务器都使用到这一多路复用技术。 epoll 很重要，但是 epoll 与 select 的区别是什么呢？epoll 高效的原因是什么？  网上虽然也有不少讲解 epoll 的文章，但要么是">
+<meta name="twitter:description" content="看到一篇对epoll讲解很到位的文章，转载收藏一下。 从事服务端开发，少不了要接触网络编程。epoll 作为 Linux 下高性能网络服务器的必备技术至关重要，nginx、Redis、Skynet 和大部分游戏服务器都使用到这一多路复用技术。 epoll 很重要，但是 epoll 与 select 的区别是什么呢？epoll 高效的原因是什么？">
 <meta name="twitter:image" content="https://u.vmpic.cn/2019/07/22/DU7p.png">
 
 
@@ -381,7 +381,7 @@
                 
                   <span class="post-meta-item-text">Edited on</span>
                 
-                <time title="Modified: 2019-09-19 22:20:46" itemprop="dateModified" datetime="2019-09-19T22:20:46+08:00">2019-09-19</time>
+                <time title="Modified: 2019-09-21 00:12:12" itemprop="dateModified" datetime="2019-09-21T00:12:12+08:00">2019-09-21</time>
               
             
           </span>
@@ -445,6 +445,7 @@
         <p>看到一篇对epoll讲解很到位的文章，转载收藏一下。</p>
 <p>从事服务端开发，少不了要接触网络编程。epoll 作为 Linux 下高性能网络服务器的必备技术至关重要，nginx、Redis、Skynet 和大部分游戏服务器都使用到这一多路复用技术。</p>
 <p>epoll 很重要，但是 epoll 与 select 的区别是什么呢？epoll 高效的原因是什么？</p>
+<a id="more"></a>
 <p><img src="https://u.vmpic.cn/2019/07/22/DU7p.png" alt="DU7p.png"></p>
 <p>网上虽然也有不少讲解 epoll 的文章，但要么是过于浅显，或者陷入源码解析，很少能有通俗易懂的。笔者于是决定编写此文，让缺乏专业背景知识的读者也能够明白 epoll 的原理。</p>
 <p>文章核心思想是：要让读者清晰明白 epoll 为什么性能好。</p>
