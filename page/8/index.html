@@ -296,6 +296,189 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="//keer.me/try-alpine-linux-release/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="楽猪先生">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="https://staticache.oss-cn-hangzhou.aliyuncs.com/o_1cqpk2o9h3l112sh19do2iu84fa.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="楽猪先生">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/try-alpine-linux-release/" itemprop="url">
+                  Alpine轻量安全的linux发行版 
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+
+              
+                
+              
+
+              <time title="Created: 2016-07-25 18:57:24" itemprop="dateCreated datePublished" datetime="2016-07-25T18:57:24+08:00">2016-07-25</time>
+            
+
+            
+              
+
+              
+                
+                <span class="post-meta-divider">|</span>
+                
+
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">Edited on</span>
+                
+                <time title="Modified: 2018-09-01 21:56:54" itemprop="dateModified" datetime="2018-09-01T21:56:54+08:00">2018-09-01</time>
+              
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/Linux/" itemprop="url" rel="index"><span itemprop="name">Linux</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/try-alpine-linux-release/#comments" itemprop="discussionUrl">
+                  <span class="post-meta-item-text">Comments: </span> <span class="post-comments-count valine-comment-count" data-xid="/try-alpine-linux-release/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <blockquote>
+<p>Alpine Linux 是一个面向安全应用的轻量级 Linux 发行版。它采用了musl libc和busybox以减小系统的体积和运行时资源消耗，同时还提供了自己的包管理工具apk。Alpine Linux的内核都打了grsecurity/PaX补丁，并且所有的程序都编译为Position Independent Executables (PIE) 以增强系统的安全性。</p>
+</blockquote>
+<p>看到<code>Docker</code>官方已经开始使用<code>Alpine</code>来替换<code>Ubuntu</code>系统作为官方的系统镜像。然后发现<code>Alpine</code>真的很小，小到<code>Docker</code>官方的Alpine镜像只有5M左右。</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">echo</span> <span class="string">"http://nl.alpinelinux.org/alpine/v3.3/community"</span> &gt;&gt; /etc/apk/repositories</span><br><span class="line">apk update</span><br><span class="line">apk add docker</span><br><span class="line">rc-update add docker boot</span><br><span class="line">service docker start</span><br></pre></td></tr></table></figure>
+          
+        
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="//keer.me/supervisor-process-manage/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1909,184 +2092,11 @@
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="//keer.me/build-orderNo-for-php/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="楽猪先生">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="https://staticache.oss-cn-hangzhou.aliyuncs.com/o_1cqpk2o9h3l112sh19do2iu84fa.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="楽猪先生">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/build-orderNo-for-php/" itemprop="url">
-                  PHP生成订单号方法汇总
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-
-            
-            
-            
-
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Posted on</span>
-              
-
-              
-                
-              
-
-              <time title="Created: 2016-06-15 17:23:33" itemprop="dateCreated datePublished" datetime="2016-06-15T17:23:33+08:00">2016-06-15</time>
-            
-
-            
-              
-
-              
-                
-                <span class="post-meta-divider">|</span>
-                
-
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-calendar-check-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">Edited on</span>
-                
-                <time title="Modified: 2018-09-01 21:56:54" itemprop="dateModified" datetime="2018-09-01T21:56:54+08:00">2018-09-01</time>
-              
-            
-          </span>
-
-          
-
-          
-            
-              <span class="post-comments-count">
-                <span class="post-meta-divider">|</span>
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-comment-o"></i>
-                </span>
-                <a href="/build-orderNo-for-php/#comments" itemprop="discussionUrl">
-                  <span class="post-meta-item-text">Comments: </span> <span class="post-comments-count valine-comment-count" data-xid="/build-orderNo-for-php/" itemprop="commentCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          <blockquote>
-<p>项目使用到了订单号生成的需求，看了一遍基本上是时间戳加随机数的思路。<br>于是找了一些<code>PHP</code>生成订单流水号的具体代码，作为记录。</p>
-</blockquote>
-<h3 id="一-从ECSHOP中扒了一段订单号生成代码"><a href="#一-从ECSHOP中扒了一段订单号生成代码" class="headerlink" title="(一) 从ECSHOP中扒了一段订单号生成代码"></a>(一) 从<code>ECSHOP</code>中扒了一段订单号生成代码</h3><figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">build_order_no</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="comment">/* 选择一个随机的方案 */</span></span><br><span class="line">    mt_srand((double) microtime() * <span class="number">1000000</span>);</span><br><span class="line">    <span class="comment">/* 日期前缀+一个1-999999的六位随机数不满6未前位补0 */</span></span><br><span class="line">    <span class="keyword">return</span> date(<span class="string">'ymd'</span>) . str_pad(mt_rand(<span class="number">1</span>, <span class="number">999999</span>), <span class="number">6</span>, <span class="string">'0'</span>, STR_PAD_LEFT);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>本机(cpu:i5 mem:1G)测试生成10万订单号、重复代码在1万左右，对于目前系统业务来说绝对够用了。</p>
-<blockquote>
-<p>如果不放心可以在生成订单号后查询下数据库是否有对应的order_no如果有重新生成</p>
-</blockquote>
-          <!--noindex-->
-          <div class="post-button text-center">
-            <a class="btn" href="/build-orderNo-for-php/#more" rel="contents">
-              Read more &raquo;
-            </a>
-          </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
   <nav class="pagination">
-    <a class="extend prev" rel="prev" href="/page/7/"><i class="fa fa-angle-left" aria-label="Previous page"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/7/">7</a><span class="page-number current">8</span><a class="page-number" href="/page/9/">9</a><a class="page-number" href="/page/10/">10</a><a class="extend next" rel="next" href="/page/9/"><i class="fa fa-angle-right" aria-label="Next page"></i></a>
+    <a class="extend prev" rel="prev" href="/page/7/"><i class="fa fa-angle-left" aria-label="Previous page"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/7/">7</a><span class="page-number current">8</span><a class="page-number" href="/page/9/">9</a><span class="space">&hellip;</span><a class="page-number" href="/page/11/">11</a><a class="extend next" rel="next" href="/page/9/"><i class="fa fa-angle-right" aria-label="Next page"></i></a>
   </nav>
 
 
@@ -2133,7 +2143,7 @@
                 
                   <a href="/archives/">
                 
-                    <span class="site-state-item-count">100</span>
+                    <span class="site-state-item-count">101</span>
                     <span class="site-state-item-name">posts</span>
                   </a>
                 </div>
@@ -2194,7 +2204,9 @@
                     
                       
                     
-                    <span class="site-state-item-count">24</span>
+                      
+                    
+                    <span class="site-state-item-count">25</span>
                     <span class="site-state-item-name">categories</span>
                   </a>
                 </div>
@@ -2563,7 +2575,15 @@
                     
                       
                     
-                    <span class="site-state-item-count">178</span>
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">182</span>
                     <span class="site-state-item-name">tags</span>
                   </a>
                 </div>
