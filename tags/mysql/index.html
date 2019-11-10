@@ -109,7 +109,7 @@
   <meta name="keywords" content="Hexo, Golang, Laravel, Git, Docker">
 <meta property="og:type" content="website">
 <meta property="og:title" content="楽猪先生">
-<meta property="og:url" content="//keer.me/tags/MySQL/index.html">
+<meta property="og:url" content="//keer.me/tags/mysql/index.html">
 <meta property="og:site_name" content="楽猪先生">
 <meta property="og:locale" content="zh-Hans">
 <meta name="twitter:card" content="summary">
@@ -120,7 +120,7 @@
 
 
 
-  <link rel="canonical" href="//keer.me/tags/MySQL/"/>
+  <link rel="canonical" href="//keer.me/tags/mysql/"/>
 
 
 
@@ -130,7 +130,7 @@
   };
 </script>
 
-  <title>Tag: MySQL | 楽猪先生</title>
+  <title>Tag: mysql | 楽猪先生</title>
   
 
 
@@ -305,7 +305,7 @@
 
     <div id="posts" class="posts-collapse">
       <div class="collection-title">
-        <h1>MySQL<small>Tag</small>
+        <h1>mysql<small>Tag</small>
         </h1>
       </div>
 
@@ -317,9 +317,9 @@
 
       <h2 class="post-title">
         
-            <a class="post-title-link" href="/MySQL学习系列-二-索引/" itemprop="url">
+            <a class="post-title-link" href="/use-systemctl-to-set-Nginx-PHP-Mysql-bootstrap/" itemprop="url">
               
-                <span itemprop="name">MySQL学习系列(二)索引</span>
+                <span itemprop="name">systemctl设置Nginx、PHP、Mysql开机启动</span>
               
             </a>
         
@@ -327,9 +327,9 @@
 
       <div class="post-meta">
         <time class="post-time" itemprop="dateCreated"
-              datetime="2016-06-10T15:51:35+08:00"
-              content="2016-06-10" >
-          06-10
+              datetime="2018-12-08T23:27:36+08:00"
+              content="2018-12-08" >
+          12-08
         </time>
       </div>
 
@@ -345,37 +345,9 @@
 
       <h2 class="post-title">
         
-            <a class="post-title-link" href="/MySQL学习系列-一-数据类型/" itemprop="url">
+            <a class="post-title-link" href="/php-connect-mysql-by-ssh/" itemprop="url">
               
-                <span itemprop="name">MySQL学习系列(一)数据类型</span>
-              
-            </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2016-06-09T16:56:06+08:00"
-              content="2016-06-09" >
-          06-09
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-      
-        
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="/sql-learning-having/" itemprop="url">
-              
-                <span itemprop="name">SQL语句Having理解</span>
+                <span itemprop="name">PHP通过SSH隧道连接MySQL</span>
               
             </a>
         
@@ -383,9 +355,9 @@
 
       <div class="post-meta">
         <time class="post-time" itemprop="dateCreated"
-              datetime="2016-04-22T19:07:25+08:00"
-              content="2016-04-22" >
-          04-22
+              datetime="2017-04-23T16:26:45+08:00"
+              content="2017-04-23" >
+          04-23
         </time>
       </div>
 
@@ -446,7 +418,7 @@
                 
                   <a href="/archives/">
                 
-                    <span class="site-state-item-count">101</span>
+                    <span class="site-state-item-count">89</span>
                     <span class="site-state-item-name">posts</span>
                   </a>
                 </div>
@@ -507,9 +479,7 @@
                     
                       
                     
-                      
-                    
-                    <span class="site-state-item-count">25</span>
+                    <span class="site-state-item-count">24</span>
                     <span class="site-state-item-name">categories</span>
                   </a>
                 </div>
@@ -862,31 +832,7 @@
                     
                       
                     
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                    <span class="site-state-item-count">182</span>
+                    <span class="site-state-item-count">170</span>
                     <span class="site-state-item-name">tags</span>
                   </a>
                 </div>
@@ -1184,6 +1130,32 @@
         }).toArray().join('\n')
         var ta = document.createElement('textarea')
         document.body.appendChild(ta)
+        ta.style.position = 'absolute'
+        ta.style.top = '0px'
+        ta.style.left = '0px'
+        ta.value = code
+        ta.select()
+        ta.focus()
+        var result = document.execCommand('copy')
+        document.body.removeChild(ta)
+        
+          if(result)$(this).text('Copied')
+          else $(this).text('Copy failed')
+        
+        $(this).blur()
+      })).on('mouseleave', function (e) {
+        var $b = $(this).find('.copy-btn')
+        setTimeout(function () {
+          $b.text('Copy')
+        }, 300)
+      }).append(e)
+    })
+  </script>
+
+
+</body>
+</html>
+    document.body.appendChild(ta)
         ta.style.position = 'absolute'
         ta.style.top = '0px'
         ta.style.left = '0px'
